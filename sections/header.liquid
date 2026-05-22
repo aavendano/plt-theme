@@ -1,68 +1,76 @@
 <header>
-
-<nav class="navbar">
-  <div class="navbar-brand">
-      <div class="navbar-item"><h2>{{ shop.name | link_to: routes.root_url }}</h2></div>
-
-    <div class="navbar-burger js-burger" data-target="navbarExampleTransparentExample">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </div>
-
-  <div id="navbarExampleTransparentExample" class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item" href="{{ routes.root_url }}"> Home </a>
-      <div x-data="{menu_active:false}" class="navbar-item has-dropdown" :class="menu_active ? 'is-active' : ''" @mouseover="menu_active=true" @mouseout="menu_active=false" >
-        <a class="navbar-link" href="https://bulma.io/documentation/overview/start/"> Docs </a>
-        <div class="navbar-dropdown is-boxed">
-          <a class="navbar-item" href="https://bulma.io/documentation/overview/start/"> Overview </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/overview/modifiers/"> Modifiers </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/"> Columns </a>
-          <a class="navbar-item is-selected" href="https://bulma.io/documentation/layout/container/"> Layout </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/form/general/"> Form </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/elements/box/"> Elements </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/components/breadcrumb/"> Components </a>
-        </div>
+  
+  <nav class="b-navbar" x-data="{ menuOpen: false }" style="background-color: {{ section.settings.background_color }};">
+    <div class="b-navbar-brand">
+      <div class="b-navbar-item"><h2>{{ shop.name | link_to: routes.root_url }}</h2></div>
+      
+      <div
+        class="b-navbar-burger"
+        :class="menuOpen ? 'b-is-active' : ''"
+        @click="menuOpen = !menuOpen"
+        role="button"
+        aria-label="menu"
+        :aria-expanded="menuOpen"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </div>
-
-    <div class="navbar-end">
-
-        <div class="navbar-item">
-      {% if shop.customer_accounts_enabled %}
-          <shopify-account menu="{{ section.settings.customer_account_menu }}">
-          <span class="icon"><i>  
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></i>
-</span>
-
-          </shopify-account>
+    
+    <div id="navbarExampleTransparentExample" class="b-navbar-menu" :class="menuOpen ? 'b-is-active' : ''">
+      <div class="b-navbar-start">
+        <a class="b-navbar-item" href="{{ routes.root_url }}"> Home </a>
+        <div x-data="{menu_active:false}" class="b-navbar-item b-has-dropdown" :class="menu_active ? 'b-is-active' : ''" @mouseover="menu_active=true" @mouseout="menu_active=false" >
+          <a class="b-navbar-link" href="https://bulma.io/documentation/overview/start/"> Docs </a>
+          <div class="b-navbar-dropdown">
+            <a class="b-navbar-item" href="https://bulma.io/documentation/overview/start/"> Overview </a>
+            <a class="b-navbar-item" href="https://bulma.io/documentation/overview/modifiers/"> Modifiers </a>
+            <hr class="b-navbar-divider">
+            <a class="b-navbar-item" href="https://bulma.io/documentation/columns/basics/"> Columns </a>
+            <a class="b-navbar-item b-is-selected" href="https://bulma.io/documentation/layout/container/"> Layout </a>
+            <a class="b-navbar-item" href="https://bulma.io/documentation/form/general/"> Form </a>
+            <a class="b-navbar-item" href="https://bulma.io/documentation/elements/box/"> Elements </a>
+            <a class="b-navbar-item" href="https://bulma.io/documentation/components/breadcrumb/"> Components </a>
+          </div>
         </div>
-      {% endif %}
-      <div class="navbar-item">
-          <a href="{{ routes.cart_url }}" class="is-ghost">
+      </div>
+      
+      <div class="b-navbar-end">
+        
+        <div class="b-navbar-item">
+          <span class="b-icon-text">
+          {% if shop.customer_accounts_enabled %}
+            <shopify-account menu="{{ section.settings.customer_account_menu }}">
+              <span class="b-icon b-is-medium">
+                <i>  
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </i>
+              </span>
+            </shopify-account>
+            </span>
+          </div>
+        {% endif %}
+        <div class="b-navbar-item">
+          <a href="{{ routes.cart_url }}">
+          <span class="b-icon-text">
             {% if cart.item_count > 0 %}
               <sup>{{ cart.item_count }}</sup>
             {% endif %}
             
-          <span class="icon">
-  <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></i>
-</span>
-          </a>
+            <span class="b-icon b-is-medium">
+              <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></i>
+            </span>
+          </span>
+        </a>
+        </div>
       </div>
     </div>
-  </div>
-</nav>
-
-
-
-
-
-
-
+  </nav>
+  
 </header>
 
 
@@ -75,6 +83,12 @@
       "type": "link_list",
       "id": "menu",
       "label": "t:labels.menu"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:labels.background_color",
+      "default": "#FFFFFF"
     },
     {
       "type": "link_list",

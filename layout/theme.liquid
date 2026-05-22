@@ -3,12 +3,9 @@
   <head>
     {% # Inlined CSS Variables %}
     {% render 'css-variables' %}
-    <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/versions/bulma-no-dark-mode.min.css"
->
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.11/dist/cdn.min.js"></script>
-<script src="https://cdn.shopify.com/storefront/web-components.js" defer></script>
+    {{ 'b-style.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'b-style-alpine.js' | asset_url }}" defer></script>
+    <script src="https://cdn.shopify.com/storefront/web-components.js" defer></script>
 
 
 
@@ -39,7 +36,7 @@
   store-domain="https://{{ shop.permanent_domain }}"
   country="{{ localization.country.iso_code }}"
   language="{{ localization.language.iso_code }}"
-  public-access-token="9bd5732020eac917abadcf1fa82488a9"
+  public-access-token="{{ settings.public_access_token }}"
 
 >
     {% sections 'header-group' %}

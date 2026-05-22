@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "build:assets": "npm run build:css && npm run build:js",
+    "build:css": "cp node_modules/b-style/dist/b-style.min.css assets/b-style.css",
+    "build:js": "cp node_modules/b-style/dist/alpine.js assets/b-style-alpine.js",
+    "postinstall": "npm run build:assets"
+  },
+  "dependencies": {
+    "b-style": "github:aavendano/b-style"
+  }
+}

@@ -79,5 +79,20 @@
         "default": 4
       }
     ]
+  },
+  {
+    "name": "t:general.access_keys",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:general.access_keys"
+      },
+      {
+        "type": "text",
+        "id": "public_access_token",
+        "label": "t:labels.public_access_token",
+        "default": "0000"
+      }
+    ]
   }
 ]

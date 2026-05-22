@@ -31,7 +31,8 @@
     "sidebar": "Sidebar",
     "text": "Text",
     "theme": "Theme",
-    "typography": "Typography"
+    "typography": "Typography",
+    "access_keys": "Access keys"
   },
   "labels": {
     "alignment": "Alignment",
@@ -48,7 +49,8 @@
     "page_width": "Page width",
     "show_payment_icons": "Show payment icons",
     "text_style": "Text style",
-    "text": "Text"
+    "text": "Text",
+    "public_access_token": "Public access token"
   },
   "options": {
     "alignment": {
