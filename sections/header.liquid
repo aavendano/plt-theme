@@ -1,0 +1,87 @@
+<header>
+
+<nav class="navbar">
+  <div class="navbar-brand">
+      <div class="navbar-item"><h2>{{ shop.name | link_to: routes.root_url }}</h2></div>
+
+    <div class="navbar-burger js-burger" data-target="navbarExampleTransparentExample">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div id="navbarExampleTransparentExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{{ routes.root_url }}"> Home </a>
+      <div x-data="{menu_active:false}" class="navbar-item has-dropdown" :class="menu_active ? 'is-active' : ''" @mouseover="menu_active=true" @mouseout="menu_active=false" >
+        <a class="navbar-link" href="https://bulma.io/documentation/overview/start/"> Docs </a>
+        <div class="navbar-dropdown is-boxed">
+          <a class="navbar-item" href="https://bulma.io/documentation/overview/start/"> Overview </a>
+          <a class="navbar-item" href="https://bulma.io/documentation/overview/modifiers/"> Modifiers </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/"> Columns </a>
+          <a class="navbar-item is-selected" href="https://bulma.io/documentation/layout/container/"> Layout </a>
+          <a class="navbar-item" href="https://bulma.io/documentation/form/general/"> Form </a>
+          <a class="navbar-item" href="https://bulma.io/documentation/elements/box/"> Elements </a>
+          <a class="navbar-item" href="https://bulma.io/documentation/components/breadcrumb/"> Components </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+
+        <div class="navbar-item">
+      {% if shop.customer_accounts_enabled %}
+          <shopify-account menu="{{ section.settings.customer_account_menu }}">
+          <span class="icon"><i>  
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></i>
+</span>
+
+          </shopify-account>
+        </div>
+      {% endif %}
+      <div class="navbar-item">
+          <a href="{{ routes.cart_url }}" class="is-ghost">
+            {% if cart.item_count > 0 %}
+              <sup>{{ cart.item_count }}</sup>
+            {% endif %}
+            
+          <span class="icon">
+  <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></i>
+</span>
+          </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+
+</header>
+
+
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu"
+    },
+    {
+      "type": "link_list",
+      "id": "customer_account_menu",
+      "label": "t:labels.customer_account_menu",
+      "default": "customer-account-main-menu"
+    }
+  ]
+}
+{% endschema %}
