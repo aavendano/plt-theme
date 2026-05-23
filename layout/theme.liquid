@@ -1,13 +1,11 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
   <head>
-    {% # Inlined CSS Variables %}
-    {% render 'css-variables' %}
     {{ 'b-style.css' | asset_url | stylesheet_tag }}
+    {% # Inlined CSS Variables (overrides Bulma defaults) %}
     <script src="{{ 'b-style-alpine.js' | asset_url }}" defer></script>
     <script src="https://cdn.shopify.com/storefront/web-components.js" defer></script>
-
-
+    {% render 'css-variables' %}
 
     {% comment %}
       Font preloading:
@@ -22,8 +20,6 @@
       {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
     {% endunless %}
 
-    {% # Load and preload the critical CSS %}
-    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
@@ -37,13 +33,12 @@
   country="{{ localization.country.iso_code }}"
   language="{{ localization.language.iso_code }}"
   public-access-token="{{ settings.public_access_token }}"
-
 >
+</shopify-store>
     {% sections 'header-group' %}
 
     {{ content_for_layout }}
 
     {% sections 'footer-group' %}
-</shopify-store>
   </body>
 </html>
