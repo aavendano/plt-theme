@@ -1,11 +1,18 @@
 {
   "scripts": {
     "build:assets": "npm run build:css && npm run build:js",
-    "build:css": "cp node_modules/b-style/dist/b-style.min.css assets/b-style.css",
+    "build:css": "postcss node_modules/b-style/dist/b-style.css -o assets/b-style.css",
+    "build:css:report": "node scripts/css-size-report.mjs",
     "build:js": "cp node_modules/b-style/dist/alpine.js assets/b-style-alpine.js",
     "postinstall": "npm run build:assets"
   },
   "dependencies": {
     "b-style": "github:aavendano/b-style"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^6.0.0",
+    "cssnano": "^7.0.0",
+    "postcss": "^8.4.49",
+    "postcss-cli": "^11.0.0"
   }
 }
