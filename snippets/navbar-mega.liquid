@@ -1,0 +1,55 @@
+{% doc %}
+
+Renders a mega menu.
+
+@param {link} link - Navigation link from a link_list menu.
+
+@example
+{% render 'navbar-mega', link: link, image: image %}
+{% enddoc %}
+
+<div class="b-navbar-item b-is-mega b-has-dropdown"
+    x-data="{menu_hovered_active:false, is_hidden:false}"  
+    x-init="$nextTick(() => { is_hidden = small_screen })"
+    :class="menu_hovered_active ? 'b-is-active' : ''"       
+    @mouseover="if (!small_screen) menu_hovered_active = true"
+    @mouseout="if (!small_screen) menu_hovered_active = false"
+> 
+<div
+    class="b-navbar-link"
+    @click="if (small_screen) is_hidden = !is_hidden"
+        >
+            <a class="b-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
+        </div>
+        <div class="b-navbar-dropdown l-navbar-background-black" x-show="!is_hidden" x-collapse>
+            <div class="b-container b-is-fluid l-mega-menu-container">
+                <div class="b-columns">
+                    {% for child_link in link.links %}
+                        <div class="b-column"
+                            x-data="{ submenu_active:true }"
+                            x-init="$nextTick(() => { submenu_active = !small_screen })"
+                        
+                        >
+                            <div 
+                                class="b-navbar-item l-navbar-background-black"
+                                @click="if (small_screen) submenu_active = !submenu_active"
+                            >
+                                <h2 class="b-title b-is-mega-menu-title b-is-size-6">
+                                    <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                                    </h2>
+                                </div>
+                            <div class="l-sub-menu-mega" x-show="submenu_active" x-collapse>
+                                {% for grandchild_link in child_link.links %}
+                                    <div class="b-navbar-item l-navbar-background-black" x-data="{ selected: false }" :class="selected ? 'b-is-selected' : ''" @mouseover="selected=true" @mouseout="selected=false" >
+                                        <a href="{{ grandchild_link.url }}">
+                                            {{ grandchild_link.title }}
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+</div>

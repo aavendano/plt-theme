@@ -1,0 +1,29 @@
+{% doc %}
+
+Renders a navbar dropdown.
+
+@param {link} link - Navigation link from a link_list menu.
+
+@example
+{% render 'navbar-dropdown', link: link %}
+{% enddoc %}
+
+<div class="b-navbar-item b-has-dropdown" 
+        x-data="{menu_hovered_active:false, is_hidden:false, small_screen:false}"  
+        x-init="$nextTick(() => { small_screen = window.innerWidth < 1024; is_hidden = small_screen })"
+        :class="menu_hovered_active ? 'b-is-active' : ''"       
+        @mouseover="if (!small_screen) menu_hovered_active = true"
+        @mouseout="if (!small_screen) menu_hovered_active = false"
+        @click="if (small_screen) is_hidden = !is_hidden"
+        >
+    <a class="b-navbar-link l-navbar-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
+        <div class="b-navbar-dropdown l-navbar-background-black" x-show="!is_hidden" x-collapse>
+            {% for child_link in link.links %}
+                <div class="b-navbar-item " x-data="{ selected: false }" :class="selected ? 'b-is-selected' : ''" @mouseover="selected=true" @mouseout="selected=false" >
+                  <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                </div>
+            {% endfor %}
+        </div>
+
+</div>
+

@@ -1,104 +1,132 @@
 {% assign logo_alt = shop.name | append: '_logo' %} 
 <header>
   
-  <nav class="b-navbar b-navbar-custom b-is-expanded b-is-spaced b-has-shadow b-is-fixed-top b-is-black" x-data="{ menuOpen: false }">
+  <nav class="b-navbar l-navbar-custom b-is-black" 
+    role="navigation" 
+    x-data="{ menuOpen: false, small_screen:false }"
+    x-init="$nextTick(() => { small_screen = window.innerWidth < 1024; menuOpen = !small_screen; })">
     <div class="b-navbar-brand">
       <div class="b-navbar-item">
         <a href="{{ routes.root_url }}">
           <figure>
-          {{ settings.logo | image_url: width: 500  | img_tag: logo_alt, 'b-image b-navbar-image-logo', '500'  }}
+          {{ settings.logo | image_url: width: 500  | img_tag: logo_alt, 'b-image l-navbar-image-logo', '500'  }}
           </figure>
         </a>
       </div>
-      
       <div
-        class="b-navbar-burger"
+        class="b-navbar-burger b-has-text-white"
         :class="menuOpen ? 'b-is-active' : ''"
         @click="menuOpen = !menuOpen"
         role="button"
         aria-label="menu"
         :aria-expanded="menuOpen"
       >
-        <span></span>
-        <span></span>
-        <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
-    </div>
-    
-    <div id="navbar-menu" class="b-navbar-menu" :class="menuOpen ? 'b-is-active' : ''">
+      <div id="navbar-menu" class="b-navbar-menu" :class="menuOpen ? 'b-is-active' : ''">
       <div class="b-navbar-start">
 
-        {%- for link in section.settings.menu.links -%}
-        {% liquid 
-              assign child_links = link.links 
-              if link.links.size > 0
-                assign has_child_links = true
-              else 
-                assign has_child_links = false
-              endif
-        %}
-            <div class="b-navbar-item" 
-              {% if has_child_links %}
-              x-data="{menu_active:false}"  
-                :class="menu_active ? 'b-has-dropdown b-is-active' : 'b-has-dropdown'" 
-                @mouseover="menu_active=true" 
-                @mouseout="menu_active=false" 
-              {% endif %}
-              >
-              <a class="b-navbar-item" href="{{ link.url }}">{{- link.title -}}</a>
-              {% if has_child_links %}
-                <div class="b-navbar-dropdown b-is-link">
-                  {% for child_link in child_links %}
 
-                  <div class="b-navbar-item" x-data="{selected: false}" :class="selected ? 'b-is-selected' : ''" @mouseover="selected=true" @mouseout="selected=false" >
-                  <a href="{{ child_link.url }}">{{ child_link.title }}</a>
-                  </div>
-                  {% endfor %}
-                </div>
-              {% else %}
-                <div class="b-navbar b-is-link">
-                </div>
-                {% endif %}
-            </div>
-        {% endfor %}
+<div class="b-level b-is-mobile" x-show="small_screen">
 
-
-
-      </div>
-      
-      <div class="b-navbar-end">
-        
-        <div class="b-navbar-item">
-          <span class="b-icon-text">
-          {% if shop.customer_accounts_enabled %}
-            <shopify-account menu="{{ section.settings.customer_account_menu }}">
-            <div slot="signed-out-avatar">
-              <span class="b-icon b-has-text-white" >
-                <i alt="{{ 'general.accessibility.account' | t }}">  
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
-              </i>
+  
+  {% if shop.customer_accounts_enabled %}
+  <div class="b-level-item">
+  <span class="b-icon-text">
+      <shopify-account menu="{{ section.settings.customer_account_menu }}">
+        <div slot="signed-out-avatar">
+          <span class="b-icon b-has-text-white" >
+            <i alt="{{ 'general.accessibility.account' | t }}">  
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </i>
               </span>
-              </div>
-            </shopify-account>
-            </span>
-          </div>
-        {% endif %}
-        <div class="b-navbar-item">
-          <a href="{{ routes.cart_url }}">
-          <span class="b-icon-text">
-            {% if cart.item_count > 0 %}
-              <sup>{{ cart.item_count }}</sup>
-            {% endif %}
-            
-            <span class="b-icon b-has-text-white">
-              <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></i>
-            </span>
+            </div>
+          </shopify-account>
+        </span>
+        </div>
+      {% endif %}
+      
+      <div class="b-level-item">
+      <span class="b-icon-text">
+        <a href="{{ routes.cart_url }}">
+          {% if cart.item_count > 0 %}
+            <sup>{{ cart.item_count }}</sup>
+          {% endif %}
+          <span class="b-icon b-has-text-white">
+            <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></i>
           </span>
         </a>
+      </span>
+      </div>
+    </div>
+  
+                  
+        
+                
+                
+
+
+          
+          
+
+        {%- for link in section.settings.menu.links -%}
+          {% case link.levels %}
+            {% when 0 %}
+              <div class="b-navbar-item b-navbar-item-hover-black ">
+                <a class="b-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
+              </div>
+            {% when 1 %}
+              {% render 'navbar-dropdown', link: link %}
+            {% when 2%}
+              {% render 'navbar-mega', link: link %}
+            {% else %}
+            <div class="b-navbar-item b-navbar-item-hover-black">
+              <a class="l-navbar-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
+            </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+      
+      <div class="b-navbar-end" x-show="!small_screen">
+        <div class="b-navbar-item ">
+            <span class="b-icon-text">
+              {% if shop.customer_accounts_enabled %}
+                <shopify-account menu="{{ section.settings.customer_account_menu }}">
+                  <div slot="signed-out-avatar">
+                    <span class="b-icon b-has-text-white" >
+                      <i alt="{{ 'general.accessibility.account' | t }}">  
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                      </i>
+                    </span>
+                  </div>
+                </shopify-account>
+              {% endif %}
+            </span>
         </div>
+
+        <div class="b-navbar-item">
+          <a href="{{ routes.cart_url }}">
+            <span class="b-icon-text">
+              {% if cart.item_count > 0 %}
+                <sup>{{ cart.item_count }}</sup>
+              {% endif %}
+              <span class="b-icon b-has-text-white">
+                <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></i>
+              </span>
+            </span>
+          </a>
+        </div>
+
+
       </div>
     </div>
   </nav>
@@ -107,16 +135,49 @@
 
 {% style %}
   
-  .b-navbar-image-logo {
+  .l-navbar-image-logo {
     max-width: 100%;
     max-height: 100% !important;
     object-fit: contain;
     height: 3rem !important;
 
   }
-  .b-navbar-custom {
+  .l-navbar-custom {
     background-image: linear-gradient( 115deg, rgba(35, 31, 32, 1) 0%, rgba(83, 50, 120, 1) 50%, rgba(244, 67, 108, 1) 100% ) !important;
   }
+
+  .l-mega-menu-container {
+    width: 100% !important;
+
+  }
+
+  .wl-navbar-background-black a {
+    color: var(--b-white)
+  }
+  
+  .l-navbar-background-black {
+    background-color: var(--b-black) !important;
+    color: var(--b-white) !important;
+  }
+
+  .l-navbar-background-black .b-navbar-item {
+    background-color: var(--b-black) !important;
+    color: var(--b-white) !important;
+  }
+  .l-navbar-background-black .b-navbar-item a {
+    color: var(--b-white) !important;
+  }
+  .l-navbar-background-black .b-navbar-item:hover {
+    background-color: var(--b-grey) !important;
+    color: var(--b-primary) !important;
+  }
+
+  .l-navbar-background-black .b-navbar-item a:hover {
+    color: var(--b-primary) !important;
+  }
+.b-navbar-item-hover-black:hover {
+  background-color: var(--b-black) !important;
+}
 
 {% endstyle %}
 
