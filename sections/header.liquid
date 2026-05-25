@@ -1,109 +1,195 @@
-{% assign logo_alt = shop.name | append: '_logo' %} 
+{% assign logo_alt = shop.name | append: '_logo' %}
 <header>
-  
-  <nav class="b-navbar l-navbar-custom b-is-black" 
-    role="navigation" 
-    x-data="{ menuOpen: false, small_screen:false }"
-    x-init="$nextTick(() => { small_screen = window.innerWidth < 1024; menuOpen = !small_screen; })">
-    <div class="b-navbar-brand">
-      <div class="b-navbar-item">
-        <a href="{{ routes.root_url }}">
-          <figure>
-          {{ settings.logo | image_url: width: 500  | img_tag: logo_alt, 'b-image l-navbar-image-logo', '500'  }}
-          </figure>
-        </a>
-      </div>
-      <div
-        class="b-navbar-burger b-has-text-white"
-        :class="menuOpen ? 'b-is-active' : ''"
-        @click="menuOpen = !menuOpen"
-        role="button"
-        aria-label="menu"
-        :aria-expanded="menuOpen"
-      >
+  <section class="b-section l-section-header ">
+    <nav
+      class="b-navbar b-is-black b-is-fixed-top l-navbar-custom"
+      role="navigation"
+      x-data="{ menuOpen: false, small_screen:false }"
+      x-init="$nextTick(() => { small_screen = window.innerWidth < 1024; menuOpen = !small_screen; })"
+      x-resize="if ($width < 1024) small_screen = true; else small_screen = false;"
+    >
+      <div class="b-navbar-brand">
+        <div class="b-navbar-item l-navbar-logo">
+          <a href="{{ routes.root_url }}">
+            <figure>
+              {{ settings.logo | image_url: width: 500 | img_tag: logo_alt, 'b-image l-navbar-image-logo', '500' }}
+            </figure>
+          </a>
+        </div>
+        <div
+          class="b-navbar-burger b-has-text-white"
+          :class="menuOpen ? 'b-is-active' : ''"
+          @click="menuOpen = !menuOpen"
+          role="button"
+          aria-label="menu"
+          :aria-expanded="menuOpen"
+        >
           <span></span>
           <span></span>
           <span></span>
         </div>
       </div>
-      <div id="navbar-menu" class="b-navbar-menu" :class="menuOpen ? 'b-is-active' : ''">
-      <div class="b-navbar-start">
+      <div id="navbar-menu" class="b-navbar-menu l-navbar-menu-small-screen" :class="menuOpen ? 'b-is-active' : ''">
+        <div class="b-navbar-start">
+          <div class="b-level b-is-mobile" x-cloak x-show="small_screen">
+            {% if shop.customer_accounts_enabled %}
+              <div class="b-level-item">
+                <span class="b-icon-text">
+                  <shopify-account menu="{{ section.settings.customer_account_menu }}">
+                    <div slot="signed-out-avatar">
+                      <span class="b-icon b-has-text-white">
+                        <i alt="{{ 'general.accessibility.account' | t }}">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                              <circle cx="12" cy="7" r="4"/>
+                          </svg>
+                        </i>
+                      </span>
+                    </div>
+                  </shopify-account>
+                </span>
+              </div>
+            {% endif %}
 
-
-<div class="b-level b-is-mobile" x-show="small_screen">
-
-  
-  {% if shop.customer_accounts_enabled %}
-  <div class="b-level-item">
-  <span class="b-icon-text">
-      <shopify-account menu="{{ section.settings.customer_account_menu }}">
-        <div slot="signed-out-avatar">
-          <span class="b-icon b-has-text-white" >
-            <i alt="{{ 'general.accessibility.account' | t }}">  
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                  <circle cx="12" cy="7" r="4"/>
+            <div class="b-level-item">
+              <span class="b-icon-text">
+                <a href="{{ routes.cart_url }}">
+                  {% if cart.item_count > 0 %}
+                    <sup>{{ cart.item_count }}</sup>
+                  {% endif %}
+                  <span class="b-icon b-has-text-white">
+                    <i>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+                      </svg>
+                    </i>
+                  </span>
+                </a>
+              </span>
+            </div>
+          </div>
+          <div class="l-mobile-search" x-cloak x-show="small_screen">
+            <div class="b-control b-has-icons-left">
+              <input class="b-input b-is-medium b-is-primary b-is-rounded" type="text" placeholder="Search">
+              <span class="b-icon b-is-medium b-is-left">
+                <i>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/>
                   </svg>
                 </i>
               </span>
             </div>
-          </shopify-account>
-        </span>
+          </div>
+
+          {%- for link in section.settings.menu.links -%}
+            {% case link.levels %}
+              {% when 0 %}
+                <div class="b-navbar-item b-navbar-item-hover-black ">
+                  <h2 class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
+                    <a class="b-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
+                  </h2>
+                </div>
+              {% when 1 %}
+                {% render 'navbar-dropdown', link: link %}
+              {% when 2 %}
+                {% render 'navbar-mega', link: link %}
+              {% else %}
+                <div class="b-navbar-item b-navbar-item-hover-black">
+                  <h2 class="b-title b-is-size-3 b-has-text-white">
+                    <a class="l-navbar-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
+                  </h2>
+                </div>
+            {% endcase %}
+          {% endfor %}
         </div>
-      {% endif %}
-      
-      <div class="b-level-item">
-      <span class="b-icon-text">
-        <a href="{{ routes.cart_url }}">
-          {% if cart.item_count > 0 %}
-            <sup>{{ cart.item_count }}</sup>
-          {% endif %}
-          <span class="b-icon b-has-text-white">
-            <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></i>
-          </span>
-        </a>
-      </span>
-      </div>
-    </div>
-  
-                  
-        
-                
-                
 
-
-          
-          
-
-        {%- for link in section.settings.menu.links -%}
-          {% case link.levels %}
-            {% when 0 %}
-              <div class="b-navbar-item b-navbar-item-hover-black ">
-                <a class="b-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
-              </div>
-            {% when 1 %}
-              {% render 'navbar-dropdown', link: link %}
-            {% when 2%}
-              {% render 'navbar-mega', link: link %}
-            {% else %}
-            <div class="b-navbar-item b-navbar-item-hover-black">
-              <a class="l-navbar-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
+        <div class="b-navbar-end" x-show="!small_screen">
+          <div class="b-navbar-item">
+            <div class="b-control b-has-icons-left">
+              <input class="b-input b-is-medium b-is-primary b-is-rounded" type="text" placeholder="Search">
+              <span class="b-icon b-is-medium b-is-left">
+                <i>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/>
+                  </svg>
+                </i>
+              </span>
             </div>
-          {% endcase %}
-        {% endfor %}
-      </div>
-      
-      <div class="b-navbar-end" x-show="!small_screen">
-        <div class="b-navbar-item ">
+          </div>
+          <div class="b-navbar-item">
+            <div class="b-control b-has-icons-left">
+              <div class="b-select b-is-medium">
+                <select>
+                  <option selected>Country</option>
+                  <option>Select dropdown</option>
+                  <option>With options</option>
+                </select>
+              </div>
+              <div class="b-icon b-is-small b-is-left">
+                <i class="fas fa-globe"></i>
+              </div>
+            </div>
+          </div>
+          <div class="b-navbar-item ">
             <span class="b-icon-text">
               {% if shop.customer_accounts_enabled %}
                 <shopify-account menu="{{ section.settings.customer_account_menu }}">
                   <div slot="signed-out-avatar">
-                    <span class="b-icon b-has-text-white" >
-                      <i alt="{{ 'general.accessibility.account' | t }}">  
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <span class="b-icon b-has-text-white">
+                      <i alt="{{ 'general.accessibility.account' | t }}">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
                           <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                            <circle cx="12" cy="7" r="4"/>
+                          <circle cx="12" cy="7" r="4"/>
                         </svg>
                       </i>
                     </span>
@@ -111,50 +197,68 @@
                 </shopify-account>
               {% endif %}
             </span>
+
+            <div class="b-navbar-item">
+              <a href="{{ routes.cart_url }}">
+                <span class="b-icon-text">
+                  {% if cart.item_count > 0 %}
+                    <sup>{{ cart.item_count }}</sup>
+                  {% endif %}
+                  <span class="b-icon b-has-text-white">
+                    <i>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+                      </svg>
+                    </i>
+                  </span>
+                </span>
+              </a>
+            </div>
+          </div>
         </div>
-
-        <div class="b-navbar-item">
-          <a href="{{ routes.cart_url }}">
-            <span class="b-icon-text">
-              {% if cart.item_count > 0 %}
-                <sup>{{ cart.item_count }}</sup>
-              {% endif %}
-              <span class="b-icon b-has-text-white">
-                <i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></i>
-              </span>
-            </span>
-          </a>
-        </div>
-
-
       </div>
-    </div>
-  </nav>
-  
+    </nav>
+  </section>
 </header>
 
 {% style %}
-  
   .l-navbar-image-logo {
     max-width: 100%;
     max-height: 100% !important;
     object-fit: contain;
     height: 3rem !important;
-
   }
   .l-navbar-custom {
-    background-image: linear-gradient( 115deg, rgba(35, 31, 32, 1) 0%, rgba(83, 50, 120, 1) 50%, rgba(244, 67, 108, 1) 100% ) !important;
+    background-image: linear-gradient(
+      115deg,
+      rgba(35, 31, 32, 1) 0%,
+      rgba(83, 50, 120, 1) 50%,
+      rgba(244, 67, 108, 1) 100%
+    ) !important;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: clip;
   }
 
   .l-mega-menu-container {
-    width: 100% !important;
-
+    width: 100vw !important;
+    
   }
 
   .wl-navbar-background-black a {
-    color: var(--b-white)
+    color: var(--b-white);
   }
-  
+
   .l-navbar-background-black {
     background-color: var(--b-black) !important;
     color: var(--b-white) !important;
@@ -173,14 +277,86 @@
   }
 
   .l-navbar-background-black .b-navbar-item a:hover {
-    color: var(--b-primary) !important;
+    color: var(--b-link) !important;
   }
-.b-navbar-item-hover-black:hover {
-  background-color: var(--b-black) !important;
-}
+  .b-navbar-item-hover-black:hover {
+    background-color: var(--b-black) !important;
+  }
+  .l-navbar-menu-small-screen {
+    height: 100%;
+  }
+  .l-image-mega-menu-figure {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    background-color: var(--b-white) !important;
+  }
+  .l-image-mega-menu-figure img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 4rem !important;
+    max-width: 4rem !important;
+    object-fit: contain !important;
+  }
 
+  @media screen and (max-width: 1023px) {
+    .l-navbar-custom {
+      width: 100%;
+      max-width: 100svw;
+    }
+
+    .l-navbar-logo {
+      margin-inline-start: auto !important;
+    }
+
+    .l-navbar-menu-small-screen.b-is-active {
+      max-width: 100%;
+      overflow-x: clip;
+    }
+
+    .l-mega-menu-container {
+      max-width: 100%;
+      padding-inline: 0;
+    }
+
+    .l-navbar-custom .b-navbar-dropdown {
+      max-width: 100%;
+      left: 0;
+      right: 0;
+    }
+    .l-grandchild-link-title {
+      margin-top: 0.25rem !important;
+      margin-bottom: 0.25rem !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      margin-left: 1.25rem !important;
+    }
+    .l-child-link-title {
+      margin-top: 0.25rem !important;
+      margin-bottom: 0.25rem !important;
+    }
+    .l-child-b-navbar-item {
+      margin-top: 0.25rem !important;
+      margin-bottom: 0.25rem !important;
+      padding-top: 0.25rem !important;
+      padding-bottom: 0.25rem !important;
+    }
+    .l-child-column {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+    .l-mobile-search {
+      margin-top: 0.5rem !important;
+      margin-bottom: 1.25rem !important;
+      padding-top: 0.5rem !important;
+      padding-bottom: 0.5rem !important;
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
+    }
+  }
 {% endstyle %}
-
 
 {% schema %}
 {

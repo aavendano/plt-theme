@@ -1,7 +1,7 @@
 import { statSync } from "node:fs";
 import { resolve } from "node:path";
 
-const source = resolve("node_modules/b-style/dist/b-style.css");
+const source = resolve("assets/b-style.source.css");
 const output = resolve("assets/b-style.css");
 
 function formatBytes(bytes) {

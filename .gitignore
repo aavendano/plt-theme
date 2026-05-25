@@ -9,6 +9,9 @@ ehthumbs.db
 Thumbs.db
 node_modules/
 
+# CSS build artifacts (compiled + purged output is committed)
+assets/b-style.source.css
+
 # Shopify CLI files
 .shopify/
 

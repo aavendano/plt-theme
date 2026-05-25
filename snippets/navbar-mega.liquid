@@ -1,55 +1,100 @@
 {% doc %}
+  Renders a mega menu.
 
-Renders a mega menu.
+  @param {link} link - Navigation link from a link_list menu.
 
-@param {link} link - Navigation link from a link_list menu.
-
-@example
-{% render 'navbar-mega', link: link, image: image %}
+  @example
+  {% render 'navbar-mega', link: link, image: image %}
 {% enddoc %}
 
-<div class="b-navbar-item b-is-mega b-has-dropdown"
-    x-data="{menu_hovered_active:false, is_hidden:false}"  
-    x-init="$nextTick(() => { is_hidden = small_screen })"
-    :class="menu_hovered_active ? 'b-is-active' : ''"       
-    @mouseover="if (!small_screen) menu_hovered_active = true"
-    @mouseout="if (!small_screen) menu_hovered_active = false"
-> 
 <div
-    class="b-navbar-link"
+  class="b-navbar-item b-is-mega b-has-dropdown"
+  x-data="{menu_hovered_active:false, is_hidden:false}"
+  x-init="$nextTick(() => { is_hidden = small_screen })"
+  :class="menu_hovered_active ? 'b-is-active' : ''"
+  @mouseover="if (!small_screen) menu_hovered_active = true"
+  @mouseout="if (!small_screen) menu_hovered_active = false"
+>
+  <div
+    class="b-navbar-link b-flex"
     @click="if (small_screen) is_hidden = !is_hidden"
-        >
-            <a class="b-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
-        </div>
-        <div class="b-navbar-dropdown l-navbar-background-black" x-show="!is_hidden" x-collapse>
-            <div class="b-container b-is-fluid l-mega-menu-container">
-                <div class="b-columns">
-                    {% for child_link in link.links %}
-                        <div class="b-column"
-                            x-data="{ submenu_active:true }"
-                            x-init="$nextTick(() => { submenu_active = !small_screen })"
-                        
-                        >
-                            <div 
-                                class="b-navbar-item l-navbar-background-black"
-                                @click="if (small_screen) submenu_active = !submenu_active"
-                            >
-                                <h2 class="b-title b-is-mega-menu-title b-is-size-6">
-                                    <a href="{{ child_link.url }}">{{ child_link.title }}</a>
-                                    </h2>
-                                </div>
-                            <div class="l-sub-menu-mega" x-show="submenu_active" x-collapse>
-                                {% for grandchild_link in child_link.links %}
-                                    <div class="b-navbar-item l-navbar-background-black" x-data="{ selected: false }" :class="selected ? 'b-is-selected' : ''" @mouseover="selected=true" @mouseout="selected=false" >
-                                        <a href="{{ grandchild_link.url }}">
-                                            {{ grandchild_link.title }}
-                                        </a>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+  >
+    <h2 class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
+      <a class="b-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
+    </h2>
+  </div>
+  <div class="b-navbar-dropdown l-navbar-background-black" x-show="!is_hidden" x-collapse>
+    <div class="b-container b-is-fluid l-mega-menu-container ">
+      <div class="b-columns">
+        {% for child_link in link.links %}
+          <div
+            class="b-column l-child-column"
+            x-data="{ submenu_active:true }"
+            x-init="$nextTick(() => { submenu_active = !small_screen })"
+          >
+            <div
+              class="b-navbar-item l-navbar-background-black l-child-b-navbar-item"
+              @click="if (small_screen) submenu_active = !submenu_active"
+            >
+              <template x-if="!small_screen">
+                <h2 class="b-title b-is-mega-menu-title b-is-size-4 b-is-size-6-desktop l-child-link-title">
+                  <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                </h2>
+              </template>
+              <template x-if="small_screen">
+                <p class="b-title b-is-mega-menu-title b-is-size-4 l-child-link-title b-has-text-white">
+                  {{ child_link.title }}
+                </p>
+              </template>
             </div>
-        </div>
+            <div class="l-sub-menu-mega" x-show="submenu_active" x-collapse>
+              {% for grandchild_link in child_link.links %}
+                <div
+                  class="b-navbar-item l-navbar-background-black"
+                  x-data="{ selected: false }"
+                  :class="selected ? 'b-is-selected' : ''"
+                  @mouseover="selected=true"
+                  @mouseout="selected=false"
+                >
+                  {% if grandchild_link.type == 'collection_link' and grandchild_link.object %}
+                    {% assign collection = grandchild_link.object %}
+                    <article class="b-media">
+                      {% if collection.image %}
+                        <div class="b-media-left">
+                          <figure class="b-image b-is-320x320 l-image-mega-menu-figure">
+                            <img
+                              src="{{ collection.image | image_url: width: 320 }}"
+                              width="320"
+                              height="320"
+                              alt="image-{{ collection.title }}"
+                            >
+                          </figure>
+                        </div>
+                      {% else %}
+
+                      {% endif %}
+                      <div class="b-media-content">
+                        <div class="b-content">
+                          <a href="{{ grandchild_link.url }}">
+                            <p class="b-title b-is-size-5 b-has-text-white l-grandchild-link-title">
+                              {{ grandchild_link.title }}
+                            </p>
+                          </a>
+                        </div>
+                      </div>
+                    </article>
+
+                  {% else %}
+                    <p class="b-title b-is-size-5 b-has-text-white l-grandchild-link-title">
+                      {{ grandchild_link.title }}
+                    </p>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 </div>
