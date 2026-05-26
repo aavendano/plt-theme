@@ -9,21 +9,20 @@
 
 <div
   class="b-navbar-item b-is-mega b-has-dropdown"
-  x-data="{menu_hovered_active:false, is_hidden:false}"
-  x-init="$nextTick(() => { is_hidden = $store.screen.small })"
+  x-data="{ menu_hovered_active: false }"
   :class="menu_hovered_active ? 'b-is-active' : ''"
-  @mouseover="if (!$store.screen.small) menu_hovered_active = true"
-  @mouseout="if (!$store.screen.small) menu_hovered_active = false"
+  @mouseenter="if (!$store.screen.small) menu_hovered_active = true"
+  @mouseleave="if (!$store.screen.small) menu_hovered_active = false"
 >
   <div
     class="b-navbar-link b-flex"
-    @click="if ($store.screen.small) is_hidden = !is_hidden"
+    @click="if ($store.screen.small) menu_hovered_active = !menu_hovered_active"
   >
     <h2 class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
       <a class="b-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
     </h2>
   </div>
-  <div class="b-navbar-dropdown" x-show="!is_hidden" x-collapse>
+  <div class="b-navbar-dropdown">
     <div class="b-container b-is-fluid l-mega-menu-container ">
       <div class="b-columns">
         {% for child_link in link.links %}
@@ -61,11 +60,11 @@
                     <article class="b-media">
                       {% if collection.image %}
                         <div class="b-media-left">
-                          <figure class="b-image b-is-320x320 l-image-mega-menu-figure">
+                          <figure class="b-image l-image-mega-menu-figure">
                             <img
-                              src="{{ collection.image | image_url: width: 320 }}"
-                              width="320"
-                              height="320"
+                              src="{{ collection.image | image_url: width: 120 }}"
+                              width="120"
+                              height="120"
                               alt="image-{{ collection.title }}"
                             >
                           </figure>
@@ -98,3 +97,75 @@
     </div>
   </div>
 </div>
+
+{% stylesheet %}
+  .b-navbar-item.b-is-mega.b-has-dropdown {
+    position: static;
+  }
+
+  .b-navbar-item.b-is-mega .b-navbar-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    display: none;
+    background-color: hsl(0, 0%, 4%);
+  }
+
+  .b-navbar-item.b-is-mega.b-is-active .b-navbar-dropdown {
+    display: block;
+  }
+
+  .l-mega-menu-container {
+    width: 100vw !important;
+  }
+
+  .l-image-mega-menu-figure {
+    width: 4rem;
+    height: 4rem;
+    background-color: var(--b-white);
+  }
+
+  .l-image-mega-menu-figure img {
+    width: 100%;
+    height: 100%;
+    max-height: 4rem;
+    max-width: 4rem;
+    object-fit: contain;
+  }
+
+  @media screen and (max-width: 1023px) {
+    .b-navbar-item.b-is-mega .b-navbar-dropdown {
+      position: static;
+      width: 100%;
+      box-shadow: none;
+    }
+
+    .l-mega-menu-container {
+      max-width: 100%;
+      padding-inline: 0;
+    }
+
+    .l-mega-menu-container .b-columns {
+      flex-direction: column;
+    }
+
+    .l-child-link-title {
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+    .l-child-b-navbar-item {
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
+    .l-child-column {
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+{% endstylesheet %}

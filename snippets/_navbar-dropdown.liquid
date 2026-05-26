@@ -8,48 +8,75 @@
 {% enddoc %}
 
 <div
-  class="b-navbar-item"
+  class="b-navbar-item b-has-dropdown"
   x-data="{ dropdownOpen: false }"
   :class="dropdownOpen ? 'b-is-active' : ''"
-  @mouseenter="dropdownOpen = true"
-  @mouseleave="dropdownOpen = false"
-  role="button"
-  aria-label="dropdown"
+  @mouseenter="if (!$store.screen.small) dropdownOpen = true"
+  @mouseleave="if (!$store.screen.small) dropdownOpen = false"
   :aria-expanded="dropdownOpen"
 >
-  <div class="b-dropdown-trigger">
-    <a class="b-button b-is-text" href="{{ link.url }}">
-      <span>
-        <h2 class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
-          {{- link.title -}}
-        </h2>
-      </span>
-    </a>
+  <a
+    class="b-navbar-link"
+    href="{{ link.url }}"
+    @click.prevent="if ($store.screen.small) dropdownOpen = !dropdownOpen"
+  >
+    <h2 class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
+      {{- link.title -}}
+    </h2>
+  </a>
+  <div class="b-navbar-dropdown">
+    {% for child_link in link.links %}
+      <a class="b-navbar-item" href="{{ child_link.url }}">
+        {{ child_link.title }}
+      </a>
+    {% endfor %}
   </div>
-  <!-- end b-dropdown-trigger -->
-  <div class="b-dropdown-menu c-dropdown-menu b-has-background-black b-is-relative">
-    <div class="b-dropdown-content b-has-background-black">
-      {% for child_link in link.links %}
-        <a class="b-dropdown-item" href="{{ child_link.url }}">
-          <h3 class="b-title b-is-size-5 b-has-text-white b-has-background-black">
-            {{ child_link.title }}
-          </h3>
-        </a>
-      {% endfor %}
-    </div>
-  </div>
-  <!-- end b-dropdown-menu -->
 </div>
-<!-- end b-dropdown -->
 
-{% style %}
-  .b-dropdown-trigger {
-    position: relative; !important;
+{% stylesheet %}
+  .b-navbar-item.b-has-dropdown {
+    position: relative;
   }
-    .c-dropdown-menu {
-      position: absolute; !important;
-      top: 5rem; !important;
-      left: 0; !important;
-      width: 100%; !important;
+
+  .b-navbar-dropdown {
+    background-color: hsl(0, 0%, 4%);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 100%;
+    z-index: 20;
+    display: none;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.1);
+  }
+
+  .b-navbar-item.b-is-active .b-navbar-dropdown {
+    display: block;
+  }
+
+  .b-navbar-dropdown .b-navbar-item {
+    color: hsl(0, 0%, 100%);
+    background-color: hsl(0, 0%, 4%);
+    padding: 0.375rem 1rem;
+    white-space: nowrap;
+    display: block;
+  }
+
+  .b-navbar-dropdown .b-navbar-item:hover {
+    background-color: hsl(0, 0%, 14%);
+    color: hsl(0, 0%, 100%);
+  }
+
+  @media screen and (max-width: 1023px) {
+    .b-navbar-item.b-has-dropdown {
+      position: relative;
     }
-{% endstyle %}
+
+    .b-navbar-dropdown {
+      position: static;
+      width: 100%;
+      box-shadow: none;
+      border-radius: 0;
+    }
+  }
+{% endstylesheet %}

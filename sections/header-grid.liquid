@@ -1,38 +1,51 @@
-<header>
-  <div class="l-header-wrapper-dev b-mb-5 " style="background-color: blue;">
+<header x-data="{ menuOpen: false }">
+  <div class="l-header-wrapper-dev b-mb-5">
     <div class="b-container">
-      <div class="b-fixed-grid b-has-4-cols">
-        <div class="b-grid b-my-0">
-          <div class="b-cell b-mx-auto b-my-auto">
-            <a href="{{ routes.root_url }}">
-              {% if settings.logo %}
-                <img src="{{ settings.logo | image_url: width: 100 }}" alt="{{ shop.name }}" width="100" height="100">
-              {% else %}
-                <img src="https://placehold.net/default.svg" alt="{{ shop.name }}" width="100" height="100">
-              {% endif %}
-            </a>
+      <div class="l-header-top">
+        <div class="l-header-top__logo">
+          <a href="{{ routes.root_url }}">
+            {% if settings.logo %}
+              <img src="{{ settings.logo | image_url: width: 100 }}" alt="{{ shop.name }}" width="100" height="100">
+            {% else %}
+              <img src="https://placehold.net/default.svg" alt="{{ shop.name }}" width="100" height="100">
+            {% endif %}
+          </a>
+        </div>
+        <div class="l-header-top__search">
+          <input
+            class="b-input b-is-medium b-is-rounded"
+            type="text"
+            placeholder="Large input"
+          >
+        </div>
+        <div class="l-header-top__actions">
+          <div class="l-desktop-only">
+            {% render '_navbar-end' %}
           </div>
-          <div class="b-cell b-is-col-span-2 b-py-3 b-my-auto">
-            <input
-              class="b-input b-is-medium b-is-rounded"
-              type="text"
-              placeholder="Large input"
-            >
-          </div>
-          <div class="b-cell b-mx-auto b-my-auto">
-            <div class="b-navbar-end">
-              {% render '_navbar-end' %}
-            </div>
-          </div>
+          <button
+            class="b-navbar-burger b-has-text-white l-burger"
+            :class="menuOpen ? 'b-is-active' : ''"
+            @click="menuOpen = !menuOpen"
+            aria-label="menu"
+            :aria-expanded="menuOpen"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </div>
     </div>
 
-    <div class="b-is-flex b-is-justify-content-center b-py-2 l-bg-dark">
-      {% render '_navbar-menu', links: section.settings.menu.links %}
+    <div class="l-bg-dark b-py-2" :class="menuOpen ? 'l-nav--open' : ''">
+      <div class="l-nav-menu-wrapper" :class="menuOpen ? '' : 'l-nav-menu--closed'">
+        {% render '_navbar-menu', links: section.settings.menu.links %}
+      </div>
     </div>
   </div>
 </header>
+
 {% style %}
   .l-header-wrapper {
     background-image: linear-gradient(
@@ -62,6 +75,58 @@
       rgba(0, 0, 0, 70%) 80%,
       rgba(0, 0, 0, 55%) 100%
     ) !important;
+    position: relative;
+    overflow: visible;
+  }
+
+  .l-header-top {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+  }
+
+  .l-header-top__logo {
+    flex-shrink: 0;
+  }
+
+  .l-header-top__search {
+    flex: 1;
+  }
+
+  .l-header-top__actions {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .l-burger {
+    display: none;
+  }
+
+  .l-desktop-only {
+    display: flex;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 1023px) {
+    .l-burger {
+      display: flex;
+    }
+
+    .l-desktop-only {
+      display: none;
+    }
+
+    .l-nav-menu--closed {
+      display: none;
+    }
+
+    .l-nav--open .b-navbar-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
   }
 {% endstyle %}
 
