@@ -47,6 +47,21 @@
     "placeholder": "Search articles, pages, or products",
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
-    "results_for_html": "{{ count }} results found for {{ terms }}"
+    "results_for_html": "{{ count }} results found for {{ terms }}",
+    "main": {
+      "label": "Search",
+      "placeholder": "Search products, collections, pages, and articles",
+      "submit": "Search"
+    },
+    "predictive": {
+      "aria_label": "Suggested search results",
+      "queries": "Suggested searches",
+      "products": "Products",
+      "collections": "Collections",
+      "pages": "Pages",
+      "articles": "Articles",
+      "no_results": "No suggestions found",
+      "view_all": "View all results for \"{{ terms }}\""
+    }
   }
 }

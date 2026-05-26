@@ -7,16 +7,44 @@
             {% if settings.logo %}
               <img src="{{ settings.logo | image_url: width: 100 }}" alt="{{ shop.name }}" width="100" height="100">
             {% else %}
-              <img src="https://placehold.net/default.svg" alt="{{ shop.name }}" width="100" height="100">
+              {{ 'image' | placeholder_svg_tag: 'l-header-logo-placeholder' }}
             {% endif %}
           </a>
         </div>
-        <div class="l-header-top__search">
-          <input
-            class="b-input b-is-medium b-is-rounded"
-            type="text"
-            placeholder="Large input"
-          >
+        <div class="l-header-top__search" data-header-search>
+          <form class="l-header-search__form" action="{{ routes.search_url }}" method="get" role="search">
+            <label class="l-header-search__label" for="HeaderSearchInput-{{ section.id }}">
+              {{ 'search.main.label' | t }}
+            </label>
+            <input
+              id="HeaderSearchInput-{{ section.id }}"
+              class="b-input b-is-medium b-is-rounded l-header-search__input"
+              type="search"
+              name="q"
+              value="{{ search.terms | escape }}"
+              placeholder="{{ 'search.main.placeholder' | t }}"
+              autocorrect="off"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+              role="combobox"
+              aria-expanded="false"
+              aria-owns="HeaderPredictiveSearchResults-{{ section.id }}"
+              aria-controls="HeaderPredictiveSearchResults-{{ section.id }}"
+              aria-haspopup="listbox"
+              aria-autocomplete="list"
+              data-header-search-input
+            >
+            <input type="hidden" name="options[prefix]" value="last">
+            <button class="l-header-search__submit" type="submit">{{ 'search.main.submit' | t }}</button>
+          </form>
+          <div
+            id="HeaderPredictiveSearchResults-{{ section.id }}"
+            class="l-header-search__predictive"
+            data-header-search-results
+            data-predictive-search-url="{{ routes.predictive_search_url }}"
+            hidden
+          ></div>
         </div>
         <div class="l-header-top__actions">
           <div class="l-desktop-only">
@@ -90,8 +118,66 @@
     flex-shrink: 0;
   }
 
+  .l-header-logo-placeholder {
+    width: 6.25rem;
+    height: 6.25rem;
+    display: block;
+  }
+
   .l-header-top__search {
     flex: 1;
+    position: relative;
+    z-index: 30;
+  }
+
+  .l-header-search__form {
+    position: relative;
+  }
+
+  .l-header-search__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .l-header-search__input {
+    padding-inline-end: 5.25rem;
+  }
+
+  .l-header-search__submit {
+    position: absolute;
+    top: 50%;
+    right: 0.35rem;
+    transform: translateY(-50%);
+    border: 0;
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    background: #0f172a;
+    color: #fff;
+    font-size: 0.8rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .l-header-search__predictive {
+    position: absolute;
+    top: calc(100% + 0.35rem);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 0.75rem;
+    box-shadow:
+      0 14px 36px rgb(15 23 42 / 18%),
+      0 0 0 1px rgb(148 163 184 / 25%);
+    max-height: min(70vh, 30rem);
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .l-header-top__actions {
@@ -127,8 +213,171 @@
       flex-direction: column;
       align-items: stretch;
     }
+
+    .l-header-search__submit {
+      font-size: 0.75rem;
+      padding-inline: 0.7rem;
+    }
   }
 {% endstyle %}
+
+{% javascript %}
+  (() => {
+    class HeaderGridPredictiveSearch {
+    constructor(container) {
+      this.container = container;
+      this.input = container.querySelector('[data-header-search-input]');
+      this.results = container.querySelector('[data-header-search-results]');
+      this.form = container.querySelector('form');
+      this.predictiveSearchUrl = this.results?.dataset.predictiveSearchUrl;
+      this.abortController = new AbortController();
+      this.onInputChange = this.debounce(this.handleInputChange.bind(this), 250);
+      this.handleDocumentClick = this.onDocumentClick.bind(this);
+
+      if (!this.input || !this.results || !this.form || !this.predictiveSearchUrl) {
+        return;
+      }
+
+      this.input.addEventListener('input', this.onInputChange);
+      this.input.addEventListener('keydown', this.onKeyDown.bind(this));
+      this.input.addEventListener('focus', this.onFocus.bind(this));
+      this.form.addEventListener('submit', this.onFormSubmit.bind(this));
+      this.container.addEventListener('focusout', this.onFocusOut.bind(this));
+      document.addEventListener('click', this.handleDocumentClick);
+    }
+
+    onFormSubmit(event) {
+      if (this.input.value.trim() == '') {
+        event.preventDefault();
+      }
+    }
+
+    onFocus() {
+      if (this.results.innerHTML.trim() != '' && this.input.value.trim() != '') {
+        this.open();
+      }
+    }
+
+    onFocusOut() {
+      requestAnimationFrame(() => {
+        if (!this.container.contains(document.activeElement)) {
+          this.close();
+        }
+      });
+    }
+
+    onDocumentClick(event) {
+      if (!this.container.contains(event.target)) {
+        this.close();
+      }
+    }
+
+    onKeyDown(event) {
+      if (event.key == 'Escape') {
+        this.close();
+        this.input.blur();
+      }
+    }
+
+    handleInputChange() {
+      const searchTerm = this.input.value.trim();
+
+      if (searchTerm == '') {
+        this.results.innerHTML = '';
+        this.close();
+        return;
+      }
+
+      this.getSearchResults(searchTerm);
+    }
+
+    getSearchResults(searchTerm) {
+      this.abortController.abort();
+      this.abortController = new AbortController();
+
+      const params = new URLSearchParams({
+        q: searchTerm,
+        section_id: 'predictive-search'
+      });
+      params.set('resources[options][prefix]', 'last');
+
+      fetch(`${this.predictiveSearchUrl}?${params.toString()}`, {
+        signal: this.abortController.signal
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Predictive search request failed with ${response.status}`);
+          }
+
+          return response.text();
+        })
+        .then((responseText) => {
+          const predictiveSearchElement = new DOMParser()
+            .parseFromString(responseText, 'text/html')
+            .querySelector('#shopify-section-predictive-search');
+
+          if (!predictiveSearchElement) {
+            this.results.innerHTML = '';
+            this.close();
+            return;
+          }
+
+          this.results.innerHTML = predictiveSearchElement.innerHTML;
+          this.open();
+        })
+        .catch((error) => {
+          if (error.name == 'AbortError') {
+            return;
+          }
+
+          this.results.innerHTML = '';
+          this.close();
+        });
+    }
+
+    open() {
+      this.results.hidden = false;
+      this.input.setAttribute('aria-expanded', 'true');
+    }
+
+    close() {
+      this.results.hidden = true;
+      this.input.setAttribute('aria-expanded', 'false');
+    }
+
+    debounce(fn, wait) {
+      let timeout;
+
+      return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn.apply(this, args), wait);
+      };
+    }
+    }
+
+    const initializeHeaderGridPredictiveSearch = (container = document) => {
+      const searchContainers = container.querySelectorAll('[data-header-search]');
+      searchContainers.forEach((searchContainer) => {
+        if (searchContainer.dataset.predictiveSearchInitialized == 'true') {
+          return;
+        }
+
+        searchContainer.dataset.predictiveSearchInitialized = 'true';
+        new HeaderGridPredictiveSearch(searchContainer);
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => initializeHeaderGridPredictiveSearch());
+    } else {
+      initializeHeaderGridPredictiveSearch();
+    }
+
+    document.addEventListener('shopify:section:load', (event) => {
+      initializeHeaderGridPredictiveSearch(event.target);
+    });
+  })();
+{% endjavascript %}
 
 {% schema %}
 {
