@@ -10,38 +10,38 @@
 <div
   class="b-navbar-item b-is-mega b-has-dropdown"
   x-data="{menu_hovered_active:false, is_hidden:false}"
-  x-init="$nextTick(() => { is_hidden = small_screen })"
+  x-init="$nextTick(() => { is_hidden = $store.screen.small })"
   :class="menu_hovered_active ? 'b-is-active' : ''"
-  @mouseover="if (!small_screen) menu_hovered_active = true"
-  @mouseout="if (!small_screen) menu_hovered_active = false"
+  @mouseover="if (!$store.screen.small) menu_hovered_active = true"
+  @mouseout="if (!$store.screen.small) menu_hovered_active = false"
 >
   <div
     class="b-navbar-link b-flex"
-    @click="if (small_screen) is_hidden = !is_hidden"
+    @click="if ($store.screen.small) is_hidden = !is_hidden"
   >
     <h2 class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
       <a class="b-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
     </h2>
   </div>
-  <div class="b-navbar-dropdown l-navbar-background-black" x-show="!is_hidden" x-collapse>
+  <div class="b-navbar-dropdown" x-show="!is_hidden" x-collapse>
     <div class="b-container b-is-fluid l-mega-menu-container ">
       <div class="b-columns">
         {% for child_link in link.links %}
           <div
             class="b-column l-child-column"
             x-data="{ submenu_active:true }"
-            x-init="$nextTick(() => { submenu_active = !small_screen })"
+            x-init="$nextTick(() => { submenu_active = !$store.screen.small })"
           >
             <div
-              class="b-navbar-item l-navbar-background-black l-child-b-navbar-item"
-              @click="if (small_screen) submenu_active = !submenu_active"
+              class="b-navbar-item l-child-b-navbar-item"
+              @click="if ($store.screen.small) submenu_active = !submenu_active"
             >
-              <template x-if="!small_screen">
+              <template x-if="!$store.screen.small">
                 <h2 class="b-title b-is-mega-menu-title b-is-size-4 b-is-size-6-desktop l-child-link-title">
                   <a href="{{ child_link.url }}">{{ child_link.title }}</a>
                 </h2>
               </template>
-              <template x-if="small_screen">
+              <template x-if="$store.screen.small">
                 <p class="b-title b-is-mega-menu-title b-is-size-4 l-child-link-title b-has-text-white">
                   {{ child_link.title }}
                 </p>
@@ -50,7 +50,7 @@
             <div class="l-sub-menu-mega" x-show="submenu_active" x-collapse>
               {% for grandchild_link in child_link.links %}
                 <div
-                  class="b-navbar-item l-navbar-background-black"
+                  class="b-navbar-item"
                   x-data="{ selected: false }"
                   :class="selected ? 'b-is-selected' : ''"
                   @mouseover="selected=true"
@@ -76,7 +76,7 @@
                       <div class="b-media-content">
                         <div class="b-content">
                           <a href="{{ grandchild_link.url }}">
-                            <p class="b-title b-is-size-5 b-has-text-white l-grandchild-link-title">
+                            <p class="b-title b-is-size-5 b-has-text-white">
                               {{ grandchild_link.title }}
                             </p>
                           </a>
@@ -85,7 +85,7 @@
                     </article>
 
                   {% else %}
-                    <p class="b-title b-is-size-5 b-has-text-white l-grandchild-link-title">
+                    <p class="b-title b-is-size-5 b-has-text-white">
                       {{ grandchild_link.title }}
                     </p>
                   {% endif %}

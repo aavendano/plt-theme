@@ -14,11 +14,12 @@
     "header": {
       "type": "header-grid",
       "settings": {
-        "menu": "theme-trade-main-menu-copy"
+        "menu": "main-menu",
+        "customer_account_menu": "customer-account-main-menu"
       }
     }
   },
   "order": [
     "header"
-  ],
+  ]
 }

@@ -2,8 +2,46 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const dirs = ['layout', 'templates', 'sections', 'snippets', 'blocks'];
-const regex = /class=["']([^"']+)["']/gi;
+const staticClassRegex = /class=["']([^"']+)["']/gi;
+const alpineClassRegex = /(?:x-bind)?:class=["']([^"']+)["']/gi;
+const alpineTokenRegex = /'([\w-]+)'/g;
 const classes = new Set();
+
+function isValidClass(cls) {
+  return (
+    cls &&
+    !cls.includes('{{') &&
+    !cls.includes('}}') &&
+    !cls.includes('{%') &&
+    !cls.includes('%}') &&
+    !cls.includes('block.settings.') &&
+    !cls.includes('section.settings.') &&
+    cls !== '?' &&
+    cls !== 'class'
+  );
+}
+
+function extractStaticClasses(content) {
+  let match;
+  while ((match = staticClassRegex.exec(content)) !== null) {
+    for (const cls of match[1].split(/\s+/)) {
+      const clean = cls.trim();
+      if (isValidClass(clean)) classes.add(clean);
+    }
+  }
+}
+
+function extractAlpineClasses(content) {
+  let match;
+  while ((match = alpineClassRegex.exec(content)) !== null) {
+    const expr = match[1];
+    let token;
+    while ((token = alpineTokenRegex.exec(expr)) !== null) {
+      const clean = token[1].trim();
+      if (isValidClass(clean)) classes.add(clean);
+    }
+  }
+}
 
 function processDirectory(dir) {
   if (!fs.existsSync(dir)) return;
@@ -15,28 +53,8 @@ function processDirectory(dir) {
       processDirectory(fullPath);
     } else if (fullPath.endsWith('.liquid')) {
       const content = fs.readFileSync(fullPath, 'utf8');
-      let match;
-      while ((match = regex.exec(content)) !== null) {
-        const classStr = match[1];
-        // Split by whitespace
-        const classNames = classStr.split(/\s+/);
-        for (const cls of classNames) {
-          const cleanCls = cls.trim();
-          if (
-            cleanCls &&
-            !cleanCls.includes('{{') &&
-            !cleanCls.includes('}}') &&
-            !cleanCls.includes('{%') &&
-            !cleanCls.includes('%}') &&
-            !cleanCls.includes('block.settings.') &&
-            !cleanCls.includes('section.settings.') &&
-            cleanCls !== '?' &&
-            cleanCls !== 'class'
-          ) {
-            classes.add(cleanCls);
-          }
-        }
-      }
+      extractStaticClasses(content);
+      extractAlpineClasses(content);
     }
   }
 }
@@ -46,6 +64,8 @@ for (const dir of dirs) {
 }
 
 const safelist = Array.from(classes).sort();
-fs.writeFileSync('purge/theme-safelist.json', JSON.stringify(safelist, null, 2));
+const outputPath = path.join('src', 'purge', 'theme-safelist.json');
+fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+fs.writeFileSync(outputPath, JSON.stringify(safelist, null, 2));
 
-console.log(`[generate-safelist] Extracted ${safelist.length} classes to purge/theme-safelist.json`);
+console.log(`[generate-safelist] Extracted ${safelist.length} classes to ${outputPath}`);

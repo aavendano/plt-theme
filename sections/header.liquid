@@ -4,9 +4,6 @@
     <nav
       class="b-navbar b-is-black b-is-fixed-top l-navbar-custom"
       role="navigation"
-      x-data="{ menuOpen: false, small_screen:false }"
-      x-init="$nextTick(() => { small_screen = window.innerWidth < 1024; menuOpen = !small_screen; })"
-      x-resize="if ($width < 1024) small_screen = true; else small_screen = false;"
     >
       <div class="b-navbar-brand">
         <div class="b-navbar-item l-navbar-logo">
@@ -31,7 +28,7 @@
       </div>
       <div id="navbar-menu" class="b-navbar-menu l-navbar-menu-small-screen" :class="menuOpen ? 'b-is-active' : ''">
         <div class="b-navbar-start">
-          <div class="b-level b-is-mobile" x-cloak x-show="small_screen">
+          <div class="b-level b-is-mobile" x-cloak x-show="$store.screen.small">
             {% if shop.customer_accounts_enabled %}
               <div class="b-level-item">
                 <span class="b-icon-text">
@@ -88,7 +85,7 @@
               </span>
             </div>
           </div>
-          <div class="l-mobile-search" x-cloak x-show="small_screen">
+          <div class="l-mobile-search" x-cloak x-show="$store.screen.small">
             <div class="b-control b-has-icons-left">
               <input class="b-input b-is-medium b-is-primary b-is-rounded" type="text" placeholder="Search">
               <span class="b-icon b-is-medium b-is-left">
@@ -120,20 +117,20 @@
                   </h2>
                 </div>
               {% when 1 %}
-                {% render 'navbar-dropdown', link: link %}
+                {% render '_navbar-dropdown', link: link %}
               {% when 2 %}
-                {% render 'navbar-mega', link: link %}
+                {% render '_navbar-mega', link: link %}
               {% else %}
                 <div class="b-navbar-item b-navbar-item-hover-black">
                   <h2 class="b-title b-is-size-3 b-has-text-white">
-                    <a class="l-navbar-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
+                    <a class="" href="{{ link.url }}">{{- link.title -}}</a>
                   </h2>
                 </div>
             {% endcase %}
           {% endfor %}
         </div>
 
-        <div class="b-navbar-end" x-show="!small_screen">
+        <div class="b-navbar-end" x-show="!$store.screen.small">
           <div class="b-navbar-item">
             <div class="b-control b-has-icons-left">
               <input class="b-input b-is-medium b-is-primary b-is-rounded" type="text" placeholder="Search">
@@ -252,33 +249,8 @@
 
   .l-mega-menu-container {
     width: 100vw !important;
-    
   }
 
-  .wl-navbar-background-black a {
-    color: var(--b-white);
-  }
-
-  .l-navbar-background-black {
-    background-color: var(--b-black) !important;
-    color: var(--b-white) !important;
-  }
-
-  .l-navbar-background-black .b-navbar-item {
-    background-color: var(--b-black) !important;
-    color: var(--b-white) !important;
-  }
-  .l-navbar-background-black .b-navbar-item a {
-    color: var(--b-white) !important;
-  }
-  .l-navbar-background-black .b-navbar-item:hover {
-    background-color: var(--b-grey) !important;
-    color: var(--b-primary) !important;
-  }
-
-  .l-navbar-background-black .b-navbar-item a:hover {
-    color: var(--b-link) !important;
-  }
   .b-navbar-item-hover-black:hover {
     background-color: var(--b-black) !important;
   }
@@ -324,13 +296,7 @@
       left: 0;
       right: 0;
     }
-    .l-grandchild-link-title {
-      margin-top: 0.25rem !important;
-      margin-bottom: 0.25rem !important;
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
-      margin-left: 1.25rem !important;
-    }
+
     .l-child-link-title {
       margin-top: 0.25rem !important;
       margin-bottom: 0.25rem !important;

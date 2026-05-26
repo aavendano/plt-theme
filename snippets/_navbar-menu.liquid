@@ -6,32 +6,27 @@
   @example
   {% render '_navbar-menu', links: section.settings.menu.links %}
 {% enddoc %}
-
-{%- for link in links -%}
-  {% case link.levels %}
-    {% when 0 %}
-      <div class="b-column b-is-narrow">
+<nav class="b-navbar-menu b-mx-auto">
+  {%- for link in links -%}
+    {% case link.levels %}
+      {% when 0 %}
         <div class="b-navbar-item b-navbar-item-hover-black ">
           <h2 class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
             <a class="b-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
           </h2>
         </div>
-      </div>
-    {% when 1 %}
-      <div class="b-column b-is-narrow">
-        {% render 'navbar-dropdown', link: link %}
-      </div>
-    {% when 2 %}
-      <div class="b-column b-is-narrow">
-        {% render 'navbar-mega', link: link %}
-      </div>
-    {% else %}
-      <div class="b-column b-is-narrow">
+      {% when 1 %}
+        {% render '_navbar-dropdown', link: link %}
+
+      {% when 2 %}
+        {% render '_navbar-mega', link: link %}
+
+      {% else %}
         <div class="b-navbar-item b-navbar-item-hover-black">
           <h2 class="b-title b-is-size-3 b-has-text-white">
-            <a class="l-navbar-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
+            <a class="" href="{{ link.url }}">{{- link.title -}}</a>
           </h2>
         </div>
-      </div>
-  {% endcase %}
-{% endfor %}
+    {% endcase %}
+  {% endfor %}
+</nav>

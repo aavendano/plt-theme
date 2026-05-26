@@ -1,78 +1,41 @@
 const purgecssModule = require("@fullhuman/postcss-purgecss");
 const purgecss =
   typeof purgecssModule === "function" ? purgecssModule : purgecssModule.default;
-const cssnano = require("cssnano");
-
-// Require dynamically to ensure we get the latest generated classes
-const fs = require("fs");
-const path = require("path");
-
-let themeSafelist = [];
-try {
-  const safelistPath = path.resolve(__dirname, "purge", "theme-safelist.json");
-  if (fs.existsSync(safelistPath)) {
-    themeSafelist = JSON.parse(fs.readFileSync(safelistPath, "utf8"));
-  }
-} catch (error) {
-  console.warn("[purgecss] Could not load theme-safelist.json", error);
-}
-
-let extractedSafelist = [];
-try {
-  extractedSafelist = require("b-style/src/purge/base-safelist.json");
-} catch (error) {
-  console.warn("[purgecss] Could not load base-safelist.json, using empty safelist");
-}
+const extractedSafelist = require("./src/purge/theme-safelist.json");
 
 const manualSafelist = [
-  /^shopify-.*/,
-  "hidden",
-  "visually-hidden",
-  "visually-hidden--inline",
-  "overflow-hidden",
-  "visibility-hidden",
-  "skip-to-content-link",
-  "active",
-  "current",
-  "selected",
-  "open",
-  "closed",
-  "disabled",
-  "loading",
-  "error",
-  "success",
-  "motion-reduce",
-  "animate-arrow",
-  "focused",
-  "focus-inset",
-  "focus-none",
-  "focus-offset",
-  "page-width",
-  "page-width-desktop",
-  "page-width-tablet",
-  "page-width--narrow",
-  "page-margin",
-  "small-hide",
-  "medium-hide",
-  "large-up-hide",
-  "left",
-  "center",
-  "right",
-  "isolate",
-  "placeholder",
-  "full-width-link",
-  "full-unstyled-link",
-  "field__input",
-  "form__label",
-  "select__select",
+  // Basic HTML elements that might be purged if not explicitly found in liquid templates
+  "html",
+  "body",
+  "p",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "a",
+  "img",
+  "ul",
+  "ol",
+  "li",
+  "blockquote",
+  "table",
+  "tr",
+  "td",
+  "th",
+  "button",
+  "input",
+  "label",
+  "select",
+  "textarea",
 ];
 
 const combinedSafelist = [
-  ...new Set([...(extractedSafelist || []), ...manualSafelist, ...themeSafelist]),
+  ...new Set([...(extractedSafelist || []), ...manualSafelist]),
 ];
 
 module.exports = {
-  map: false,
   plugins: [
     purgecss({
       content: [
@@ -83,15 +46,14 @@ module.exports = {
         "snippets/*.liquid",
         "blocks/*.liquid",
       ],
-      defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
       safelist: {
         standard: combinedSafelist,
-        deep: [
-          /^contains-.*/,
-        ],
+        deep: [/^b-is-active$/, /^b-is-selected$/],
+        greedy: [/^shopify-/],
       },
       variables: true,
+      defaultExtractor: (content) =>
+        content.match(/[\w-/:]+(?<!:)/g) || [],
     }),
-    cssnano({ preset: "default" }),
   ],
 };

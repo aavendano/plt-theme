@@ -1,0 +1,14 @@
+<script>
+  document.addEventListener('alpine:init', () => {
+    Alpine.store('screen', {
+      init() {
+        this.small = window.innerWidth < 1024;
+        window.addEventListener('resize', () => {
+          this.small = window.innerWidth < 1024;
+        });
+      },
+
+      small: true,
+    });
+  });
+</script>
