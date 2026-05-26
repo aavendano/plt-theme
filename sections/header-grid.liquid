@@ -1,0 +1,73 @@
+<header>
+  <div class="l-header-wrapper b-mb-5 ">
+    <nav
+      class=""
+      role="navigation"
+      x-data="{ menuOpen: false, small_screen:false }"
+      x-init="$nextTick(() => { small_screen = window.innerWidth < 1024; menuOpen = !small_screen; })"
+      x-resize="if ($width < 1024) small_screen = true; else small_screen = false;"
+    >
+      <div class="b-container">
+        <div class="b-fixed-grid b-has-4-cols">
+          <div class="b-grid b-my-0">
+            <div class="b-cell b-mx-auto b-my-auto">
+              <a href="{{ routes.root_url }}">
+                <img src="{{ settings.logo | image_url: width: 100 }}" alt="{{ shop.name }}" width="100" height="100">
+              </a>
+            </div>
+            <div class="b-cell b-is-col-span-2 b-py-3">
+              <input
+                class="b-input b-is-medium b-is-rounded"
+                type="text"
+                placeholder="Large input"
+              >
+            </div>
+            <div class="b-cell b-mx-auto b-my-auto">
+              <div class="b-navbar-end">
+                {% render '_navbar-end' %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="b-is-flex b-is-justify-content-center b-py-2 b-has-background-black">
+        <div class="b-columns">
+          {% render '_navbar-menu', links: section.settings.menu.links %}
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+{% style %}
+  .l-header-wrapper {
+    background-image: linear-gradient(
+      115deg,
+      rgba(35, 31, 32, 1) 0%,
+      rgba(83, 50, 120, 1) 50%,
+      rgba(244, 67, 108, 1) 100%
+    ) !important;
+    max-width: 100vw;
+    width: 100%;
+    overflow-x: hidden;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu"
+    },
+    {
+      "type": "link_list",
+      "id": "customer_account_menu",
+      "label": "t:labels.customer_account_menu",
+      "default": "customer-account-main-menu"
+    }
+  ]
+}
+{% endschema %}
