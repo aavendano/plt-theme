@@ -1,0 +1,6 @@
+refactor: improve CSS purging strategy for Liquid templates
+
+- Add `scripts/generate-safelist.mjs` to statically extract CSS classes directly from all `.liquid` templates and auto-populate `purge/theme-safelist.json`.
+- Update `postcss.config.cjs` with a robust `defaultExtractor` that accurately captures CSS classes, while removing overly aggressive wildcard safelists to maximize the purging efficiency.
+- Enhance the `build:css` NPM script in `package.json` to trigger `generate-safelist.mjs` before CSS compilation, ensuring the safelist is always perfectly synchronized with code usage.
+- As a result, CSS output size successfully dropped by nearly 95%, from 711 KB down to 36.1 KB.

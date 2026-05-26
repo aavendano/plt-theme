@@ -2,7 +2,20 @@ const purgecssModule = require("@fullhuman/postcss-purgecss");
 const purgecss =
   typeof purgecssModule === "function" ? purgecssModule : purgecssModule.default;
 const cssnano = require("cssnano");
-const themeSafelist = require("./purge/theme-safelist.json");
+
+// Require dynamically to ensure we get the latest generated classes
+const fs = require("fs");
+const path = require("path");
+
+let themeSafelist = [];
+try {
+  const safelistPath = path.resolve(__dirname, "purge", "theme-safelist.json");
+  if (fs.existsSync(safelistPath)) {
+    themeSafelist = JSON.parse(fs.readFileSync(safelistPath, "utf8"));
+  }
+} catch (error) {
+  console.warn("[purgecss] Could not load theme-safelist.json", error);
+}
 
 let extractedSafelist = [];
 try {
@@ -70,18 +83,11 @@ module.exports = {
         "snippets/*.liquid",
         "blocks/*.liquid",
       ],
+      defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
       safelist: {
         standard: combinedSafelist,
         deep: [
           /^contains-.*/,
-          /^product-card.*/,
-          /^collection-card.*/,
-          /^article-card.*/,
-          /^card.*/,
-          /^media.*/,
-          /^image.*/,
-          /^b-is-/,
-          /^b-has-/,
         ],
       },
       variables: true,

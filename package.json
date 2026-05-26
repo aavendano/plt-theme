@@ -2,7 +2,7 @@
   "scripts": {
     "build:assets": "npm run build:css && npm run build:js",
     "build:bulma": "sass --load-path=node_modules/b-style/src/bulma node_modules/b-style/src/bulma/bulma.scss assets/b-style.source.css",
-    "build:css": "npm run build:bulma && postcss assets/b-style.source.css -o assets/b-style.css",
+    "build:css": "node scripts/generate-safelist.mjs && npm run build:bulma && postcss assets/b-style.source.css -o assets/b-style.css",
     "build:css:report": "node scripts/css-size-report.mjs",
     "build:js": "cp node_modules/b-style/dist/alpine.js assets/b-style-alpine.js",
     "postinstall": "npm run build:assets"
