@@ -11,48 +11,47 @@
             {% endif %}
           </a>
         </div>
+
         <div class="l-header-top__search">
-          <predictive-search class="l-search">
+          <predictive-search>
             <form
               action="{{ routes.search_url }}"
               method="get"
               role="search"
-              class="l-search__form"
+              class="l-search-form"
             >
-              <label class="l-visually-hidden" for="predictive-search-input">
+              <label class="l-sr-only" for="predictive-search-input">
                 {{- 'search.label' | t -}}
               </label>
-              <input
-                id="predictive-search-input"
-                class="l-search__input b-input b-is-medium b-is-rounded"
-                type="search"
-                name="q"
-                autocomplete="off"
-                autocorrect="off"
-                autocapitalize="off"
-                spellcheck="false"
-                placeholder="{{ 'search.placeholder' | t }}"
-                role="combobox"
-                aria-expanded="false"
-                aria-owns="predictive-search-results"
-                aria-controls="predictive-search-results"
-                aria-haspopup="listbox"
-                aria-autocomplete="list"
-                data-predictive-input
-              >
-              <input type="hidden" name="options[prefix]" value="last">
-              <button
-                type="submit"
-                class="l-search__submit"
-                aria-label="{{ 'search.submit' | t }}"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                </svg>
-              </button>
+              <div class="b-control b-has-icons-left b-is-expanded">
+                <input
+                  id="predictive-search-input"
+                  class="b-input b-is-medium b-is-rounded"
+                  type="search"
+                  name="q"
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                  placeholder="{{ 'search.placeholder' | t }}"
+                  role="combobox"
+                  aria-expanded="false"
+                  aria-owns="predictive-search-results"
+                  aria-controls="predictive-search-results"
+                  aria-haspopup="listbox"
+                  aria-autocomplete="list"
+                  data-predictive-input
+                >
+                <input type="hidden" name="options[prefix]" value="last">
+                <span class="b-icon b-is-medium b-is-left" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" focusable="false">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                  </svg>
+                </span>
+              </div>
               <div
                 id="predictive-search-results"
-                class="l-search__results"
+                class="l-predictive-results"
                 data-predictive-results
                 role="listbox"
                 aria-label="{{ 'search.predictive.aria_label' | t }}"
@@ -61,6 +60,7 @@
             </form>
           </predictive-search>
         </div>
+
         <div class="l-header-top__actions">
           <div class="l-desktop-only">
             {% render '_navbar-end' %}
@@ -82,7 +82,7 @@
     </div>
 
     <div class="l-bg-dark b-py-2" :class="menuOpen ? 'l-nav--open' : ''">
-      <div class="l-nav-menu-wrapper" :class="menuOpen ? '' : 'l-nav-menu--closed'">
+      <div :class="menuOpen ? '' : 'l-nav-menu--closed'">
         {% render '_navbar-menu', links: section.settings.menu.links %}
       </div>
     </div>
@@ -122,6 +122,7 @@
     overflow: visible;
   }
 
+  /* Header bar: logo + growing search + actions in a single row */
   .l-header-top {
     display: flex;
     align-items: center;
@@ -138,56 +139,14 @@
     min-width: 0;
   }
 
-  .l-search {
-    display: block;
-    position: relative;
-    width: 100%;
-  }
-
-  .l-search__form {
-    position: relative;
-    width: 100%;
-  }
-
-  .l-search__input {
-    width: 100%;
-    padding-right: 2.75rem;
-  }
-
-  .l-search__submit {
-    position: absolute;
-    inset-block: 0;
-    right: 0.5rem;
+  .l-header-top__actions {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0 0.4rem;
-    color: inherit;
   }
 
-  .l-search__submit:hover {
-    opacity: 0.75;
-  }
-
-  .l-search__results {
-    position: absolute;
-    inset-inline: 0;
-    top: calc(100% + 0.35rem);
-    z-index: 100;
-    background: #fff;
-    border-radius: 0.75rem;
-    box-shadow:
-      0 16px 40px rgba(15, 23, 42, 0.16),
-      0 0 0 1px rgba(148, 163, 184, 0.2);
-    max-height: min(70vh, 480px);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-  }
-
-  .l-visually-hidden {
+  /* Accessibility: visually-hidden label */
+  .l-sr-only {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -199,120 +158,55 @@
     border: 0;
   }
 
-  .predictive-search {
-    padding-block: 0.4rem;
-    color: rgb(15 23 42);
+  /* Anchor context for the predictive dropdown */
+  .l-search-form {
+    position: relative;
   }
 
-  .predictive-group + .predictive-group {
-    border-top: 1px solid rgb(226 232 240);
+  /* Predictive results dropdown – no Bulma equivalent */
+  .l-predictive-results {
+    position: absolute;
+    inset-inline: 0;
+    top: calc(100% + 0.25rem);
+    z-index: 100;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow:
+      0 8px 32px rgba(15, 23, 42, 0.14),
+      0 0 0 1px rgba(148, 163, 184, 0.18);
+    max-height: min(70vh, 480px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
-  .predictive-group__label {
-    padding: 0.45rem 0.9rem 0.2rem;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: rgb(100 116 139);
-    margin: 0;
-  }
-
-  .predictive-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .predictive-item__link {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0.5rem 0.9rem;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .predictive-item__link:hover,
-  .predictive-item__link:focus-visible {
-    outline: none;
-    background: rgb(241 245 249);
-  }
-
-  .predictive-item__image {
-    flex: 0 0 auto;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 0.375rem;
-    object-fit: cover;
-  }
-
-  .predictive-item__text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-    min-width: 0;
-  }
-
-  .predictive-item__title {
-    font-size: 0.875rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .predictive-item__price {
-    font-size: 0.8rem;
-    color: rgb(100 116 139);
-  }
-
-  .predictive-footer {
-    padding: 0.6rem 0.9rem 0.75rem;
-    border-top: 1px solid rgb(226 232 240);
-  }
-
-  .predictive-footer__link {
-    font-size: 0.85rem;
-    color: rgb(15 23 42);
-    text-decoration: underline;
-  }
-
-  .predictive-footer__link:hover {
-    opacity: 0.75;
-  }
-
-  .l-header-top__actions {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-  }
-
-  .l-burger {
+  /* Mobile-first: burger shown, desktop nav hidden */
+  .l-desktop-only {
     display: none;
   }
 
-  .l-desktop-only {
-    display: flex;
-    align-items: center;
+  .l-nav-menu--closed {
+    display: none;
   }
 
-  @media screen and (max-width: 1023px) {
-    .l-burger {
+  .l-nav--open .b-navbar-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Desktop: flip visibility */
+  @media screen and (min-width: 1024px) {
+    .l-desktop-only {
       display: flex;
+      align-items: center;
     }
 
-    .l-desktop-only {
+    .l-burger {
       display: none;
     }
 
     .l-nav-menu--closed {
-      display: none;
-    }
-
-    .l-nav--open .b-navbar-menu {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
+      display: block;
     }
   }
 {% endstyle %}

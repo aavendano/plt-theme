@@ -1,15 +1,15 @@
 {%- if predictive_search.performed -%}
-  <div class="predictive-search">
+  <div class="l-predictive-body">
     {%- if predictive_search.resources.queries.size > 0 -%}
-      <div class="predictive-group">
-        <p class="predictive-group__label" id="ps-queries-label">
+      <div class="l-predictive-group">
+        <p class="b-is-size-7 b-has-text-grey l-predictive-label">
           {{- 'search.predictive.queries' | t -}}
         </p>
-        <ul class="predictive-list" aria-labelledby="ps-queries-label" role="group">
+        <ul role="group">
           {%- for query in predictive_search.resources.queries -%}
-            <li class="predictive-item" role="option">
-              <a class="predictive-item__link" href="{{ query.url }}">
-                <span class="predictive-item__title">{{ query.text }}</span>
+            <li role="option">
+              <a class="b-navbar-item" href="{{ query.url }}">
+                {{- query.text -}}
               </a>
             </li>
           {%- endfor -%}
@@ -18,17 +18,17 @@
     {%- endif -%}
 
     {%- if predictive_search.resources.products.size > 0 -%}
-      <div class="predictive-group">
-        <p class="predictive-group__label" id="ps-products-label">
+      <div class="l-predictive-group">
+        <p class="b-is-size-7 b-has-text-grey l-predictive-label">
           {{- 'search.predictive.products' | t -}}
         </p>
-        <ul class="predictive-list" aria-labelledby="ps-products-label" role="group">
+        <ul role="group">
           {%- for product in predictive_search.resources.products -%}
-            <li class="predictive-item" role="option">
-              <a class="predictive-item__link" href="{{ product.url }}">
+            <li role="option">
+              <a class="b-navbar-item" href="{{ product.url }}">
                 {%- if product.featured_image -%}
                   <img
-                    class="predictive-item__image"
+                    class="l-predictive-img"
                     src="{{ product.featured_image | image_url: width: 80, height: 80, crop: 'center' }}"
                     alt="{{ product.featured_image.alt | escape }}"
                     width="40"
@@ -36,10 +36,10 @@
                     loading="lazy"
                   >
                 {%- endif -%}
-                <span class="predictive-item__text">
-                  <span class="predictive-item__title">{{ product.title }}</span>
+                <span>
+                  <span class="b-is-block b-title b-is-size-6">{{ product.title }}</span>
                   {%- if product.price -%}
-                    <span class="predictive-item__price">{{ product.price | money }}</span>
+                    <span class="b-is-block b-subtitle b-is-size-7">{{ product.price | money }}</span>
                   {%- endif -%}
                 </span>
               </a>
@@ -49,9 +49,9 @@
       </div>
     {%- endif -%}
 
-    <div class="predictive-footer">
+    <div class="l-predictive-footer">
       <a
-        class="predictive-footer__link"
+        class="b-is-size-7"
         href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}&options[prefix]=last"
       >
         {{- 'search.predictive.view_all' | t: terms: predictive_search.terms -}}
@@ -59,6 +59,38 @@
     </div>
   </div>
 {%- endif -%}
+
+{% stylesheet %}
+  .l-predictive-body {
+    padding-block: 0.25rem;
+  }
+
+  .l-predictive-group + .l-predictive-group {
+    border-top: 1px solid var(--b-border, rgb(226 232 240));
+  }
+
+  .l-predictive-label {
+    padding: 0.5rem 0.75rem 0.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .l-predictive-img {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.375rem;
+    object-fit: cover;
+    margin-right: 0.5rem;
+  }
+
+  .l-predictive-footer {
+    padding: 0.6rem 0.75rem;
+    border-top: 1px solid var(--b-border, rgb(226 232 240));
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
