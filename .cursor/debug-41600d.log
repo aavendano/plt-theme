@@ -1,0 +1,14 @@
+{"sessionId":"41600d","location":"predictive-search.liquid:alpine-init","message":"alpine:init fired, checking predictiveSearch global","data":{"typeofFn":"undefined","windowHasFn":"undefined"},"timestamp":1779848973317,"hypothesisId":"A"}
+{"sessionId":"41600d","location":"predictive-search.liquid:alpine-data-registered","message":"Alpine.data predictiveSearch registered","data":{},"timestamp":1779848973317,"runId":"post-fix","hypothesisId":"A"}
+{"sessionId":"41600d","location":"predictive-search.liquid:dom-ready","message":"DOMContentLoaded, checking predictiveSearch global","data":{"typeofFn":"undefined","windowHasFn":"undefined"},"timestamp":1779848973542,"hypothesisId":"A-B"}
+{"sessionId":"41600d","location":"predictive-search.liquid:onInput","message":"onInput called","data":{"term":"le"},"timestamp":1779848981437,"runId":"post-fix","hypothesisId":"C-D"}
+{"sessionId":"41600d","location":"predictive-search.liquid:getResults","message":"getResults called","data":{"term":"le"},"timestamp":1779848981437,"runId":"post-fix","hypothesisId":"C"}
+{"sessionId":"41600d","location":"predictive-search.liquid:fetch-success","message":"results rendered","data":{"htmlLen":1423,"isOpen":true},"timestamp":1779848981859,"runId":"post-fix","hypothesisId":"C"}
+{"sessionId":"41600d","location":"predictive-search.liquid:onInput","message":"onInput called","data":{"term":"lel"},"timestamp":1779848986101,"runId":"post-fix","hypothesisId":"C-D"}
+{"sessionId":"41600d","location":"predictive-search.liquid:getResults","message":"getResults called","data":{"term":"lel"},"timestamp":1779848986101,"runId":"post-fix","hypothesisId":"C"}
+{"sessionId":"41600d","location":"predictive-search.liquid:onInput","message":"onInput called","data":{"term":"lelo"},"timestamp":1779848986451,"runId":"post-fix","hypothesisId":"C-D"}
+{"sessionId":"41600d","location":"predictive-search.liquid:getResults","message":"getResults called","data":{"term":"lelo"},"timestamp":1779848986452,"runId":"post-fix","hypothesisId":"C"}
+{"sessionId":"41600d","location":"predictive-search.liquid:fetch-success","message":"results rendered","data":{"htmlLen":1987,"isOpen":true},"timestamp":1779848986796,"runId":"post-fix","hypothesisId":"C"}
+{"sessionId":"41600d","location":"predictive-search.liquid:alpine-init","message":"alpine:init fired, checking predictiveSearch global","data":{"typeofFn":"undefined","windowHasFn":"undefined"},"timestamp":1779849005648,"hypothesisId":"A"}
+{"sessionId":"41600d","location":"predictive-search.liquid:alpine-data-registered","message":"Alpine.data predictiveSearch registered","data":{},"timestamp":1779849005649,"runId":"post-fix","hypothesisId":"A"}
+{"sessionId":"41600d","location":"predictive-search.liquid:dom-ready","message":"DOMContentLoaded, checking predictiveSearch global","data":{"typeofFn":"undefined","windowHasFn":"undefined"},"timestamp":1779849006789,"hypothesisId":"A-B"}

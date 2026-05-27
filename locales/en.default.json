@@ -51,8 +51,12 @@
     "results_for_html": "{{ count }} results found for {{ terms }}",
     "predictive": {
       "aria_label": "Suggested search results",
+      "loading": "Searching suggestions",
       "queries": "Suggested searches",
       "products": "Products",
+      "collections": "Collections",
+      "pages": "Pages",
+      "results_updated": "Search suggestions updated",
       "view_all": "View all results for \"{{ terms }}\""
     }
   }

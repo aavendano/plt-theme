@@ -8,6 +8,7 @@
     "postinstall": "npm run build:assets"
   },
   "dependencies": {
+    "@shopify/theme-check-common": "^3.26.0",
     "b-style": "github:aavendano/b-style"
   },
   "devDependencies": {

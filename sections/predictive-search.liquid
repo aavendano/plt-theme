@@ -49,6 +49,40 @@
       </div>
     {%- endif -%}
 
+    {%- if predictive_search.resources.collections.size > 0 -%}
+      <div class="l-predictive-group">
+        <p class="b-is-size-7 b-has-text-grey l-predictive-label">
+          {{- 'search.predictive.collections' | t -}}
+        </p>
+        <ul role="group">
+          {%- for collection in predictive_search.resources.collections -%}
+            <li role="option">
+              <a class="b-navbar-item" href="{{ collection.url }}">
+                {{- collection.title -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.pages.size > 0 -%}
+      <div class="l-predictive-group">
+        <p class="b-is-size-7 b-has-text-grey l-predictive-label">
+          {{- 'search.predictive.pages' | t -}}
+        </p>
+        <ul role="group">
+          {%- for page in predictive_search.resources.pages -%}
+            <li role="option">
+              <a class="b-navbar-item" href="{{ page.url }}">
+                {{- page.title -}}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
     <div class="l-predictive-footer">
       <a
         class="b-is-size-7"
