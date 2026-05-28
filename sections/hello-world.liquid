@@ -1,12 +1,15 @@
-
-<section class="b-hero b-is-primary">
+<section class="b-hero b-is-primary" x-data>
   <div class="b-hero-body">
     <p class="b-title">Primary hero</p>
     <p class="b-subtitle">Primary subtitle</p>
-    <p class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">Small screen: <span x-text="$store.screen.small"></span></p>
+    <p class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
+      Small screen: <span x-text="$store.screenSize.small"></span>
+    </p>
+    <p>
+      <button @click="$store.modal.toggle()" class="b-button b-is-link">Toggle Modal</button>
+    </p>
   </div>
 </section>
-
 
 {% schema %}
 {

@@ -11,12 +11,12 @@
   class="b-navbar-item b-is-mega b-has-dropdown"
   x-data="{ menu_hovered_active: false }"
   :class="menu_hovered_active ? 'b-is-active' : ''"
-  @mouseenter="if (!$store.screen.small) menu_hovered_active = true"
-  @mouseleave="if (!$store.screen.small) menu_hovered_active = false"
+  @mouseenter="if (!$store.screenSize.small) menu_hovered_active = true"
+  @mouseleave="if (!$store.screenSize.small) menu_hovered_active = false"
 >
   <div
     class="b-navbar-link b-flex"
-    @click="if ($store.screen.small) menu_hovered_active = !menu_hovered_active"
+    @click="if ($store.screenSize.small) menu_hovered_active = !menu_hovered_active"
   >
     <h2 class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
       <a class="b-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
@@ -29,18 +29,18 @@
           <div
             class="b-column l-child-column"
             x-data="{ submenu_active:true }"
-            x-init="$nextTick(() => { submenu_active = !$store.screen.small })"
+            x-init="$nextTick(() => { submenu_active = !$store.screenSize.small })"
           >
             <div
               class="b-navbar-item l-child-b-navbar-item"
-              @click="if ($store.screen.small) submenu_active = !submenu_active"
+              @click="if ($store.screenSize.small) submenu_active = !submenu_active"
             >
-              <template x-if="!$store.screen.small">
+              <template x-if="!$store.screenSize.small">
                 <h2 class="b-title b-is-mega-menu-title b-is-size-4 b-is-size-6-desktop l-child-link-title">
                   <a href="{{ child_link.url }}">{{ child_link.title }}</a>
                 </h2>
               </template>
-              <template x-if="$store.screen.small">
+              <template x-if="$store.screenSize.small">
                 <p class="b-title b-is-mega-menu-title b-is-size-4 l-child-link-title b-has-text-white">
                   {{ child_link.title }}
                 </p>

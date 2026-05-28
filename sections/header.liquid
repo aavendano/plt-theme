@@ -28,7 +28,7 @@
       </div>
       <div id="navbar-menu" class="b-navbar-menu l-navbar-menu-small-screen" :class="menuOpen ? 'b-is-active' : ''">
         <div class="b-navbar-start">
-          <div class="b-level b-is-mobile" x-cloak x-show="$store.screen.small">
+          <div class="b-level b-is-mobile" x-cloak x-show="$store.screenSize.small">
             {% if shop.customer_accounts_enabled %}
               <div class="b-level-item">
                 <span class="b-icon-text">
@@ -85,7 +85,7 @@
               </span>
             </div>
           </div>
-          <div class="l-mobile-search" x-cloak x-show="$store.screen.small">
+          <div class="l-mobile-search" x-cloak x-show="$store.screenSize.small">
             <div class="b-control b-has-icons-left">
               <input class="b-input b-is-medium b-is-primary b-is-rounded" type="text" placeholder="Search">
               <span class="b-icon b-is-medium b-is-left">
@@ -130,7 +130,7 @@
           {% endfor %}
         </div>
 
-        <div class="b-navbar-end" x-show="!$store.screen.small">
+        <div class="b-navbar-end" x-show="!$store.screenSize.small">
           <div class="b-navbar-item">
             <div class="b-control b-has-icons-left">
               <input class="b-input b-is-medium b-is-primary b-is-rounded" type="text" placeholder="Search">

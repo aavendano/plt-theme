@@ -25,12 +25,14 @@
     {% endunless %}
 
     {% # Social, title, etc. %}
-    {% render 'meta-tags' %}
-
+    {% render '_theme-meta-tags' %}
+    {% render '_theme-meta-robots' %}
     {{ content_for_header }}
   </head>
 
   <body>
+    {% render '_theme-screen-size-js' %}
+    {% render '_theme-modal-js' %}
     <shopify-store
       store-domain="https://{{ shop.permanent_domain }}"
       country="{{ localization.country.iso_code }}"
@@ -46,7 +48,6 @@
     </div>
 
     {% sections 'footer-group' %}
-
-    {% render 'script-alpine-store' %}
+    {% render '_theme-modal' %}
   </body>
 </html>

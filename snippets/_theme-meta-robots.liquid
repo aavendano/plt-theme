@@ -1,0 +1,24 @@
+{% doc %}
+  Renders a robots meta tag.
+
+  Adds noindex,follow on:
+  - Paginated listing pages (page > 1), como colecciones, blog y búsqueda.
+  - Todas las páginas de búsqueda (request.page_type == 'search').
+
+  @example
+  {% render 'meta-robots' %}
+{% enddoc %}
+
+{% liquid
+  assign should_noindex = false
+
+  if request.page_type == 'search'
+    assign should_noindex = true
+  elsif current_page and current_page > 1
+    assign should_noindex = true
+  endif
+%}
+
+{% if should_noindex %}
+  <meta name="robots" content="noindex,follow">
+{% endif %}

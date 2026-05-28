@@ -10,7 +10,7 @@
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
 
     {% # Social, title, etc. %}
-    {% render 'meta-tags' %}
+    {% render '_theme-meta-tags' %}
 
     {% style %}
       main {

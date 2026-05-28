@@ -11,14 +11,14 @@
   class="b-navbar-item b-has-dropdown"
   x-data="{ dropdownOpen: false }"
   :class="dropdownOpen ? 'b-is-active' : ''"
-  @mouseenter="if (!$store.screen.small) dropdownOpen = true"
-  @mouseleave="if (!$store.screen.small) dropdownOpen = false"
+  @mouseenter="if (!$store.screenSize.small) dropdownOpen = true"
+  @mouseleave="if (!$store.screenSize.small) dropdownOpen = false"
   :aria-expanded="dropdownOpen"
 >
   <a
     class="b-navbar-link"
     href="{{ link.url }}"
-    @click.prevent="if ($store.screen.small) dropdownOpen = !dropdownOpen"
+    @click.prevent="if ($store.screenSize.small) dropdownOpen = !dropdownOpen"
   >
     <h2 class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
       {{- link.title -}}
