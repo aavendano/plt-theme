@@ -18,38 +18,48 @@
     class="b-navbar-link b-flex"
     @click="if ($store.screenSize.small) menu_hovered_active = !menu_hovered_active"
   >
-    <h2 class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
+    <p class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
       <a class="b-has-text-white" href="{{ link.url }}">{{- link.title -}}</a>
-    </h2>
+    </p>
   </div>
-  <div class="b-navbar-dropdown">
-    <div class="b-container b-is-fluid l-mega-menu-container ">
-      <div class="b-columns">
+  <div
+    class="b-navbar-dropdown l-mega-menu-container"
+    :class="!$store.screenSize.small ? 'l-overlay-background-color' : ''"
+  >
+    <div class="b-container b-is-fluid">
+      <div class="b-columns b-is-0-desktop">
+        {% assign child_link_total = link.links | size %}
+        {% assign child_link_column_width = 100 | divided_by: child_link_total %}
         {% for child_link in link.links %}
           <div
             class="b-column l-child-column"
             x-data="{ submenu_active:true }"
             x-init="$nextTick(() => { submenu_active = !$store.screenSize.small })"
+            :style="!$store.screenSize.small ? `width: ${child_link_column_width}%` : ''"
           >
             <div
               class="b-navbar-item l-child-b-navbar-item"
               @click="if ($store.screenSize.small) submenu_active = !submenu_active"
             >
               <template x-if="!$store.screenSize.small">
-                <h2 class="b-title b-is-mega-menu-title b-is-size-4 b-is-size-6-desktop l-child-link-title">
-                  <a href="{{ child_link.url }}">{{ child_link.title }}</a>
-                </h2>
+                <a href="{{ child_link.url }}">
+                  <p class="b-title b-is-mega-menu-title b-is-size-3 l-child-link-title b-has-text-primary-light b-my-4">
+                    {{ child_link.title }}
+                  </p>
+                </a>
               </template>
-              <template x-if="$store.screenSize.small">
-                <p class="b-title b-is-mega-menu-title b-is-size-4 l-child-link-title b-has-text-white">
-                  {{ child_link.title }}
-                </p>
-              </template>
+
+              <p
+                class="b-title b-is-mega-menu-title b-is-size-4 l-child-link-title b-has-text-primary-light"
+                x-show="$store.screenSize.small"
+              >
+                {{ child_link.title }}
+              </p>
             </div>
             <div class="l-sub-menu-mega" x-show="submenu_active" x-collapse>
               {% for grandchild_link in child_link.links %}
                 <div
-                  class="b-navbar-item"
+                  class="b-navbar-item l-mega-menu-grandchild-link"
                   x-data="{ selected: false }"
                   :class="selected ? 'b-is-selected' : ''"
                   @mouseover="selected=true"
@@ -57,31 +67,38 @@
                 >
                   {% if grandchild_link.type == 'collection_link' and grandchild_link.object %}
                     {% assign collection = grandchild_link.object %}
-                    <article class="b-media">
-                      {% if collection.image %}
-                        <div class="b-media-left">
-                          <figure class="b-image l-image-mega-menu-figure">
-                            <img
-                              src="{{ collection.image | image_url: width: 120 }}"
-                              width="120"
-                              height="120"
-                              alt="image-{{ collection.title }}"
-                            >
-                          </figure>
-                        </div>
-                      {% else %}
-
-                      {% endif %}
-                      <div class="b-media-content">
-                        <div class="b-content">
-                          <a href="{{ grandchild_link.url }}">
-                            <p class="b-title b-is-size-5 b-has-text-white">
+                    <a href="{{ grandchild_link.url }}">
+                      <div class="b-media b-my-auto l-mega-menu-grandchild-link  b-ml-0-desktop">
+                        {% if collection.image %}
+                          <template
+                            x-data="{ showImage: false }"
+                            x-init="$nextTick(() => { showImage = true })"
+                            x-if="showImage"
+                          >
+                            <div class="b-media-left">
+                              <figure class="b-image l-image-mega-menu-figure b-is-clipped">
+                                <img
+                                  x-data="{ imageLoaded: false }"
+                                  src="{{ collection.image | image_url: width: 120 }}"
+                                  width="120"
+                                  height="120"
+                                  alt="image-{{ collection.title }}"
+                                  @load="imageLoaded = true"
+                                  :class="!imageLoaded ? 'b-is-skeleton' : ''"
+                                >
+                              </figure>
+                            </div>
+                          </template>
+                        {% endif %}
+                        <div class="b-media-content">
+                          <div class="b-content">
+                            <p class="b-is-size-5 b-is-size-6-desktop b-has-text-link-light l-mega-menu-grandchild-link-title">
                               {{ grandchild_link.title }}
                             </p>
-                          </a>
+                          </div>
                         </div>
                       </div>
-                    </article>
+                    </a>
 
                   {% else %}
                     <p class="b-title b-is-size-5 b-has-text-white">
@@ -99,6 +116,14 @@
 </div>
 
 {% stylesheet %}
+  .l-sub-menu-mega .b-navbar-item {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .l-mega-menu-grandchild-link-title {
+    text-wrap-mode: wrap;
+  }
+
   .b-navbar-item.b-is-mega.b-has-dropdown {
     position: static;
   }
@@ -110,7 +135,6 @@
     width: 100%;
     z-index: 20;
     display: none;
-    background-color: hsl(0, 0%, 4%);
   }
 
   .b-navbar-item.b-is-mega.b-is-active .b-navbar-dropdown {
@@ -122,9 +146,10 @@
   }
 
   .l-image-mega-menu-figure {
-    width: 4rem;
-    height: 4rem;
-    background-color: var(--b-white);
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: var(--b-grey-light);
+    border-radius: 0.5rem;
   }
 
   .l-image-mega-menu-figure img {
@@ -136,6 +161,9 @@
   }
 
   @media screen and (max-width: 1023px) {
+    .l-mega-menu-grandchild-link {
+      margin-left: 2rem;
+    }
     .b-navbar-item.b-is-mega .b-navbar-dropdown {
       position: static;
       width: 100%;
@@ -152,8 +180,8 @@
     }
 
     .l-child-link-title {
-      margin-top: 0.25rem;
-      margin-bottom: 0.25rem;
+      margin-top: 0.15rem;
+      margin-bottom: 0.15rem;
     }
     .l-child-b-navbar-item {
       margin-top: 0.25rem;

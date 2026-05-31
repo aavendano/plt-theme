@@ -6,8 +6,9 @@
   @example
   {% render '_navbar-menu', links: section.settings.menu.links %}
 {% enddoc %}
-
-<nav class="b-navbar-menu b-mx-auto b-is-justify-content-center">
+<nav
+  class="b-navbar-menu b-mx-auto b-is-justify-content-center"
+>
   {%- for link in links -%}
     {% case link.levels %}
       {% when 0 %}

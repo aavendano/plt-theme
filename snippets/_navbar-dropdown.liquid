@@ -20,14 +20,16 @@
     href="{{ link.url }}"
     @click.prevent="if ($store.screenSize.small) dropdownOpen = !dropdownOpen"
   >
-    <h2 class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
+    <p class="b-title b-is-size-3 b-is-size-6-desktop b-has-text-white">
       {{- link.title -}}
-    </h2>
+    </p>
   </a>
-  <div class="b-navbar-dropdown">
+  <div class="b-navbar-dropdown" :class="!$store.screenSize.small ? 'l-overlay-background-color' : ''">
     {% for child_link in link.links %}
-      <a class="b-navbar-item" href="{{ child_link.url }}">
-        {{ child_link.title }}
+      <a class="b-navbar-item b-has-text-white" href="{{ child_link.url }}">
+        <p class="b-title b-is-size-4 b-is-size-5-desktop b-has-text-white b-ml-2">
+          {{ child_link.title }}
+        </p>
       </a>
     {% endfor %}
   </div>
@@ -39,15 +41,12 @@
   }
 
   .b-navbar-dropdown {
-    background-color: hsl(0, 0%, 4%);
     position: absolute;
     top: 100%;
     left: 0;
     min-width: 100%;
     z-index: 20;
     display: none;
-    border-radius: 0 0 6px 6px;
-    box-shadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.1);
   }
 
   .b-navbar-item.b-is-active .b-navbar-dropdown {
@@ -56,14 +55,12 @@
 
   .b-navbar-dropdown .b-navbar-item {
     color: hsl(0, 0%, 100%);
-    background-color: hsl(0, 0%, 4%);
     padding: 0.375rem 1rem;
     white-space: nowrap;
     display: block;
   }
 
   .b-navbar-dropdown .b-navbar-item:hover {
-    background-color: hsl(0, 0%, 14%);
     color: hsl(0, 0%, 100%);
   }
 
