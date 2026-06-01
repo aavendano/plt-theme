@@ -126,5 +126,35 @@
         "default": "0000"
       }
     ]
+  },
+  {
+    "name": "t:settings_schema.hreflang.name",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "hreflang_enabled",
+        "label": "t:settings_schema.hreflang.settings.enabled.label",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "hreflang_append_path",
+        "label": "t:settings_schema.hreflang.settings.append_path.label",
+        "info": "t:settings_schema.hreflang.settings.append_path.info",
+        "default": true
+      },
+      {
+        "type": "textarea",
+        "id": "hreflang_alternates",
+        "label": "t:settings_schema.hreflang.settings.alternates.label",
+        "info": "t:settings_schema.hreflang.settings.alternates.info",
+        "placeholder": "t:settings_schema.hreflang.settings.alternates.placeholder",
+        "default": "x-default|https://playlovetoys.com\nen-CA|https://playlovetoys.ca\nfr-CA|https://playlovetoys.ca/fr\nen-US|https://playlovetoys.com\nes-US|https://playlovetoys.com/es"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:settings_schema.hreflang.settings.duplicates.info"
+      }
+    ]
   }
 ]

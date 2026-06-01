@@ -74,6 +74,28 @@
       "title": "Title",
       "subtitle": "Subtitle",
       "normal": "Normal text"
-    },
+    }
+  },
+  "settings_schema": {
+    "hreflang": {
+      "name": "Hreflang (SEO)",
+      "settings": {
+        "enabled": {
+          "label": "Enable custom hreflang tags"
+        },
+        "append_path": {
+          "label": "Append current page path to each base URL",
+          "info": "Uses request.path so product and collection URLs stay aligned across locales (for example /products/handle)."
+        },
+        "alternates": {
+          "label": "Alternate locales",
+          "info": "One entry per line: hreflang code, pipe, base URL. Lines starting with # are ignored.",
+          "placeholder": "x-default|https://example.com\nen-CA|https://example.ca"
+        },
+        "duplicates": {
+          "info": "Shopify may also output hreflang tags via Markets. Review page source to avoid duplicate or conflicting tags."
+        }
+      }
+    }
   }
 }

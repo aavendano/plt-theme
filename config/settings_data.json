@@ -12,6 +12,7 @@
     "logo": "{{ shop.brand.logo }}",
     "logo_width": 130,
     "favicon": "shopify://shop_images/favicon-playlovetoys-32x32.png",
+    "hreflang_enabled": true,
     "content_for_index": []
   }
 }
