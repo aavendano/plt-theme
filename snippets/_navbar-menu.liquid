@@ -7,13 +7,12 @@
   {% render '_navbar-menu', links: section.settings.menu.links %}
 {% enddoc %}
 
-<div class="l-small-screen-only">
-  {% render '_navbar-end' %}
-</div>
-
 <nav
   class="b-navbar-menu b-mx-auto b-is-justify-content-center"
 >
+  <div class="l-small-screen-only">
+    {% render '_navbar-end' %}
+  </div>
   {%- for link in links -%}
     {% case link.levels %}
       {% when 0 %}
