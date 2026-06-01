@@ -2,9 +2,9 @@
   document.addEventListener('alpine:init', () => {
     Alpine.store('screenSize', {
       init() {
-        this.small = window.innerWidth < 1024;
+        this.small = window.innerWidth < 1152;
         window.addEventListener('resize', () => {
-          this.small = window.innerWidth < 1024;
+          this.small = window.innerWidth < 1152;
         });
       },
 

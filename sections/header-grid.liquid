@@ -158,8 +158,19 @@
     object-fit: contain;
   }
 
+  @media screen and (max-width: 1151px) {
+    .l-predictive-results {
+      position: fixed;
+      inset-inline: 0;
+      width: auto;
+      top: var(--predictive-results-top, 0);
+      border-radius: 0;
+      max-height: min(70vh, calc(100dvh - var(--predictive-results-top, 0px) - env(safe-area-inset-bottom, 0px)));
+    }
+  }
+
   /* Desktop: flip visibility */
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1152px) {
     .l-desktop-only {
       display: flex;
       align-items: center;

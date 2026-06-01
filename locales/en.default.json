@@ -37,6 +37,11 @@
     "expires_on": "Expires on {{ expires_on }}",
     "use_at_checkout": "Use this gift card at checkout"
   },
+  "general": {
+    "accessibility": {
+      "account": "Account"
+    }
+  },
   "password": {
     "title": "This shop is private",
     "password": "Password",

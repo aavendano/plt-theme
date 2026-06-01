@@ -12,6 +12,12 @@ $plt-gray-dark: hsl(108, 6%, 34%);
 $plt-family-primary: '"Roboto Condensed", "Inter", "SF Pro", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", "Helvetica", "Arial", sans-serif';
 $plt-family-secondary: '"Inter", "SF Pro", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", "Helvetica", "Arial", sans-serif';
 $plt-image-dimensions: 75 100 150 320 400 460 520;
+$plt-tablet: 768px;
+$plt-desktop: 1152px;
+$plt-widescreen: 1536px;
+$plt-fullhd: 1920px;
+
+
 
 // Override global Sass variables from the /utilities folder
 @use "sass/utilities/initial-variables" with (
@@ -28,8 +34,10 @@ $plt-image-dimensions: 75 100 150 320 400 460 520;
     $family-sans-serif-secondary: $plt-family-secondary,
     $dimensions: $plt-image-dimensions,
     $section-padding: 3rem .25rem,
-    $dropdown-content-background-color
-
+    $tablet: $plt-tablet,
+    $desktop: $plt-desktop,
+    $widescreen: $plt-widescreen,
+    $fullhd: $plt-fullhd,
 );
 
 @forward "sass/utilities/functions";

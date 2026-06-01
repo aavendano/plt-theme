@@ -1,38 +1,39 @@
-<div class="b-navbar-item ">
-  <span class="b-icon-text">
+<div class="b-level b-is-mobile">
+  <div class="b-level-item b-has-text-centered">
     {% if shop.customer_accounts_enabled %}
       <shopify-account menu="{{ section.settings.customer_account_menu }}">
-        <div slot="signed-out-avatar">
-          <span class="b-icon b-has-text-white">
-            <i alt="{{ 'general.accessibility.account' | t }}">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-              </svg>
-            </i>
-          </span>
+        <div
+          slot="signed-out-avatar"
+          class="b-icon b-has-text-white"
+          role="button"
+          aria-label="{{ 'general.accessibility.account' | t }}"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <title>{{ 'general.accessibility.account' | t }}</title>
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
         </div>
       </shopify-account>
     {% endif %}
-  </span>
-</div>
-<div class="b-navbar-item">
-  <a href="{{ routes.cart_url }}">
-    <span class="b-icon-text">
-      {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
-      {% endif %}
-      <span class="b-icon b-has-text-white">
+  </div>
+
+  <div class="b-level-item b-has-text-centered">
+    <button class="b-button b-is-ghost" href="{{ routes.cart_url }}">
+      <span
+        class="b-icon b-has-text-white b-my-auto b-is-medium"
+        role="button"
+      >
         <i>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +49,10 @@
             <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
           </svg>
         </i>
+        {% if cart.item_count > 0 %}
+          <sup>x{{ cart.item_count }}</sup>
+        {% endif %}
       </span>
-    </span>
-  </a>
+    </button>
+  </div>
 </div>

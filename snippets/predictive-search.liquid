@@ -61,8 +61,15 @@
             });
         },
 
+        syncDropdownPosition() {
+          if (!this.isOpen || !this.$refs.input || !this.$refs.results) return;
+          const rect = this.$refs.input.getBoundingClientRect();
+          this.$refs.results.style.setProperty('--predictive-results-top', `${rect.bottom + 4}px`);
+        },
+
         open() {
           this.isOpen = true;
+          this.$nextTick(() => this.syncDropdownPosition());
         },
 
         close() {
@@ -71,7 +78,12 @@
       }));
     });
   </script>
-  <div x-data="predictiveSearch" @click.outside="close()">
+  <div
+    x-data="predictiveSearch"
+    @click.outside="close()"
+    @resize.window="if (isOpen) syncDropdownPosition()"
+    @scroll.window="if (isOpen) syncDropdownPosition()"
+  >
     <form
       action="{{ routes.search_url }}"
       method="get"

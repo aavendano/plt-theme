@@ -6,6 +6,11 @@
   @example
   {% render '_navbar-menu', links: section.settings.menu.links %}
 {% enddoc %}
+
+<div class="l-small-screen-only">
+  {% render '_navbar-end' %}
+</div>
+
 <nav
   class="b-navbar-menu b-mx-auto b-is-justify-content-center"
 >
@@ -32,3 +37,15 @@
     {% endcase %}
   {% endfor %}
 </nav>
+
+{% stylesheet %}
+  .l-small-screen-only {
+    display: none;
+  }
+
+  @media screen and (max-width: 1151px) {
+    .l-small-screen-only {
+      display: block;
+    }
+  }
+{% endstylesheet %}

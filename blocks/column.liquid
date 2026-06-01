@@ -1,0 +1,14 @@
+<div class="b-column">
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "t:general.column",
+  "tag": "div",
+  "class": "c-wrapper",
+  "blocks": [{ "type": "@theme" }, { "type": "@app" }],
+  "settings": [],
+  "presets": [{ "name": "t:general.column" }]
+}
+{% endschema %}

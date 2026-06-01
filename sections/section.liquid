@@ -1,0 +1,25 @@
+{{ section.shopify_attributes }}
+<div class="b-container b-is-fullhd">
+  {% render 'section-heading', title: section.settings.title, subtitle: section.settings.subtitle %}
+  {% for block in section.blocks %}
+    {% render block %}
+  {% endfor %}
+</div>
+{% schema %}
+{
+  "name": "t:general.section",
+  "tag": "section",
+  "class": "b-section",
+  "blocks": [{ "type": "@theme" }, { "type": "@app" }],
+  "settings": [
+    { "type": "header", "content": "Section's Title" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Section's Title" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Section's Subtitle" }
+  ],
+  "presets": [
+    {
+      "name": "Section"
+    }
+  ]
+}
+{% endschema %}
