@@ -18,22 +18,30 @@
       assign subfolder = ''
       assign handle_url = ''
     when 'product'
-      assign subfolder = '/products/'
+      assign subfolder = 'products/'
       assign handle_url = product.handle
     when 'collection'
-      assign subfolder = '/collections/'
+      assign subfolder = 'collections/'
       assign handle_url = collection.handle
     when 'blog'
-      assign subfolder = '/blogs/'
+      assign subfolder = 'blogs/'
       assign handle_url = blog.handle
     when 'article'
-      assign subfolder = '/blogs/'
+      assign subfolder = 'blogs/'
       assign handle_url = article.handle
     when 'page'
-      assign subfolder = '/pages/'
+      assign subfolder = 'pages/'
       assign handle_url = page.handle
+    when 'metaobject'
+      if metaobject.system.type == 'location_page'
+        assign subfolder = 'canada-location/'
+        assign handle_url = metaobject.system.handle
+      elsif metaobject.system.type == 'region'
+        assign subfolder = 'canada/'
+        assign handle_url = metaobject.system.handle
+      endif
     when 'search'
-      assign subfolder = '/search'
+      assign subfolder = 'search'
       assign handle_url = ''
   endcase
 %}
@@ -41,25 +49,25 @@
 <link
   rel="alternate"
   hreflang="x-default"
-  href="https://playlovetoys.com{{- subfolder -}}{{- handle_url }}"
+  href="https://playlovetoys.com/{{- subfolder -}}{{- handle_url }}"
 >
 <link
   rel="alternate"
   hreflang="en-US"
-  href="https://playlovetoys.com{{ subfolder }}{{- handle_url }}"
+  href="https://playlovetoys.com/{{ subfolder }}{{- handle_url }}"
 >
 <link
   rel="alternate"
   hreflang="es-US"
-  href="https://playlovetoys.com/es{{- subfolder -}}{{- handle_url }}"
+  href="https://playlovetoys.com/es/{{- subfolder -}}{{- handle_url }}"
 >
 <link
   rel="alternate"
   hreflang="en-CA"
-  href="https://playlovetoys.ca{{- subfolder -}}{{- handle_url }}"
+  href="https://playlovetoys.ca/{{- subfolder -}}{{- handle_url }}"
 >
 <link
   rel="alternate"
   hreflang="fr-CA"
-  href="https://playlovetoys.ca/fr{{- subfolder -}}{{- handle_url }}"
+  href="https://playlovetoys.ca/fr/{{- subfolder -}}{{- handle_url }}"
 >
