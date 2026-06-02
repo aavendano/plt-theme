@@ -8,61 +8,58 @@
   {% render '_theme-hreflang' %}
 {% enddoc %}
 
-{%- if settings.hreflang_enabled and settings.hreflang_alternates != blank -%}
-  {%- liquid
-    assign path_suffix = ''
-    if settings.hreflang_append_path and request.path != blank
-      assign path_suffix = request.path
-    endif
+{% liquid
+  assign page_type = request.page_type
+  assign subfolder = ''
+  assign handle_url = ''
 
-    assign alternate_lines = settings.hreflang_alternates | strip | newline_to_br | split: '<br />'
-  -%}
+  case page_type
+    when 'index'
+      assign subfolder = ''
+      assign handle_url = ''
+    when 'product'
+      assign subfolder = '/products/'
+      assign handle_url = product.handle
+    when 'collection'
+      assign subfolder = '/collections/'
+      assign handle_url = collection.handle
+    when 'blog'
+      assign subfolder = '/blogs/'
+      assign handle_url = blog.handle
+    when 'article'
+      assign subfolder = '/blogs/'
+      assign handle_url = article.handle
+    when 'page'
+      assign subfolder = '/pages/'
+      assign handle_url = page.handle
+    when 'search'
+      assign subfolder = '/search'
+      assign handle_url = ''
+  endcase
+%}
 
-  {%- for line in alternate_lines -%}
-    {%- liquid
-      assign line_stripped = line | strip
-      if line_stripped == blank
-        continue
-      endif
-
-      assign first_char = line_stripped | slice: 0, 1
-      if first_char == '#'
-        continue
-      endif
-
-      assign pipe_parts = line_stripped | split: '|'
-      if pipe_parts.size < 2
-        continue
-      endif
-
-      assign hreflang_code = pipe_parts[0] | strip
-      assign base_url = pipe_parts[1] | strip
-
-      if hreflang_code == blank or base_url == blank
-        continue
-      endif
-
-      unless base_url contains 'http://'
-        unless base_url contains 'https://'
-          continue
-        endunless
-      endunless
-
-      assign base_last = base_url | slice: -1, 1
-      if base_last == '/'
-        assign base_len = base_url.size | minus: 1
-        assign base_url = base_url | slice: 0, base_len
-      endif
-
-      assign alternate_href = base_url | append: path_suffix
-      assign alternate_href = alternate_href | replace: '://', '::SCHEME::'
-      assign alternate_href = alternate_href | replace: '//', '/'
-      assign alternate_href = alternate_href | replace: '::SCHEME::', '://'
-    -%}
-    <link
-      rel="alternate"
-      hreflang="{{ hreflang_code | escape }}"
-      href="{{ alternate_href | escape }}"
-    >
-  {%- endfor -%}
-{%- endif -%}
+<link
+  rel="alternate"
+  hreflang="x-default"
+  href="https://playlovetoys.com{{- subfolder -}}{{- handle_url }}"
+>
+<link
+  rel="alternate"
+  hreflang="en-US"
+  href="https://playlovetoys.com{{ subfolder }}{{- handle_url }}"
+>
+<link
+  rel="alternate"
+  hreflang="es-US"
+  href="https://playlovetoys.com/es{{- subfolder -}}{{- handle_url }}"
+>
+<link
+  rel="alternate"
+  hreflang="en-CA"
+  href="https://playlovetoys.ca{{- subfolder -}}{{- handle_url }}"
+>
+<link
+  rel="alternate"
+  hreflang="fr-CA"
+  href="https://playlovetoys.ca/fr{{- subfolder -}}{{- handle_url }}"
+>
