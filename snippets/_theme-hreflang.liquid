@@ -34,10 +34,10 @@
       assign handle_url = page.handle
     when 'metaobject'
       if metaobject.system.type == 'location_page'
-        assign subfolder = 'canada-location/'
+        assign subfolder = 'pages/canada-location/'
         assign handle_url = metaobject.system.handle
       elsif metaobject.system.type == 'region'
-        assign subfolder = 'canada/'
+        assign subfolder = 'pages/canada/'
         assign handle_url = metaobject.system.handle
       endif
     when 'search'
