@@ -1,0 +1,68 @@
+
+{%  liquid 
+    assign sanity_content_namespace = block.settings.sanity_content
+    assign portable_text = collections['hasbro'].metafields.app--6007307--sanity-fields.en_ca
+%}
+
+{% render "portable-text", portableText: portable_text  %}
+<br>
+------------------
+<br>
+<div class="b-content">
+    <!-- ###   SEO   ### -->
+
+    <h1 class='b-title'>seo</h1>
+    <p>
+        {{ portable_text.value['seo']['title'] }}
+    </p>
+    <p>
+        {{ portable_text.value['seo']['description'] }}
+</p>
+
+<br>
+
+    <h1 class='b-title'>seo</h1>
+    <p>
+        {{ portable_text.value['seo']['title'] }}
+    </p>
+    <p>
+        {{ portable_text.value['seo']['description'] }}
+</p>
+
+<br>
+
+
+<br>
+<div class="b-block">
+    
+    <div class="b-columns">
+        {% for pair in portable_text.value %}
+            
+            {% render '_inner', pair: pair %}
+            
+        {% endfor %}
+    </div>
+</div>
+</div>
+{% schema %}
+
+{
+  "name": "Sanity Content",
+  "settings": [
+    {
+      "type": "text",
+      "id": "sanity_content",
+      "label": "Sanity Content",
+      "default": "app--6007307--sanity-fields.en_us"
+
+    }, 
+
+  ],
+  "presets": [
+    {
+      "name": "Sanity Content"
+    }
+  ]
+}
+
+{% endschema %}

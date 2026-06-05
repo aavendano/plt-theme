@@ -1,0 +1,106 @@
+{
+    "seo": {
+        "title": "Buy Hasbro Toys \u0026 Games in Canada | Monopoly, Transformers, My Little Pony \u0026 More",
+        "description": "Shop Hasbro toys and games in Canada with fast nationwide shipping. Monopoly, Transformers, My Little Pony, Play-Doh, Furby \u0026 more. CAD pricing, 100% authentic, 30-day returns."
+    },
+    "faqs": [
+        {
+            "question": "Do you ship Hasbro products to all Canadian provinces?",
+            "_key": "b1b2bce1ae3c",
+            "_type": "faqs",
+            "answer": [
+                {
+                    "_key": "b0c6b67fa8a3",
+                    "_type": "block",
+                    "style": "normal",
+                    "children": [
+                        {
+                            "marks": [],
+                            "_key": "22b32fddab07",
+                            "text": "Yes — we deliver Hasbro toys and games to all Canadian provinces and territories including Ontario, Quebec, British Columbia, Alberta, Manitoba, Saskatchewan, Nova Scotia, New Brunswick, PEI, Newfoundland, Yukon, the Northwest Territories, and Nunavut.",
+                            "_type": "span"
+                        }
+                    ],
+                    "markDefs": []
+                }
+            ]
+        },
+        {
+            "_type": "faqs",
+            "answer": [
+                {
+                    "style": "normal",
+                    "children": [
+                        {
+                            "_type": "span",
+                            "marks": [],
+                            "_key": "5638d97bcea1",
+                            "text": "Top-selling Hasbro products in Canada include Monopoly (especially Canadian and city-themed editions), Scrabble, The Game of Life, Trivial Pursuit, Transformers figures, Play-Doh sets, and My Little Pony toys. Hasbro Gaming titles are consistently among Canada's best-selling board games."
+                        }
+                    ],
+                    "markDefs": [],
+                    "_key": "7ba52d52d3a5",
+                    "_type": "block"
+                }
+            ],
+            "question": "Which Hasbro games are most popular in Canada?",
+            "_key": "50a435a91e60"
+        }
+    ],
+    "_type": "collectionContentType",
+    "topPageContent": {
+        "title": "Hasbro Toys \u0026 Games — Shop in Canada",
+        "subtitle": "Official Hasbro products shipped across Canada — games, action figures, creative toys \u0026 more",
+        "body": [
+            {
+                "_key": "f4378424b0ab",
+                "_type": "block",
+                "style": "normal",
+                "children": [
+                    {
+                        "text": "Discover our complete Hasbro collection with fast shipping across Canada. From Monopoly and Scrabble to Transformers, My Little Pony, and Play-Doh, we carry the full range of Hasbro products for every age and occasion — all priced in Canadian dollars with transparent tax calculations at checkout.",
+                        "_type": "span",
+                        "marks": [],
+                        "_key": "a9520f5b9040"
+                    }
+                ],
+                "markDefs": []
+            },
+            {
+                "children": [
+                    {
+                        "_key": "31ce5d30e986",
+                        "text": "Hasbro toys and games are among the best-sellers in Canada year-round, especially during the holiday season. Our bilingual support team is available in English and French to help you find the right product, track your order, or arrange a return.",
+                        "_type": "span",
+                        "marks": []
+                    }
+                ],
+                "markDefs": [],
+                "_key": "cb432528ff25",
+                "_type": "block",
+                "style": "normal"
+            }
+        ],
+        "_type": "content"
+    },
+    "afterPageContent": {
+        "body": [
+            {
+                "_type": "block",
+                "style": "normal",
+                "children": [
+                    {
+                        "_key": "43193de555e4",
+                        "text": "We ship Hasbro products to all Canadian provinces and territories. All prices are in CAD with no hidden fees. We offer gift wrapping and express shipping for last-minute gifts — perfect for birthdays, holidays, and special occasions.",
+                        "_type": "span",
+                        "marks": []
+                    }
+                ],
+                "markDefs": [],
+                "_key": "d293dfd858fd"
+            }
+        ],
+        "title": "Canada's Trusted Hasbro Store Online",
+        "subtitle": "CAD pricing · Nationwide shipping · Bilingual customer support"
+    }
+}

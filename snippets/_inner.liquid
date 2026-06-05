@@ -1,0 +1,17 @@
+
+
+  {% assign key = pair[0] %}
+  {% assign value = pair[1] %}
+
+        <div class="b-column">
+            <p>{{ key }}</p>  
+            <p>{{ value }}</p>
+            
+        </div>
+        <div class="b-column">
+              
+            {% for child_inner in value %}
+                {% render '_inner', pair: child_inner %}
+            {% endfor %}
+        </div>
+
