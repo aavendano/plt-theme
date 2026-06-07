@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "404": {
     "title": "404",
@@ -28,7 +37,9 @@
     }
   },
   "collections": {
-    "title": "Collections"
+    "title": "Collections",
+    "learn_more": "Learn more",
+    "no_products_found": "No products found. Try using fewer filters."
   },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",

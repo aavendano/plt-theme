@@ -1,73 +1,94 @@
-{% doc %}
-  Renders custom hreflang alternate link tags from theme settings.
-
-  Each line in `settings.hreflang_alternates` must be: `hreflang|base_url`
-  When `settings.hreflang_append_path` is true, `request.path` is appended to each base URL.
-
-  @example
-  {% render '_theme-hreflang' %}
-{% enddoc %}
-
 {% liquid
   assign page_type = request.page_type
   assign subfolder = ''
   assign handle_url = ''
+  assign ca_index_only = false
 
   case page_type
     when 'index'
       assign subfolder = ''
       assign handle_url = ''
+
     when 'product'
       assign subfolder = 'products/'
       assign handle_url = product.handle
+
     when 'collection'
       assign subfolder = 'collections/'
       assign handle_url = collection.handle
+
     when 'blog'
       assign subfolder = 'blogs/'
       assign handle_url = blog.handle
+
     when 'article'
-      assign subfolder = 'blogs/'
+      assign subfolder = 'blogs/' | append: blog.handle | append: '/'
       assign handle_url = article.handle
+
     when 'page'
       assign subfolder = 'pages/'
       assign handle_url = page.handle
+
     when 'metaobject'
       if metaobject.system.type == 'location_page'
         assign subfolder = 'pages/canada-location/'
         assign handle_url = metaobject.system.handle
+        assign ca_index_only = true
       elsif metaobject.system.type == 'region'
         assign subfolder = 'pages/canada/'
         assign handle_url = metaobject.system.handle
+        assign ca_index_only = true
       endif
     when 'search'
-      assign subfolder = 'search'
+      assign subfolder = 'search/'
       assign handle_url = ''
   endcase
 %}
 
-<link
-  rel="alternate"
-  hreflang="x-default"
-  href="https://playlovetoys.com/{{- subfolder -}}{{- handle_url }}"
->
-<link
-  rel="alternate"
-  hreflang="en-US"
-  href="https://playlovetoys.com/{{ subfolder }}{{- handle_url }}"
->
-<link
-  rel="alternate"
-  hreflang="es-US"
-  href="https://playlovetoys.com/es/{{- subfolder -}}{{- handle_url }}"
->
-<link
-  rel="alternate"
-  hreflang="en-CA"
-  href="https://playlovetoys.ca/{{- subfolder -}}{{- handle_url }}"
->
-<link
-  rel="alternate"
-  hreflang="fr-CA"
-  href="https://playlovetoys.ca/fr/{{- subfolder -}}{{- handle_url }}"
->
+{% if ca_index_only %}
+  <link
+    rel="alternate"
+    hreflang="x-default"
+    href="https://playlovetoys.ca/{{- subfolder -}}{{- handle_url -}}"
+  >
+  <link
+    rel="alternate"
+    hreflang="en-CA"
+    href="https://playlovetoys.ca/{{- subfolder -}}{{- handle_url -}}"
+  >
+  <link
+    rel="alternate"
+    hreflang="fr-CA"
+    href="https://playlovetoys.ca/fr/{{- subfolder -}}{{- handle_url -}}"
+  >
+  {% if request.host != 'playlovetoys.ca' %}
+    <meta name="robots" content="noindex, follow">
+  {% endif %}
+
+{% else %}
+  <link
+    rel="alternate"
+    hreflang="x-default"
+    href="https://playlovetoys.com/{{- subfolder -}}{{- handle_url -}}"
+  >
+  <link
+    rel="alternate"
+    hreflang="en-US"
+    href="https://playlovetoys.com/{{- subfolder -}}{{- handle_url -}}"
+  >
+  <link
+    rel="alternate"
+    hreflang="es-US"
+    href="https://playlovetoys.com/es/{{- subfolder -}}{{- handle_url -}}"
+  >
+  <link
+    rel="alternate"
+    hreflang="en-CA"
+    href="https://playlovetoys.ca/{{- subfolder -}}{{- handle_url -}}"
+  >
+  <link
+    rel="alternate"
+    hreflang="fr-CA"
+    href="https://playlovetoys.ca/fr/{{- subfolder -}}{{- handle_url -}}"
+  >
+{% endif %}

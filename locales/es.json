@@ -1,0 +1,79 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "404": {
+    "title": "404",
+    "not_found": "Página no encontrada.",
+    "back_to_shopping": "Volver a comprar"
+  },
+  "blog": {
+    "article_comments": "Comentarios",
+    "article_metadata_html": "{{ date }} por {{ author }}",
+    "comment_form_body": "Comentario",
+    "comment_form_email": "Correo electrónico",
+    "comment_form_name": "Nombre",
+    "comment_form_submit": "Publicar",
+    "comment_form_title": "Añadir un comentario"
+  },
+  "cart": {
+    "checkout": "Pagar",
+    "title": "Carrito",
+    "update": "Actualizar",
+    "remove": "Eliminar"
+  },
+  "customers": {
+    "login": {
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Iniciar sesión",
+      "title": "Iniciar sesión"
+    }
+  },
+  "collections": {
+    "title": "Colecciones",
+    "learn_more": "Saber más",
+    "no_products_found": "No se encontraron productos. Intenta usar menos filtros."
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Añadir a Apple Wallet",
+    "card": "Tarjeta regalo",
+    "expired": "Esta tarjeta regalo ha caducado",
+    "expires_on": "Caduca el {{ expires_on }}",
+    "use_at_checkout": "Usa esta tarjeta regalo al pagar"
+  },
+  "general": {
+    "accessibility": {
+      "account": "Cuenta"
+    }
+  },
+  "password": {
+    "title": "Esta tienda es privada",
+    "password": "Contraseña",
+    "enter": "Entrar"
+  },
+  "search": {
+    "title": "Buscar",
+    "label": "Buscar",
+    "placeholder": "Buscar artículos, páginas o productos",
+    "submit": "Buscar",
+    "no_results_html": "No se encontraron resultados para {{ terms }}",
+    "results_for_html": "{{ count }} resultados para {{ terms }}",
+    "predictive": {
+      "aria_label": "Sugerencias de búsqueda",
+      "loading": "Buscando sugerencias",
+      "queries": "Búsquedas sugeridas",
+      "products": "Productos",
+      "collections": "Colecciones",
+      "pages": "Páginas",
+      "results_updated": "Sugerencias de búsqueda actualizadas",
+      "view_all": "Ver todos los resultados de «{{ terms }}»"
+    }
+  }
+}

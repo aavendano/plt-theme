@@ -11,7 +11,9 @@
   "sections": {
     "main": {
       "type": "collection",
-      "settings": {}
+      "settings": {
+        "hero_image": "{{ collection.image }}"
+      }
     }
   },
   "order": [

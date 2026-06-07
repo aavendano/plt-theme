@@ -5,7 +5,13 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
 {% endcomment %}
 
-<h1>{{ collection.title }}</h1>
+{% assign header_content = collection.metafields['app--6007307--sanity-fields'].header.value %}
+{% if header_content %}
+  {% render '_collection-hero-collapsable-content',
+    header_content: header_content,
+    hero_image: section.settings.hero_image
+  %}
+{% endif %}
 
 <div class="collection-products">
   {% paginate collection.products by 20 %}
@@ -32,6 +38,19 @@
   {% endpaginate %}
 </div>
 
+{% liquid
+  assign after_page_content = collection.metafields['app--6007307--sanity-fields'].afterPageContent.value.body
+  capture sanity_locale
+    render '_filter-locale'
+  endcapture
+  assign sanity_locale = sanity_locale | strip
+%}
+
+{% if after_page_content != blank %}
+  <div class="b-content">
+    {% render '_sanity-portable-text', items: after_page_content, key_prefix: 'body', locale: sanity_locale %}
+  </div>
+{% endif %}
 {% stylesheet %}
   .collection-products {
     display: grid;
@@ -42,6 +61,16 @@
 {% schema %}
 {
   "name": "t:general.collection",
-  "settings": []
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    }
+  ]
 }
 {% endschema %}
