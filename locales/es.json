@@ -51,12 +51,52 @@
   "general": {
     "accessibility": {
       "account": "Cuenta"
+    },
+    "pagination": {
+      "label": "Paginación",
+      "next": "Página siguiente",
+      "page": "Página {{ number }}",
+      "previous": "Página anterior"
+    }
+  },
+  "products": {
+    "facets": {
+      "apply": "Aplicar",
+      "clear_all": "Eliminar todo",
+      "filter_and_sort": "Filtrar y ordenar",
+      "from": "Desde",
+      "product_count_simple": {
+        "one": "{{ count }} producto",
+        "other": "{{ count }} productos"
+      },
+      "search": "Buscar",
+      "sort_by_label": "Ordenar por:",
+      "to": "Hasta"
+    },
+    "product": {
+      "price": {
+        "regular_price": "Precio habitual"
+      }
     }
   },
   "password": {
     "title": "Esta tienda es privada",
     "password": "Contraseña",
     "enter": "Entrar"
+  },
+  "sections": {
+    "collection_template": {
+      "empty": "No se encontraron productos",
+      "use_fewer_filters_html": "Usa menos filtros o <a class=\"{{ class }}\" href=\"{{ link }}\">elimina todo</a>"
+    }
+  },
+  "templates": {
+    "search": {
+      "results_with_count": {
+        "one": "{{ count }} resultado encontrado para «{{ terms }}»",
+        "other": "{{ count }} resultados encontrados para «{{ terms }}»"
+      }
+    }
   },
   "search": {
     "title": "Buscar",

@@ -26,7 +26,7 @@
     class="b-navbar-dropdown l-mega-menu-container"
     :class="!$store.screenSize.small ? 'l-overlay-background-color' : ''"
   >
-    <div class="b-container b-is-fluid">
+    <div class="b-container b-is-fullhd">
       <div class="b-columns b-is-0-desktop">
         {% assign child_link_total = link.links | size %}
         {% assign child_link_column_width = 100 | divided_by: child_link_total %}

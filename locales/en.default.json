@@ -51,12 +51,52 @@
   "general": {
     "accessibility": {
       "account": "Account"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "next": "Next page",
+      "page": "Page {{ number }}",
+      "previous": "Previous page"
+    }
+  },
+  "products": {
+    "facets": {
+      "apply": "Apply",
+      "clear_all": "Remove all",
+      "filter_and_sort": "Filter and sort",
+      "from": "From",
+      "product_count_simple": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "search": "Search",
+      "sort_by_label": "Sort by:",
+      "to": "To"
+    },
+    "product": {
+      "price": {
+        "regular_price": "Regular price"
+      }
     }
   },
   "password": {
     "title": "This shop is private",
     "password": "Password",
     "enter": "Enter"
+  },
+  "sections": {
+    "collection_template": {
+      "empty": "No products found",
+      "use_fewer_filters_html": "Use fewer filters or <a class=\"{{ class }}\" href=\"{{ link }}\">remove all</a>"
+    }
+  },
+  "templates": {
+    "search": {
+      "results_with_count": {
+        "one": "{{ count }} result found for \"{{ terms }}\"",
+        "other": "{{ count }} results found for \"{{ terms }}\""
+      }
+    }
   },
   "search": {
     "title": "Search",

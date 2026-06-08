@@ -15,9 +15,20 @@
     assign results_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&sort_by=' | append: sort_by
     assign form_action = routes.search_url
   endif
+  assign icon_fold_svg = 'm356-160-56-56 180-180 180 180-56 56-124-124-124 124Zm124-404L300-744l56-56 124 124 124-124 56 56-180 180Z'
+  assign icon_unfold_svg = 'M480-120 300-300l58-58 122 122 122-122 58 58-180 180ZM358-598l-58-58 180-180 180 180-58 58-122-122-122 122Z'
 -%}
 
-<div x-data="{ drawerOpen: false }" class="b-container facets-wrapper">
+<div
+  x-data="
+    {
+    drawerOpen: false,
+    fold_svg: '{{ icon_fold_svg }}',
+    unfold_svg: '{{ icon_unfold_svg }}'
+    }
+  "
+  class="b-container facets-wrapper"
+>
   <!-- Trigger Sticky -->
   <div class="b-level b-top-4 b-px-4 b-border-bottom-light">
     <div class="b-level-left">
@@ -52,17 +63,40 @@
   >
     <div class="b-drawer-background" @click="drawerOpen = false"></div>
 
-    <div class="b-drawer-panel">
+    <!-- facets-logo -->
+
+    <div class="c-drawer-panel-background-color b-drawer-panel">
+      <a href="{{ routes.root_url }}">
+        {% if settings.logo %}
+          <figure class="b-image l-facets-logo b-mx-auto b-my-4 b-pt-2">
+            <img src="{{ settings.logo | image_url: width: 100 }}" alt="{{ shop.name }}" width="100%" height="100%">
+          </figure>
+        {% else %}
+          {{ 'image' | placeholder_svg_tag: 'l-logo-placeholder' }}
+        {% endif %}
+      </a>
+      <!-- Predictive Search -->
+      <!-- Header -->
+      <header class="b-level b-is-mobile b-is-align-items-center b-px-4 b-border-bottom-light">
+        <p class="b-title b-is-3 b-is-4-mobile b-my-0 b-has-text-primary-light">
+          {{ 'products.facets.search' | t }}
+        </p>
+        <button type="button" class="b-delete" @click="drawerOpen = false"></button>
+      </header>
+      <div class="b-p-2 b-is-flex-grow-1">
+        {% render 'predictive-search', results: results %}
+      </div>
+
       <form
         id="FacetFiltersForm"
         action="{{ form_action }}"
         x-target="product-grid-container"
         x-on:input.debounce.800ms="if($el.isConnected) $el.requestSubmit()"
-        class="b-is-flex b-is-flex-direction-column b-h-full b-px-4 b-py-6"
+        class="b-is-flex b-is-flex-direction-column b-h-full b-py-4"
       >
         <!-- Header -->
-        <header class="b-level b-is-mobile b-is-align-items-center b-py-4 b-px-4 b-border-bottom-light">
-          <p class="b-title b-is-3 b-is-4-mobile b-my-0 b-has-text-primary ">
+        <header class="b-level b-is-mobile b-is-align-items-center b-px-4 b-border-bottom-light">
+          <p class="b-title b-is-3 b-is-4-mobile b-my-0 b-has-text-primary-light">
             {{ 'products.facets.filter_and_sort' | t }}
           </p>
           <button type="button" class="b-delete" @click="drawerOpen = false"></button>
@@ -78,26 +112,40 @@
 
           {% comment %} Sorting {% endcomment %}
 
-          <div class="b-field b-mb-5">
-            <label class="b-label " for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
-            <div class="b-control">
-              <div class="b-select b-is-primary b-is-fullwidth">
-                <select
-                  name="sort_by"
-                  id="SortBy"
-                  aria-describedby="a11y-refresh-page-message"
-                >
-                  {%- for option in results.sort_options -%}
-                    <option
-                      value="{{ option.value | escape }}"
-                      {% if option.value == sort_by %}
-                        selected="selected"
-                      {% endif %}
-                    >
-                      {{ option.name | escape }}
-                    </option>
-                  {%- endfor -%}
-                </select>
+          <div class="b-mb-4" x-data="{ open: false }">
+            <button
+              type="button"
+              class="b-button b-is-primary b-is-light b-is-fullwidth b-is-justify-content-space-between"
+              @click="open = !open"
+            >
+              <span class="b-has-text-primary">{{ 'products.facets.sort_by_label' | t }}</span>
+
+              <span class="b-icon b-is-small b-has-text-link">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                  <path x-bind:d="open ? fold_svg : unfold_svg"/>
+                </svg>
+              </span>
+            </button>
+
+            <div x-show="open" x-collapse>
+              <div class="b-mt-2 b-pl-4">
+                {%- for option in results.sort_options -%}
+                  <div class="b-field">
+                    <div class="b-control">
+                      <label class="b-radio">
+                        <input
+                          type="radio"
+                          name="sort_by"
+                          value="{{ option.value | escape }}"
+                          {% if option.value == sort_by %}
+                            checked
+                          {% endif %}
+                        >
+                        {{ option.name | escape }}
+                      </label>
+                    </div>
+                  </div>
+                {%- endfor -%}
               </div>
             </div>
           </div>
@@ -113,9 +161,11 @@
                 @click="open = !open"
               >
                 <span class="b-has-text-primary">{{ filter.label | escape }}</span>
-                <span class="b-icon b-is-size-6">
-                  <i class="fas" :class="open ? 'fa-angle-up' : 'fa-angle-down'"></i>
-                  {{- 'icon-caret.svg' | inline_asset_content -}}
+
+                <span class="b-icon b-is-small b-has-text-link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                    <path x-bind:d="open ? fold_svg : unfold_svg"/>
+                  </svg>
                 </span>
               </button>
 
@@ -156,25 +206,27 @@
         </section>
 
         {% comment %} Footer {% endcomment %}
-        <div class="b-drawer-footer b-is-radiusless">
-          <div class="b-level b-is-mobile">
-            <button
-              type="button"
-              class="b-button b-level-item b-is-primary b-is-small"
-              @click="drawerOpen = false"
-            >
-              {{ 'products.facets.apply' | t }}
-            </button>
-            <a
-              href="{{ results_url }}"
-              class="b-button b-level-item b-is-ghost b-has-text-link"
-              x-target="product-grid-container"
-            >
-              <span class="b-delete b-mr-2"></span>
-              {{- 'products.facets.clear_all' | t -}}
-            </a>
+        <section class="b-px-4 b-py-4 b-is-flex-grow-1">
+          <div class="b-drawer-footer b-is-radiusless">
+            <div class="b-level b-is-mobile">
+              <button
+                type="button"
+                class="b-button b-level-item b-is-link b-is-light b-is-small"
+                @click="drawerOpen = false"
+              >
+                {{ 'products.facets.apply' | t }}
+              </button>
+              <a
+                href="{{ results_url }}"
+                class="b-button b-level-item b-is-ghost b-has-text-link"
+                x-target="product-grid-container"
+              >
+                <span class="b-delete b-mr-2"></span>
+                {{- 'products.facets.clear_all' | t -}}
+              </a>
+            </div>
           </div>
-        </div>
+        </section>
       </form>
     </div>
   </div>

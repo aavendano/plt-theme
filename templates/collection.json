@@ -12,7 +12,8 @@
     "main": {
       "type": "collection",
       "settings": {
-        "hero_image": "{{ collection.image }}"
+        "hero_image": "{{ collection.image }}",
+        "logo": "shopify://shop_images/Logo-PlayLoveToys-3by2-800x534.png"
       }
     }
   },
