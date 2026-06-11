@@ -122,5 +122,13 @@
   "search-results",
   "selected",
   "shopify-section",
-  "text"
+  "text",
+  "b-pagination",
+  "b-pagination-previous",
+  "b-is-disabled",
+  "b-pagination-next",
+  "b-pagination-list",
+  "b-pagination-link",
+  "b-is-current",
+  "b-pagination-ellipsis"
 ]
