@@ -1,0 +1,66 @@
+/* ============================================================
+   PlayLoveToys — Color tokens
+   Brand palette (source: brand sheet play.pdf + compiled b-style)
+     Purple  #533278  hsl(268 41% 33%)  — primary
+     Pink    #F4436C  hsl(346 89% 61%)  — accent / link / CTA
+     Teal    #0C7489  hsl(190 84% 29%)  — secondary / info
+     Grey    #B4B4B4  hsl(0 0% 71%)     — neutral
+     Ink     #545C52  hsl(108 6% 34%)   — body text (warm grey)
+
+   These mirror the live storefront's b-style tokens
+   (--b-primary = purple, --b-link = pink, --b-info = teal).
+   Style real UI with the b-* framework classes; use these
+   --plt-* aliases only when no framework class fits.
+   ============================================================ */
+:root {
+  /* ---- Brand core ---- */
+  --plt-purple: #533278;
+  --plt-purple-deep: #3a2456;
+  --plt-purple-soft: #efeaf5;
+
+  --plt-pink: #f4436c;
+  --plt-pink-deep: #d62a54;
+  --plt-pink-soft: #fde7ed;
+
+  --plt-teal: #0c7489;
+  --plt-teal-soft: #e0f1f4;
+
+  --plt-ink: #545c52;
+  --plt-grey: #b4b4b4;
+
+  /* ---- Neutral scale (cool grey, matches b-style scheme 221/14%) ---- */
+  --plt-white: #ffffff;
+  --plt-paper: #fafafb;     /* page background tint */
+  --plt-cloud: #f4f4f6;     /* muted surface */
+  --plt-line: #e4e4e9;      /* hairline border */
+  --plt-line-strong: #cfcfd6;
+  --plt-slate: #6c6f7a;     /* muted text */
+  --plt-charcoal: #2e2b35;  /* near-black, purple-tinted */
+
+  /* ---- Status ---- */
+  --plt-success: #48c78e;
+  --plt-success-soft: #e4f7ee;
+  --plt-warning: #ffb70f;
+  --plt-warning-soft: #fff3d6;
+  --plt-danger: #ff5a78;
+  --plt-danger-soft: #ffe4e9;
+
+  /* ---- Semantic aliases ---- */
+  --plt-text: var(--plt-ink);
+  --plt-text-strong: var(--plt-charcoal);
+  --plt-text-muted: var(--plt-slate);
+  --plt-text-on-brand: #ffffff;
+
+  --plt-surface: var(--plt-white);
+  --plt-surface-muted: var(--plt-cloud);
+  --plt-surface-brand: var(--plt-purple);
+  --plt-surface-accent: var(--plt-pink);
+
+  --plt-border: var(--plt-line);
+  --plt-link: var(--plt-pink);
+  --plt-focus: var(--plt-pink);
+
+  /* ---- Signature gradient (hero / sale banners) ---- */
+  --plt-gradient: linear-gradient(115deg, #231f20 0%, #533278 50%, #f4436c 100%); /* @kind color */
+  --plt-gradient-warm: linear-gradient(120deg, #f4436c 0%, #b3327f 100%); /* @kind color */
+}

@@ -1,0 +1,14 @@
+/* ============================================================
+   PlayLoveToys Design System — TOKEN ENTRY (scanned by tooling)
+   This file declares ONLY PlayLoveToys design tokens + webfonts.
+   The b-style framework CSS is intentionally NOT imported here so
+   the token index stays clean (the framework ships ~5k internal
+   Bulma vars we don't want indexed as brand tokens).
+
+   • Consumers: link  playlovetoys.css  (framework + custom + these tokens).
+   • Tokens only:      link  styles.css.
+   ============================================================ */
+@import "tokens/fonts.css";
+@import "tokens/colors.css";
+@import "tokens/typography.css";
+@import "tokens/spacing.css";

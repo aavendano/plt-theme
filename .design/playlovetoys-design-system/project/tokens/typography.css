@@ -1,0 +1,41 @@
+/* ============================================================
+   PlayLoveToys — Typography tokens
+   Body / UI : Roboto Condensed  (matches live --b-family-primary)
+   Display   : Fredoka           (playful headlines & brand moments)
+   Scale     : Major Third-ish, rounded for UI legibility.
+   ============================================================ */
+:root {
+  --plt-font-body: "Roboto Condensed", "Inter", system-ui, sans-serif;
+  --plt-font-display: "Fredoka", "Roboto Condensed", system-ui, sans-serif;
+
+  /* Weights */
+  --plt-w-light: 300;      /* @kind font */
+  --plt-w-regular: 400;    /* @kind font */
+  --plt-w-medium: 500;     /* @kind font */
+  --plt-w-semibold: 600;   /* @kind font */
+  --plt-w-bold: 700;       /* @kind font */
+  --plt-w-extrabold: 800;  /* @kind font */
+
+  /* Type scale (px-friendly rems) */
+  --plt-size-xs: 0.75rem;    /* 12 — labels, fine print   @kind font */
+  --plt-size-sm: 0.875rem;   /* 14 — captions, meta        @kind font */
+  --plt-size-base: 1rem;     /* 16 — body                  @kind font */
+  --plt-size-md: 1.25rem;    /* 20 — lead                  @kind font */
+  --plt-size-lg: 1.5rem;     /* 24 — h4                    @kind font */
+  --plt-size-xl: 2rem;       /* 32 — h3                    @kind font */
+  --plt-size-2xl: 2.75rem;   /* 44 — h2                    @kind font */
+  --plt-size-3xl: 3.75rem;   /* 60 — h1 / hero             @kind font */
+  --plt-size-display: 5rem;  /* 80 — splashy display       @kind font */
+
+  /* Line heights */
+  --plt-leading-tight: 1.05;    /* @kind font */
+  --plt-leading-snug: 1.2;      /* @kind font */
+  --plt-leading-normal: 1.5;    /* @kind font */
+  --plt-leading-relaxed: 1.65;  /* @kind font */
+
+  /* Letter spacing */
+  --plt-tracking-tight: -0.02em;  /* @kind spacing */
+  --plt-tracking-normal: 0;       /* @kind spacing */
+  --plt-tracking-wide: 0.08em;    /* eyebrows / overlines   @kind spacing */
+  --plt-tracking-wider: 0.16em;   /* small caps labels      @kind spacing */
+}

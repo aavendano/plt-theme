@@ -1,0 +1,57 @@
+<!-- @dsCard group="Components" viewport="700x420" name="Forms — Field · Input · Select · Checkbox" subtitle="b-field structure with b-input, b-select, b-checkbox" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../playlovetoys.css">
+<style>
+  body{margin:0;padding:24px;font-family:var(--plt-font-body);background:var(--plt-paper)}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+  const { Field, TextInput, Select, Checkbox, Button } = window.PlayLoveToysDesignSystem_88998d;
+  function Demo() {
+    return (
+      <div className="cols">
+        <div>
+          <Field label="Email" help="Order updates only — no spam." helpState="info">
+            <TextInput type="email" placeholder="you@example.com" />
+          </Field>
+          <Field label="Discount code" help="That code expired." helpState="danger">
+            <TextInput state="danger" defaultValue="PLAY2023" />
+          </Field>
+          <Field>
+            <Checkbox defaultChecked>I confirm I am 18 or older</Checkbox>
+          </Field>
+        </div>
+        <div>
+          <Field label="Size">
+            <Select fullWidth defaultValue="">
+              <option value="" disabled>Choose a size…</option>
+              <option>Small</option>
+              <option>Medium</option>
+              <option>Large</option>
+            </Select>
+          </Field>
+          <Field label="Add to bag" grouped>
+            <TextInput defaultValue="1" style={{maxWidth:'72px'}} />
+            <Button color="link">Add to cart</Button>
+          </Field>
+          <Field>
+            <Checkbox>Add discreet gift wrap (+$4)</Checkbox>
+          </Field>
+        </div>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!-- @dsCard group="Colors" viewport="700x200" name="Status" subtitle="Success · Warning · Danger, with soft tints" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body{margin:0;padding:22px;font-family:var(--plt-font-body);background:#fff}
+  .row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .pair{display:flex;border-radius:var(--plt-radius-md);overflow:hidden;border:1px solid var(--plt-line)}
+  .solid{flex:1.6;height:78px;display:flex;align-items:flex-end;padding:9px}
+  .solid b{color:#fff;font-size:12.5px;font-weight:700}
+  .soft{flex:1;height:78px}
+  .meta{padding:7px 2px 0}
+  .nm{font-weight:700;font-size:13px;color:var(--plt-text-strong)}
+  .hx{font-size:11px;color:var(--plt-text-muted);letter-spacing:.03em}
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="pair"><div class="solid" style="background:var(--plt-success)"><b>success</b></div><div class="soft" style="background:var(--plt-success-soft)"></div></div><div class="meta"><div class="nm">Success</div><div class="hx">#48C78E</div></div></div>
+    <div class="sw"><div class="pair"><div class="solid" style="background:var(--plt-warning)"><b>warning</b></div><div class="soft" style="background:var(--plt-warning-soft)"></div></div><div class="meta"><div class="nm">Warning</div><div class="hx">#FFB70F</div></div></div>
+    <div class="sw"><div class="pair"><div class="solid" style="background:var(--plt-danger)"><b>danger</b></div><div class="soft" style="background:var(--plt-danger-soft)"></div></div><div class="meta"><div class="nm">Danger</div><div class="hx">#FF5A78</div></div></div>
+  </div>
+</body>
+</html>

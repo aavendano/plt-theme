@@ -1,0 +1,12 @@
+/* ============================================================
+   PlayLoveToys Design System — CONSUMER BUNDLE (link this one file)
+   Loads, in order:
+     1. b-style framework (compiled Bulma + brand colors baked in)
+     2. PlayLoveToys storefront overrides
+     3. PlayLoveToys design tokens + webfonts (styles.css)
+   Style real UI with the b-* framework classes; author bespoke
+   classes only when no b-* class can do the job.
+   ============================================================ */
+@import "vendor/b-style.css";
+@import "vendor/plt-custom.css";
+@import "styles.css";

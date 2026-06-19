@@ -49,6 +49,10 @@
     "use_at_checkout": "Usa esta tarjeta regalo al pagar"
   },
   "general": {
+    "breadcrumbs": {
+      "home": "Inicio",
+      "shop": "Tienda"
+    },
     "accessibility": {
       "account": "Cuenta"
     },
@@ -74,6 +78,7 @@
       "to": "Hasta"
     },
     "product": {
+      "add_to_cart": "Añadir al carrito",
       "price": {
         "regular_price": "Precio habitual"
       }

@@ -1,0 +1,9 @@
+ <nav class="b-breadcrumb" aria-label="breadcrumbs" style="margin-bottom: 8px;">
+      <ul>
+        <li><a href="{{ routes.root_url }}">{{ 'general.breadcrumbs.home' | t }}</a></li>
+        {% if collection.url contains '/collections/' %}
+          <li><a href="{{ routes.collections_url }}">{{ 'general.breadcrumbs.shop' | t | default: 'Shop' }}</a></li>
+        {% endif %}
+        <li class="b-is-active"><a aria-current="page">{{ collection.title }}</a></li>
+      </ul>
+    </nav>

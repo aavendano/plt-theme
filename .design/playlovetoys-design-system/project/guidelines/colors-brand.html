@@ -1,0 +1,25 @@
+<!-- @dsCard group="Colors" viewport="700x210" name="Brand core" subtitle="Purple primary · Pink accent · Teal secondary" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body{margin:0;padding:22px;font-family:var(--plt-font-body);background:#fff}
+  .row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .sw{border-radius:var(--plt-radius-md);overflow:hidden;border:1px solid var(--plt-line)}
+  .chip{height:84px;display:flex;align-items:flex-end;padding:10px}
+  .chip b{color:#fff;font-size:13px;font-weight:700}
+  .meta{padding:8px 10px}
+  .meta .nm{font-weight:700;font-size:14px;color:var(--plt-text-strong)}
+  .meta .hx{font-size:12px;color:var(--plt-text-muted);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:var(--plt-purple)"><b>primary</b></div><div class="meta"><div class="nm">Purple</div><div class="hx">#533278</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--plt-pink)"><b>link / CTA</b></div><div class="meta"><div class="nm">Hot Pink</div><div class="hx">#F4436C</div></div></div>
+    <div class="sw"><div class="chip" style="background:var(--plt-teal)"><b>info</b></div><div class="meta"><div class="nm">Teal</div><div class="hx">#0C7489</div></div></div>
+  </div>
+</body>
+</html>

@@ -31,7 +31,7 @@
 >
   <!-- Trigger Sticky -->
   <div class="b-level b-top-4 b-px-4 b-border-bottom-light">
-    <div class="b-level-left">
+    <div class="b-level-left c-hide-on-desktop">
       <button
         type="button"
         class="b-button b-is-primary b-is-light"
@@ -46,22 +46,39 @@
 
     <div class="b-level-right">
       <p class="b-is-size-5">
-        {% if results.results_count %}
-          {{ 'templates.search.results_with_count' | t: terms: results.terms, count: results.results_count }}
-        {% else %}
-          {{ 'products.facets.product_count_simple' | t: count: results.products_count }}
-        {% endif %}
+        <span style="color: var(--plt-text-muted); font-size: 14px;">
+          {% if collection.products_count == 1 %}
+            {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
+          {% else %}
+            {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
+          {% endif %}
+        </span>
+        <form action="{{ collection.url }}" x-target="product-grid-container">
+          <div class="b-select b-is-small">
+            <select name="sort_by" onchange="this.form.submit()">
+              {%- for option in collection.sort_options -%}
+                <option
+                  value="{{ option.value | escape }}"
+                  {% if option.value == sort_by %}
+                    selected
+                  {% endif %}
+                >
+                  {{ option.name | escape }}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        </form>
       </p>
     </div>
   </div>
-
   <!-- Drawer Component -->
   <div
     class="b-drawer"
     :class="{ 'b-is-active': drawerOpen }"
     @keydown.escape.window="drawerOpen = false"
   >
-    <div class="b-drawer-background" @click="drawerOpen = false"></div>
+    <div class="" @click="drawerOpen = false"></div>
 
     <!-- facets-logo -->
 

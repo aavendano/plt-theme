@@ -1,0 +1,122 @@
+<div class="">
+  <a href="{{ routes.root_url }}">
+    {% if settings.logo %}
+      <figure class="b-image l-facets-logo b-mx-auto b-my-4 b-pt-2">
+        <img src="{{ settings.logo | image_url: width: 100 }}" alt="{{ shop.name }}" width="100%" height="100%">
+      </figure>
+    {% else %}
+      {{ 'image' | placeholder_svg_tag: 'l-logo-placeholder' }}
+    {% endif %}
+  </a>
+
+  <form
+    id="FacetFiltersForm"
+    action="{{ form_action }}"
+    x-target="product-grid-container"
+    x-on:input.debounce.800ms="if($el.isConnected) $el.requestSubmit()"
+    class="b-is-flex b-is-flex-direction-column b-h-full b-py-4"
+  >
+    <!-- Body -->
+    <section>
+      <!-- Valores ocultos de búsqueda -->
+      {% if results.terms %}
+        <input type="hidden" name="q" value="{{ results.terms | escape }}">
+        <input name="options[prefix]" type="hidden" value="last">
+      {%- endif -%}
+
+      {% comment %} Sorting {% endcomment %}
+
+      <div x-data="{ open: false }">
+        <button
+          type="button"
+          class="b-button b-is-primary b-is-light b-is-fullwidth b-is-justify-content-space-between"
+          @click="open = !open"
+        >
+          <span class="b-has-text-primary">{{ 'products.facets.sort_by_label' | t }}</span>
+
+          <span class="b-icon b-is-small b-has-text-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+              <path x-bind:d="open ? fold_svg : unfold_svg"/>
+            </svg>
+          </span>
+        </button>
+
+        <div x-show="open" x-collapse>
+          <div class="b-mt-2 b-pl-4">
+            {%- for option in results.sort_options -%}
+              <div class="b-field">
+                <div class="b-control">
+                  <label class="b-radio">
+                    <input
+                      type="radio"
+                      name="sort_by"
+                      value="{{ option.value | escape }}"
+                      {% if option.value == sort_by %}
+                        checked
+                      {% endif %}
+                    >
+                    {{ option.name | escape }}
+                  </label>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+      <hr class="b-dropdown-divider">
+
+      {% comment %} Filters {% endcomment %}
+
+      {%- for filter in results.filters -%}
+        <div class="b-mb-4" x-data="{ open: false }">
+          <button
+            type="button"
+            class="b-button b-is-primary b-is-light b-is-fullwidth b-is-justify-content-space-between"
+            @click="open = !open"
+          >
+            <span class="b-has-text-primary">{{ filter.label | escape }}</span>
+
+            <span class="b-icon b-is-small b-has-text-link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                <path x-bind:d="open ? fold_svg : unfold_svg"/>
+              </svg>
+            </span>
+          </button>
+
+          <div x-show="open" x-collapse>
+            <div class="b-mt-2 b-pl-4">
+              {% case filter.type %}
+                {% when 'boolean', 'list' %}
+                  {%- for value in filter.values -%}
+                    <div class="b-field">
+                      <div class="b-control">
+                        <label class="b-checkbox">
+                          <input
+                            type="checkbox"
+                            name="{{ value.param_name }}"
+                            value="{{ value.value }}"
+                            {% if value.active %}
+                              checked
+                            {% endif %}
+                            {% if value.count == 0 and value.active == false %}
+                              disabled
+                            {% endif %}
+                          >
+                          {{ value.label | escape }} ({{ value.count }})
+                        </label>
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                {% when 'price_range' %}
+                  <div class="facets__price" x-data="priceRange()">
+                    {% render 'price-facet', filter: filter, id_prefix: 'Filter-' %}
+                  </div>
+              {% endcase %}
+            </div>
+          </div>
+        </div>
+        <hr class="b-dropdown-divider">
+      {%- endfor -%}
+    </section>
+  </form>
+</div>
