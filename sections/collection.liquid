@@ -27,13 +27,8 @@
       <div class="b-columns b-is-variable b-is-5">
         <!-- Filters Sidebar -->
 
-        <div class="b-column b-is-2-desktop c-only-desktop">
-          <div class="c-filters-sidebar" style="position: sticky; top: 75px;">
-            <!-- Filters Drawer -->
-            {% render 'side-drawer', results: collection %}
-            <!-- Filters Drawer End -->
-          </div>
-        </div>
+        <!-- Filters Drawer -->
+        {% render 'side-drawer', results: collection %}
 
         <!-- Product Grid -->
         <div class="b-column">
@@ -41,7 +36,8 @@
           <div class="b-mb-4">
             {% render 'facets', results: collection, paginate: paginate %}
           </div>
-
+          <!-- PRODUCTS GRID -->
+          <!-- PRODUCTS GRID - FALLBACK IF NO PRODUCTS -->
           {%- if collection.products.size == 0 -%}
             <div class="b-has-text-centered b-py-6" id="product-grid" data-id="{{ section.id }}">
               <h2 class="b-title b-is-4">
@@ -54,10 +50,11 @@
               </h2>
             </div>
           {%- else -%}
+            <!-- PRODUCTS GRID - IF PRODUCTS ARE FOUND -->
             <div
               id="product-grid"
               data-id="{{ section.id }}"
-              class="b-columns b-is-multiline b-is-0-mobile"
+              class="b-columns b-is-multiline"
             >
               {%- for product in collection.products -%}
                 {% if product.available %}
@@ -79,31 +76,26 @@
                   -%}
 
                   <div class="b-column b-is-half-tablet b-is-one-third-desktop b-is-one-quarter-widescreen">
-                    <div class="b-columns b-is-multiline">
+                    <div class="b-columns b-is-multiline b-is-mobile">
                       <!-- Card image -->
                       <div class="b-column">
-                        <div class="b-has-image-overlay">
-                          <figure class="b-image b-is-1by1" style="margin: 0; background: var(--plt-purple-soft);">
-                            <a href="{{ product.url }}">
-                              {{
-                                product.featured_media
-                                | image_url: width: 600, height: 600, pad_color: 'ffffff'
-                                | image_tag:
-                                  widths: '150,250,350,450,600',
-                                  loading: 'lazy',
-                                  style: 'object-fit: contain;',
-                                  alt: product.title
-                                | escape
-                              }}
-                            </a>
-                          </figure>
+                        <a href="{{ product.url }}">
+                          <div class="b-has-image-overlay">
+                            {% render 'image',
+                              image: product.featured_media,
+                              width: 600,
+                              height: 600,
+                              crop: 'center',
+                              class: 'b-is-1by1'
+                            %}
 
-                          {% if free_shipping %}
-                            <span class="b-badge-primary b-tag-top-left b-is-size-7">Free shipping</span>
-                          {% elsif on_sale %}
-                            <span class="b-badge-danger b-tag-top-left b-is-size-7">SALE {{ saved_pct }}% OFF</span>
-                          {% endif %}
-                        </div>
+                            {% if free_shipping %}
+                              <span class="b-badge-primary b-tag-top-left b-is-size-7">Free shipping</span>
+                            {% elsif on_sale %}
+                              <span class="b-badge-danger b-tag-top-left b-is-size-7">SALE {{ saved_pct }}% OFF</span>
+                            {% endif %}
+                          </div>
+                        </a>
                       </div>
 
                       <!-- Card content -->

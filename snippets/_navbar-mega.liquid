@@ -35,7 +35,7 @@
             class="b-column l-child-column"
             x-data="{ submenu_active:true }"
             x-init="$nextTick(() => { submenu_active = !$store.screenSize.small })"
-            :style="!$store.screenSize.small ? `width: ${child_link_column_width}%` : ''"
+            :style="!$store.screenSize.small ? 'width: {{ child_link_column_width }}%' : ''"
           >
             <div
               class="b-navbar-item l-child-b-navbar-item"
