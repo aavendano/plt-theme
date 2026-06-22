@@ -97,5 +97,33 @@
         }
       }
     }
+  },
+  "sections": {
+    "location": {
+      "name": "Location page",
+      "hero_header": "Hero",
+      "hero_background": "Hero background",
+      "hero_gradient": "Brand gradient",
+      "hero_dark": "Dark",
+      "hero_warm": "Warm pink",
+      "show_trust_bar": "Show trust bar",
+      "best_sellers_header": "Best sellers shelf",
+      "eyebrow": "Eyebrow",
+      "heading": "Heading",
+      "collection": "Collection",
+      "products_to_show": "Products to show",
+      "new_arrivals_header": "New arrivals shelf",
+      "newsletter_header": "Newsletter CTA",
+      "text": "Text",
+      "button_label": "Button label",
+      "category_card": "Category card",
+      "label_optional": "Label (optional — defaults to collection title)",
+      "image_optional": "Image (optional)",
+      "background_tint": "Background tint",
+      "tint_purple": "Purple",
+      "tint_teal": "Teal",
+      "tint_pink": "Pink",
+      "tint_mix": "Purple → teal"
+    }
   }
 }

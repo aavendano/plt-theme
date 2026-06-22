@@ -1,0 +1,74 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-location",
+      "blocks": {
+        "category_HnY8gk": {
+          "type": "category",
+          "settings": {
+            "collection": "best-sex-toys",
+            "label": "",
+            "tint": "purple"
+          }
+        },
+        "category_nEtkrC": {
+          "type": "category",
+          "settings": {
+            "collection": "sex-toys-for-women",
+            "label": "",
+            "tint": "purple"
+          }
+        },
+        "category_NQmmY9": {
+          "type": "category",
+          "settings": {
+            "collection": "sex-toys-for-men",
+            "label": "",
+            "tint": "purple"
+          }
+        },
+        "category_3pcHHW": {
+          "type": "category",
+          "settings": {
+            "collection": "sex-toys-new-arrival",
+            "label": "",
+            "tint": "purple"
+          }
+        }
+      },
+      "block_order": [
+        "category_HnY8gk",
+        "category_nEtkrC",
+        "category_NQmmY9",
+        "category_3pcHHW"
+      ],
+      "settings": {
+        "hero_style": "gradient",
+        "show_trust_bar": true,
+        "products_eyebrow": "Trending now",
+        "products_heading": "Best sellers",
+        "products_collection": "sex-toys-new-arrival",
+        "products_count": 4,
+        "new_eyebrow": "Fresh arrivals",
+        "new_heading": "New in store",
+        "new_collection": "",
+        "new_count": 4,
+        "newsletter_heading": "New here?",
+        "newsletter_text": "Join the club for 15% off your first order and exclusive drops.",
+        "newsletter_button": "Get my code"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

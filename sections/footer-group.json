@@ -14,7 +14,26 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "menu": "",
+        "tagline": "Embrace Your Sexual Wellness",
+        "social_instagram": "https://www.instagram.com/playlovetoys/",
+        "social_facebook": "https://www.facebook.com/playlovetoys",
+        "social_bluesky": "https://bsky.app/profile/playlovetoys.bsky.social",
+        "social_tiktok": "",
+        "social_youtube": "",
+        "social_whatsapp": "",
+        "show_newsletter": true,
+        "newsletter_title": "¡Únete a nuestra comunidad!",
+        "newsletter_subtitle": "Recibe novedades, ofertas exclusivas y tips de bienestar.",
+        "col1_title": "Collections",
+        "col1_menu": "footer-collections",
+        "col2_title": "Menu",
+        "col2_menu": "footer",
+        "col3_title": "",
+        "col3_menu": "blog-main-menu",
+        "col4_title": "",
+        "col4_menu": "service-areas",
+        "copyright_extra": "",
+        "legal_menu": "horizon-main-menu",
         "show_payment_icons": true
       }
     }

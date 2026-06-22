@@ -1,0 +1,736 @@
+{%- comment -%}
+  Section: main-location — metaobject location landing page (b-style).
+{%- endcomment -%}
+
+{%- liquid
+  assign mo = metaobject
+  assign city = mo.city | default: shop.name
+  assign tints = 'var(--plt-purple-soft),var(--plt-teal-soft),var(--plt-pink-soft),linear-gradient(135deg|#efeaf5|#e0f1f4)' | split: ','
+-%}
+
+<div class="loc loc--hero-{{ section.settings.hero_style }}" data-screen-label="{{ 'sections.location.screen_label' | t: city: city }}">
+
+  {%- comment -%} ===== HERO ===== {%- endcomment -%}
+  <div class="b-hero loc-band loc-hero">
+    <div class="b-hero-body">
+      <div class="b-container b-is-fullhd b-px-5">
+        <div class="b-columns b-is-vcentered b-is-8">
+          <div class="b-column">
+            <span class="b-tag b-is-rounded l-loc-eyebrow b-mb-5">
+              📍 {% if mo.state != blank %}{{ mo.state }}{% else %}{{ city }}{% endif -%}
+              {%- if mo.country != blank %} · {{ mo.country }}{% endif %}
+            </span>
+            <h1 class="b-title b-is-1 b-has-text-white b-mb-4">{{ mo.titulo | default: mo.system.handle }}</h1>
+            {%- if mo.subtitulo != blank -%}
+              <p class="b-subtitle b-is-5 b-has-text-white b-mb-5 l-loc-hero-sub">{{ mo.subtitulo }}</p>
+            {%- endif -%}
+            <div class="b-buttons">
+              <a href="#loc-products" class="b-button b-is-link b-is-large b-is-rounded l-loc-btn-glow">{{ 'sections.location.shop_now' | t }}</a>
+              <a href="#loc-categories" class="b-button b-is-large b-is-rounded l-loc-btn-ghost">{{ 'sections.location.browse_categories' | t }}</a>
+            </div>
+          </div>
+          <div class="b-column b-is-narrow">
+            <div class="b-fixed-grid b-has-2-cols l-loc-stats">
+              <div class="b-grid">
+                <div class="b-box l-loc-stat">
+                  <span class="l-loc-stat-n">10k+</span>
+                  <span class="l-loc-stat-l">{{ 'sections.location.stat_customers' | t: city: city }}</span>
+                </div>
+                <div class="b-box l-loc-stat">
+                  <span class="l-loc-stat-n">500+</span>
+                  <span class="l-loc-stat-l">{{ 'sections.location.stat_products' | t }}</span>
+                </div>
+                <div class="b-box l-loc-stat">
+                  <span class="l-loc-stat-n">2–4</span>
+                  <span class="l-loc-stat-l">{{ 'sections.location.stat_delivery' | t }}</span>
+                </div>
+                <div class="b-box l-loc-stat">
+                  <span class="l-loc-stat-n">30</span>
+                  <span class="l-loc-stat-l">{{ 'sections.location.stat_guarantee' | t }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ===== TRUST STRIP ===== {%- endcomment -%}
+  {%- if section.settings.show_trust_bar -%}
+    <div class="b-section loc-band loc-trust b-has-text-white">
+      <div class="b-container b-is-fullhd b-px-5">
+        <div class="b-level b-is-mobile b-is-justify-content-center">
+          <div class="b-level-item"><span class="b-is-size-7">{{ 'sections.location.trust_packaging' | t }}</span></div>
+          <div class="b-level-item"><span class="b-is-size-7">{{ 'sections.location.trust_materials' | t }}</span></div>
+          <div class="b-level-item"><span class="b-is-size-7">{{ 'sections.location.trust_shipping' | t }}</span></div>
+          <div class="b-level-item"><span class="b-is-size-7">{{ 'sections.location.trust_guarantee' | t }}</span></div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ===== INTRO EDITORIAL ===== {%- endcomment -%}
+  {%- if mo.intro != blank -%}
+    <div class="b-section loc-band">
+      <div class="b-container b-is-fullhd b-px-5">
+        <div class="b-columns b-is-8">
+          <div class="b-column b-is-7-tablet">
+            <p class="b-tag b-is-light b-is-link l-loc-overline b-mb-2">{{ city }}</p>
+            {%- if mo.subtitulo != blank -%}
+              <h2 class="b-title b-is-3 b-mb-4">{{ mo.subtitulo }}</h2>
+            {%- endif -%}
+            <div class="b-content l-loc-ed">{{ mo.intro }}</div>
+          </div>
+          <aside class="b-column b-is-5-tablet">
+            <div class="b-box l-loc-aside">
+              <p class="b-title b-is-6 b-has-text-link b-mb-4">{{ 'sections.location.aside_title' | t }}</p>
+              <ul class="b-content l-loc-checks b-mb-5">
+                <li>
+                  <span class="b-has-text-link">✓</span>
+                  <div><b>{{ 'sections.location.benefit_materials_title' | t }}</b><em>{{ 'sections.location.benefit_materials_desc' | t }}</em></div>
+                </li>
+                <li>
+                  <span class="b-has-text-link">✓</span>
+                  <div><b>{{ 'sections.location.benefit_shipping_title' | t }}</b><em>{{ 'sections.location.benefit_shipping_desc' | t }}</em></div>
+                </li>
+                <li>
+                  <span class="b-has-text-link">✓</span>
+                  <div><b>{{ 'sections.location.benefit_checkout_title' | t }}</b><em>{{ 'sections.location.benefit_checkout_desc' | t }}</em></div>
+                </li>
+                <li>
+                  <span class="b-has-text-link">✓</span>
+                  <div><b>{{ 'sections.location.benefit_delivery_title' | t }}</b><em>{{ 'sections.location.benefit_delivery_desc' | t }}</em></div>
+                </li>
+              </ul>
+              <a href="#loc-products" class="b-button b-is-link b-is-fullwidth b-is-rounded">{{ 'sections.location.shop_all_products' | t }}</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ===== SHOP BY CATEGORY ===== {%- endcomment -%}
+  {%- if section.blocks.size > 0 -%}
+    <div id="loc-categories" class="b-section loc-band loc-band--paper">
+      <div class="b-container b-is-fullhd b-px-5">
+        <div class="b-level b-is-mobile b-is-align-items-flex-end b-mb-5">
+          <div class="b-level-left">
+            <h2 class="b-title b-is-4">{{ 'sections.location.shop_by_category' | t }}</h2>
+          </div>
+          <div class="b-level-right">
+            <a href="{{ routes.collections_url }}" class="b-has-text-link b-is-size-6 l-loc-link">{{ 'sections.location.view_all_collections' | t }}</a>
+          </div>
+        </div>
+        <div class="b-fixed-grid b-has-1-cols-mobile b-has-2-cols-tablet b-has-4-cols-desktop">
+          <div class="b-grid">
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign cat_url = block.settings.collection.url | default: '#'
+                assign cat_label = block.settings.label | default: block.settings.collection.title
+                assign cat_count = block.settings.collection.products_count
+              -%}
+              <a href="{{ cat_url }}" class="b-card l-loc-cat" {{ block.shopify_attributes }}>
+                <div class="b-card-image">
+                  <figure class="b-image b-is-4by3 l-loc-tint-{{ block.settings.tint }}">
+                    {%- if block.settings.image != blank -%}
+                      <img
+                        src="{{ block.settings.image | image_url: width: 600 }}"
+                        alt="{{ cat_label | escape }}"
+                        loading="lazy"
+                        width="600"
+                        height="400"
+                      >
+                    {%- elsif block.settings.collection.featured_image != blank -%}
+                      <img
+                        src="{{ block.settings.collection.featured_image | image_url: width: 600 }}"
+                        alt="{{ cat_label | escape }}"
+                        loading="lazy"
+                        width="600"
+                        height="400"
+                      >
+                    {%- endif -%}
+                  </figure>
+                </div>
+                <footer class="b-card-footer">
+                  <div>
+                    <span class="b-has-text-weight-bold">{{ cat_label }}</span>
+                    {%- if cat_count > 0 -%}
+                      <span class="b-is-size-7 b-has-text-grey b-is-block">{{ 'products.facets.product_count_simple' | t: count: cat_count }}</span>
+                    {%- endif -%}
+                  </div>
+                  <span class="b-has-text-link">→</span>
+                </footer>
+              </a>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ===== BEST SELLERS ===== {%- endcomment -%}
+  {%- if section.settings.products_collection != blank -%}
+    <div id="loc-products" class="b-section loc-band">
+      <div class="b-container b-is-fullhd b-px-5">
+        <div class="b-level b-is-mobile b-is-align-items-flex-end b-mb-5">
+          <div class="b-level-left">
+            {%- if section.settings.products_eyebrow != blank -%}
+              <p class="b-tag b-is-light b-is-link l-loc-overline b-mb-2">{{ section.settings.products_eyebrow }}</p>
+            {%- endif -%}
+            <h2 class="b-title b-is-4">{{ section.settings.products_heading }}</h2>
+          </div>
+          <div class="b-level-right">
+            <a href="{{ section.settings.products_collection.url }}" class="b-has-text-link b-is-size-6 l-loc-link">{{ 'sections.location.view_all' | t }}</a>
+          </div>
+        </div>
+        <div class="b-fixed-grid b-has-1-cols-mobile b-has-2-cols-tablet b-has-4-cols-desktop">
+          <div class="b-grid">
+            {%- for product in section.settings.products_collection.products limit: section.settings.products_count -%}
+              {%- render 'loc-product-card', product: product, tint: tints[forloop.index0] -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ===== EDITORIAL 2 ===== {%- endcomment -%}
+  {%- if mo.content_2 != blank -%}
+    <div class="b-section loc-band loc-band--paper">
+      <div class="b-container b-is-fullhd b-px-5 l-loc-prose">
+        {%- if mo.titulo_2 != blank -%}
+          <p class="b-tag b-is-light b-is-link l-loc-overline b-mb-2">{{ 'sections.location.overline_collection' | t }}</p>
+        {%- endif -%}
+        {%- if mo.titulo_2 != blank -%}
+          <h2 class="b-title b-is-3 b-mb-4">{{ mo.titulo_2 }}</h2>
+        {%- endif -%}
+        {%- if mo.subtitulo_h2 != blank -%}
+          <p class="b-subtitle b-is-5 b-has-text-grey b-mb-5">{{ mo.subtitulo_h2 }}</p>
+        {%- endif -%}
+        <div class="b-content l-loc-ed">{{ mo.content_2 }}</div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ===== NEW ARRIVALS ===== {%- endcomment -%}
+  {%- if section.settings.new_collection != blank -%}
+    <div class="b-section loc-band">
+      <div class="b-container b-is-fullhd b-px-5">
+        <div class="b-level b-is-mobile b-is-align-items-flex-end b-mb-5">
+          <div class="b-level-left">
+            {%- if section.settings.new_eyebrow != blank -%}
+              <p class="b-tag b-is-light b-is-info l-loc-overline l-loc-overline--teal b-mb-2">{{ section.settings.new_eyebrow }}</p>
+            {%- endif -%}
+            <h2 class="b-title b-is-4">{{ section.settings.new_heading }}</h2>
+          </div>
+          <div class="b-level-right">
+            <a href="{{ section.settings.new_collection.url }}" class="b-has-text-link b-is-size-6 l-loc-link">{{ 'sections.location.view_all_new_arrivals' | t }}</a>
+          </div>
+        </div>
+        <div class="b-fixed-grid b-has-1-cols-mobile b-has-2-cols-tablet b-has-4-cols-desktop">
+          <div class="b-grid">
+            {%- for product in section.settings.new_collection.products limit: section.settings.new_count -%}
+              {%- render 'loc-product-card', product: product, tint: tints[forloop.index0] -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ===== EDITORIAL 3 ===== {%- endcomment -%}
+  {%- if mo.content_3 != blank -%}
+    <div class="b-section loc-band loc-band--paper">
+      <div class="b-container b-is-fullhd b-px-5">
+        <div class="b-columns b-is-8">
+          <div class="b-column b-is-7-tablet">
+            <p class="b-tag b-is-light b-is-link l-loc-overline b-mb-2">{{ 'sections.location.overline_shop_online' | t }}</p>
+            {%- if mo.titulo_3 != blank -%}
+              <h2 class="b-title b-is-3 b-mb-4">{{ mo.titulo_3 }}</h2>
+            {%- endif -%}
+            {%- if mo.subtitulo_3 != blank -%}
+              <p class="b-subtitle b-is-5 b-has-text-grey b-mb-5">{{ mo.subtitulo_3 }}</p>
+            {%- endif -%}
+            <div class="b-content l-loc-ed">{{ mo.content_3 }}</div>
+          </div>
+          <aside class="b-column b-is-5-tablet">
+            <div class="b-box l-loc-promo">
+              <p class="b-title b-is-4 b-has-text-white b-mb-2">{{ 'sections.location.promo_title' | t }}</p>
+              <p class="b-subtitle b-is-6 b-has-text-white b-mb-4 l-loc-promo-text">{{ 'sections.location.promo_text' | t }}</p>
+              <form onsubmit="return false">
+                <div class="b-field">
+                  <input type="email" class="b-input b-is-rounded" placeholder="{{ 'sections.location.email_placeholder' | t }}" aria-label="{{ 'sections.location.email_label' | t }}">
+                </div>
+                <button class="b-button b-is-fullwidth b-is-rounded l-loc-btn-invert b-mt-2" type="submit">{{ 'sections.location.get_my_code' | t }}</button>
+              </form>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ===== BRAND SECTION ===== {%- endcomment -%}
+  {%- if mo.brand_section_title != blank or mo.brand_section_content != blank -%}
+    <div class="b-section loc-band">
+      <div class="b-container b-is-fullhd b-px-5">
+        <div class="b-box l-loc-brand">
+          <div class="b-columns b-is-8">
+            <div class="b-column b-is-5-tablet">
+              <h2 class="b-title b-is-3 b-has-text-white b-mb-3">{{ mo.brand_section_title }}</h2>
+              {%- if mo.brand_section_subtitle != blank -%}
+                <p class="b-subtitle b-is-6 b-has-text-white b-mb-5 l-loc-brand-sub">{{ mo.brand_section_subtitle }}</p>
+              {%- endif -%}
+              <a href="#loc-products" class="b-button b-is-large b-is-rounded l-loc-btn-invert">{{ 'sections.location.shop_now_arrow' | t }}</a>
+            </div>
+            <div class="b-column b-is-7-tablet">
+              <div class="b-content l-loc-ed l-loc-ed--inv">{{ mo.brand_section_content }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ===== DELIVERY / MAP ===== {%- endcomment -%}
+  {%- if mo.map_content != blank -%}
+    <div class="b-section loc-band loc-band--paper">
+      <div class="b-container b-is-fullhd b-px-5">
+        <p class="b-tag b-is-light b-is-info l-loc-overline l-loc-overline--teal b-mb-2">{{ 'sections.location.overline_delivery' | t }}</p>
+        {%- if mo.map_title != blank -%}
+          <h2 class="b-title b-is-3 b-mb-5">{{ mo.map_title }}</h2>
+        {%- endif -%}
+        <div class="b-columns b-is-8">
+          <div class="b-column b-is-7-tablet">
+            <div class="b-content l-loc-ed">{{ mo.map_content }}</div>
+          </div>
+          <div class="b-column b-is-5-tablet">
+            <div class="b-box l-loc-zones">
+              <div class="l-loc-zones-head">{{ 'sections.location.delivery_zones' | t: city: city }}</div>
+              <div class="l-loc-zones-body">
+                <div class="b-level b-is-mobile">
+                  <div class="b-level-left"><span>{{ 'sections.location.zone_standard' | t }}</span></div>
+                  <div class="b-level-right"><span class="b-tag b-is-success b-is-light">{{ 'sections.location.zone_days_short' | t }}</span></div>
+                </div>
+                <div class="b-level b-is-mobile">
+                  <div class="b-level-left"><span>{{ 'sections.location.zone_outer' | t }}</span></div>
+                  <div class="b-level-right"><span class="b-tag b-is-success b-is-light">{{ 'sections.location.zone_days_medium' | t }}</span></div>
+                </div>
+                <div class="b-level b-is-mobile">
+                  <div class="b-level-left"><span>{{ 'sections.location.zone_metro' | t }}</span></div>
+                  <div class="b-level-right"><span class="b-tag b-is-info b-is-light">{{ 'sections.location.zone_days_long' | t }}</span></div>
+                </div>
+              </div>
+              <div class="l-loc-zones-foot">{{ 'sections.location.zones_foot_html' | t }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ===== FAQ ===== {%- endcomment -%}
+  {%- if mo.faqs != blank -%}
+    <div class="b-section loc-band">
+      <div class="b-container b-is-fullhd b-px-5 l-loc-faq-wrap">
+        <p class="b-tag b-is-light b-is-link l-loc-overline b-has-text-centered b-mb-2">{{ 'sections.location.faq_overline' | t }}</p>
+        <h2 class="b-title b-is-3 b-has-text-centered b-mb-3">{{ 'sections.location.faq_heading' | t }}</h2>
+        <p class="b-subtitle b-is-5 b-has-text-grey b-has-text-centered b-mb-5">{{ 'sections.location.faq_lead' | t }}</p>
+        <div class="b-mt-5">
+          {%- for faq in mo.faqs.value -%}
+            <details class="l-loc-faq">
+              <summary>{{ faq.question | default: faq.pregunta }}</summary>
+              <div class="b-content l-loc-faq-a">{{ faq.answer | default: faq.respuesta }}</div>
+            </details>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ===== AFTER PAGE CONTENT ===== {%- endcomment -%}
+  {%- if mo.after_page_content != blank -%}
+    <div class="b-section loc-band loc-band--paper">
+      <div class="b-container b-is-fullhd b-px-5 l-loc-prose">
+        <div class="b-content l-loc-ed">{{ mo.after_page_content }}</div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ===== NEWSLETTER CTA ===== {%- endcomment -%}
+  <div class="b-section loc-band loc-band--paper loc-band--tight">
+    <div class="b-container b-is-fullhd b-px-5">
+      <div class="b-box l-loc-news">
+        <div class="b-level b-is-mobile">
+          <div class="b-level-left">
+            <h3 class="b-title b-is-3 b-has-text-white b-mb-2">{{ section.settings.newsletter_heading }}</h3>
+            <p class="b-subtitle b-is-6 b-has-text-white l-loc-news-text">{{ section.settings.newsletter_text }}</p>
+          </div>
+          <div class="b-level-right">
+            <form onsubmit="return false">
+              <div class="b-field b-is-grouped b-is-grouped-multiline">
+                <div class="b-control">
+                  <input type="email" class="b-input b-is-rounded" placeholder="{{ 'sections.location.email_placeholder' | t }}" aria-label="{{ 'sections.location.email_label' | t }}">
+                </div>
+                <div class="b-control">
+                  <button class="b-button b-is-large b-is-rounded l-loc-btn-invert" type="submit">
+                    {{ section.settings.newsletter_button }}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .loc {
+    --loc-hero-bg: var(--plt-gradient);
+    color: var(--plt-ink);
+    font-family: 'Roboto Condensed', 'Roboto Condensed Fallback', var(--font-primary--family, sans-serif);
+  }
+  .loc--hero-dark { --loc-hero-bg: #1a1720; }
+  .loc--hero-warm { --loc-hero-bg: var(--plt-gradient-warm); }
+
+  .loc h1,
+  .loc h2,
+  .loc h3,
+  .loc .b-title {
+    text-wrap: balance;
+    font-family: 'Fredoka', 'Fredoka Fallback', var(--font-primary--family, sans-serif);
+  }
+
+  .loc-band {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+  .loc-band--paper { background: var(--plt-paper); }
+  .loc-band--tight { padding-block: 2rem !important; }
+
+  .loc-hero {
+    background: var(--loc-hero-bg);
+    color: #fff;
+    padding: 0;
+  }
+  .loc-hero .b-hero-body { padding-block: 5rem 4.5rem; }
+
+  .l-loc-eyebrow {
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    color: #fff;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .l-loc-hero-sub { max-width: 480px; opacity: 0.92; }
+  .l-loc-btn-glow { box-shadow: 0 4px 18px rgba(244, 67, 108, 0.45); font-weight: 700; }
+  .l-loc-btn-ghost {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.45);
+    font-weight: 600;
+  }
+  .l-loc-stats { max-width: 420px; margin-left: auto; }
+  .l-loc-stat {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+    box-shadow: none;
+  }
+  .l-loc-stat-n {
+    display: block;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2.375rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+  .l-loc-stat-l { display: block; font-size: 12.5px; opacity: 0.82; font-weight: 500; }
+
+  .loc-trust { background: var(--plt-charcoal); padding: 0 !important; }
+  .loc-trust .b-level-item { padding: 0.8rem 1.5rem; font-weight: 600; }
+  .loc-trust .b-level-item + .b-level-item { border-left: 1px solid rgba(255, 255, 255, 0.12); }
+
+  .l-loc-overline {
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .l-loc-overline--teal { color: var(--plt-teal) !important; }
+  .l-loc-link { font-weight: 700; }
+
+  .l-loc-prose { max-width: 860px; margin-inline: auto; }
+
+  .l-loc-ed h2 { font-size: 21px; color: var(--plt-purple); margin: 1.75rem 0 0.625rem; }
+  .l-loc-ed h3 { font-size: 17px; color: var(--plt-charcoal); margin: 1.375rem 0 0.5rem; }
+  .l-loc-ed strong,
+  .l-loc-ed b { color: var(--plt-charcoal); }
+  .l-loc-ed em { color: var(--plt-slate); }
+  .l-loc-ed--inv,
+  .l-loc-ed--inv p,
+  .l-loc-ed--inv li { color: rgba(255, 255, 255, 0.9); }
+  .l-loc-ed--inv h2,
+  .l-loc-ed--inv h3,
+  .l-loc-ed--inv strong,
+  .l-loc-ed--inv b,
+  .l-loc-ed--inv em { color: #fff; }
+
+  .l-loc-aside { background: var(--plt-paper); border: 1px solid var(--plt-line); border-radius: 16px; }
+  .l-loc-checks { list-style: none; padding: 0; }
+  .l-loc-checks li { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 1rem; }
+  .l-loc-checks b { display: block; font-size: 14px; }
+  .l-loc-checks em { display: block; font-size: 13px; color: var(--plt-slate); font-style: normal; margin-top: 2px; }
+
+  .l-loc-cat { height: 100%; transition: box-shadow 0.2s, transform 0.2s; text-decoration: none; }
+  .l-loc-cat:hover { box-shadow: 0 6px 24px rgba(83, 50, 120, 0.13); transform: translateY(-2px); }
+  .l-loc-tint-purple { background: var(--plt-purple-soft); }
+  .l-loc-tint-teal { background: var(--plt-teal-soft); }
+  .l-loc-tint-pink { background: var(--plt-pink-soft); }
+  .l-loc-tint-mix { background: linear-gradient(135deg, #efeaf5, #e0f1f4); }
+
+  .l-loc-pcard { height: 100%; transition: box-shadow 0.2s, transform 0.2s; text-decoration: none; }
+  .l-loc-pcard:hover { box-shadow: 0 8px 28px rgba(83, 50, 120, 0.14); transform: translateY(-2px); }
+  .l-loc-pcard .b-card-image img { object-fit: cover; }
+  .l-loc-badge-sale,
+  .l-loc-badge-new { border-bottom-right-radius: 2px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; }
+  .l-loc-vendor { text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; }
+  .l-loc-stars { letter-spacing: 1px; font-size: 13px; }
+  .l-loc-price { margin-top: auto; gap: 0.5rem; }
+  .l-loc-price-now { font-size: 17px; }
+  .l-loc-price-was { text-decoration: line-through; font-size: 14px; }
+
+  .l-loc-promo,
+  .l-loc-news { background: var(--plt-gradient-warm); color: #fff; border-radius: 20px; border: none; box-shadow: none; }
+  .l-loc-brand { background: var(--plt-gradient); color: #fff; border-radius: 20px; border: none; box-shadow: none; padding: 3.25rem; }
+  .l-loc-brand-sub { opacity: 0.86; }
+  .l-loc-promo-text,
+  .l-loc-news-text { opacity: 0.9; }
+  .l-loc-btn-invert { background: #fff; color: var(--plt-pink-deep); font-weight: 700; }
+  .l-loc-brand .l-loc-btn-invert { color: var(--plt-purple); }
+  .l-loc-promo .b-input,
+  .l-loc-news .b-input {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.45);
+    color: #fff;
+  }
+  .l-loc-promo .b-input::placeholder,
+  .l-loc-news .b-input::placeholder { color: rgba(255, 255, 255, 0.7); }
+
+  .l-loc-zones { padding: 0; overflow: hidden; border: 1px solid var(--plt-line); border-radius: 16px; }
+  .l-loc-zones-head {
+    background: var(--plt-purple);
+    color: #fff;
+    padding: 1rem 1.25rem;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .l-loc-zones-body { padding: 0.375rem 1.25rem; }
+  .l-loc-zones-body .b-level { padding: 0.75rem 0; border-bottom: 1px solid var(--plt-line); font-weight: 700; font-size: 14px; }
+  .l-loc-zones-body .b-level:last-child { border-bottom: none; }
+  .l-loc-zones-foot { background: var(--plt-pink-soft); padding: 0.875rem 1.25rem; font-size: 13px; line-height: 1.5; }
+
+  .l-loc-faq-wrap { max-width: 760px; margin-inline: auto; }
+  .l-loc-faq { border-bottom: 1px solid var(--plt-line); }
+  .l-loc-faq summary {
+    padding: 1.125rem 0;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--plt-charcoal);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .l-loc-faq summary::-webkit-details-marker { display: none; }
+  .l-loc-faq summary::after {
+    content: '+';
+    color: var(--plt-pink);
+    font-size: 22px;
+    flex-shrink: 0;
+    transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .l-loc-faq[open] summary { color: var(--plt-purple); }
+  .l-loc-faq[open] summary::after { transform: rotate(45deg); }
+  .l-loc-faq-a { padding-bottom: 1.125rem; font-size: 15px; line-height: 1.75; }
+
+  @media (max-width: 860px) {
+    .l-loc-stats { margin-left: 0; max-width: 100%; }
+  }
+  @media (max-width: 768px) {
+    .loc-trust .b-level-item + .b-level-item { border-left: none; }
+    .loc-hero .b-hero-body { padding-block: 2.5rem 2rem; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.location.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.location.hero_header"
+    },
+    {
+      "type": "select",
+      "id": "hero_style",
+      "label": "t:sections.location.hero_background",
+      "options": [
+        { "value": "gradient", "label": "t:sections.location.hero_gradient" },
+        { "value": "dark", "label": "t:sections.location.hero_dark" },
+        { "value": "warm", "label": "t:sections.location.hero_warm" }
+      ],
+      "default": "gradient"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_bar",
+      "label": "t:sections.location.show_trust_bar",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.location.best_sellers_header"
+    },
+    {
+      "type": "text",
+      "id": "products_eyebrow",
+      "label": "t:sections.location.eyebrow",
+      "default": "Trending now"
+    },
+    {
+      "type": "text",
+      "id": "products_heading",
+      "label": "t:sections.location.heading",
+      "default": "Best sellers"
+    },
+    {
+      "type": "collection",
+      "id": "products_collection",
+      "label": "t:sections.location.collection"
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "t:sections.location.products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "t:sections.location.new_arrivals_header"
+    },
+    {
+      "type": "text",
+      "id": "new_eyebrow",
+      "label": "t:sections.location.eyebrow",
+      "default": "Fresh arrivals"
+    },
+    {
+      "type": "text",
+      "id": "new_heading",
+      "label": "t:sections.location.heading",
+      "default": "New in store"
+    },
+    {
+      "type": "collection",
+      "id": "new_collection",
+      "label": "t:sections.location.collection"
+    },
+    {
+      "type": "range",
+      "id": "new_count",
+      "label": "t:sections.location.products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "t:sections.location.newsletter_header"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "t:sections.location.heading",
+      "default": "New here?"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_text",
+      "label": "t:sections.location.text",
+      "default": "Join the club for 15% off your first order and exclusive drops."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button",
+      "label": "t:sections.location.button_label",
+      "default": "Get my code"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "t:sections.location.category_card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "t:sections.location.collection"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.location.label_optional"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.location.image_optional"
+        },
+        {
+          "type": "select",
+          "id": "tint",
+          "label": "t:sections.location.background_tint",
+          "options": [
+            { "value": "purple", "label": "t:sections.location.tint_purple" },
+            { "value": "teal", "label": "t:sections.location.tint_teal" },
+            { "value": "pink", "label": "t:sections.location.tint_pink" },
+            { "value": "mix", "label": "t:sections.location.tint_mix" }
+          ],
+          "default": "purple"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.location.name",
+      "blocks": [
+        { "type": "category" },
+        { "type": "category", "settings": { "tint": "teal" } },
+        { "type": "category", "settings": { "tint": "pink" } },
+        { "type": "category", "settings": { "tint": "mix" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

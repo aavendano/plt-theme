@@ -1,39 +1,364 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+{%- liquid
+  assign _logo = section.settings.logo | default: settings.logo
+-%}
+
+<footer class="b-footer l-sfooter" role="contentinfo">
+  {%- comment -%}══ BAND: Logo + Newsletter ══════════════════════════════{%- endcomment -%}
+  <div class="b-section l-sfooter__band">
+    <div class="b-container b-is-fullhd b-px-5">
+      <div class="b-level">
+        {%- comment -%}── Brand ──{%- endcomment -%}
+        <div class="b-level-left">
+          <div class="b-level-item b-has-text-centered">
+            <div>
+              {%- if _logo != blank -%}
+                <a href="{{ routes.root_url }}" class="b-is-block b-mb-3" aria-label="{{ shop.name }}">
+                  <div class="b-is-flex b-is-justify-content-center">
+                    {% render 'image', image: _logo, width: 300, class: 'l-logo-footer' %}
+                  </div>
+                </a>
+              {%- endif -%}
+
+              {%- if section.settings.tagline != blank -%}
+                <p class="b-content b-is-small b-has-text-grey b-mb-4">{{ section.settings.tagline }}</p>
+              {%- endif -%}
+
+              <div class="b-level-item">
+                {%- if section.settings.social_instagram != blank -%}
+                  <a
+                    href="{{ section.settings.social_instagram }}"
+                    class="b-button b-is-large b-is-rounded b-is-ghost b-has-text-white "
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                  >
+                    {% render 'icon-instagram' %}
+                  </a>
+                {%- endif -%}
+                {%- if section.settings.social_facebook != blank -%}
+                  <a
+                    href="{{ section.settings.social_facebook }}"
+                    class="b-button b-is-large b-is-rounded b-is-ghost b-has-text-white "
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                  >
+                    {% render 'icon-facebook' %}
+                  </a>
+                {%- endif -%}
+                {%- if section.settings.social_bluesky != blank -%}
+                  <a
+                    href="{{ section.settings.social_bluesky }}"
+                    class="b-button b-is-large b-is-rounded b-is-ghost b-has-text-white "
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Bluesky"
+                  >
+                    {% render 'icon-bluesky' %}
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="b-level-right">
+          <div class="b-level-item">
+            {%- comment -%}── Newsletter ──{%- endcomment -%}
+            {%- if section.settings.show_newsletter -%}
+              {%- if section.settings.newsletter_title != blank -%}
+                <p class="b-title b-is-4 b-has-text-white b-mb-2">{{ section.settings.newsletter_title }}</p>
+              {%- endif -%}
+              {%- if section.settings.newsletter_subtitle != blank -%}
+                <p class="b-subtitle b-is-6 b-has-text-grey b-mb-4">{{ section.settings.newsletter_subtitle }}</p>
+              {%- endif -%}
+
+              {%- form 'customer', id: 'l-footer-newsletter-form' -%}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                {%- if form.posted_successfully? -%}
+                  <div class="b-notification b-is-link" role="alert">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    {{
+                      'sections.footer.newsletter_success'
+                      | t
+                      | default: 'Thanks! You have subscribed successfully.'
+                    }}
+                  </div>
+                {%- else -%}
+                  <div class="b-field b-is-grouped b-is-grouped-multiline">
+                    <label for="l-footer-nl-email" class="b-is-sr-only">
+                      {{ 'sections.footer.newsletter_email_label' | t | default: 'Email' }}
+                    </label>
+                    <div class="b-control b-is-expanded">
+                      <input
+                        id="l-footer-nl-email"
+                        class="b-input"
+                        type="email"
+                        name="contact[email]"
+                        value="{{ form.email }}"
+                        placeholder="{{ 'sections.footer.newsletter_placeholder' | t | default: 'tu@correo.mx' }}"
+                        autocomplete="email"
+                        required
+                      >
+                    </div>
+                    <div class="b-control">
+                      <button type="submit" class="b-button b-is-link">
+                        {{ 'sections.footer.newsletter_btn' | t | default: 'Suscribirme' }}
+                      </button>
+                    </div>
+                  </div>
+                  {%- if form.errors -%}
+                    <p class="b-help b-is-danger" role="alert">
+                      {{ form.errors.translated_fields.email | capitalize }}
+                      {{ form.errors.messages.email }}
+                    </p>
+                  {%- endif -%}
+                  <p class="b-help">
+                    {{ 'sections.footer.newsletter_note' | t | default: 'Sin spam. Cancela cuando quieras.' }}
+                  </p>
+                {%- endif -%}
+              {%- endform -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+  {%- comment -%}══ NAV COLUMNS ═══════════════════════════════════════════{%- endcomment -%}
+  {%- liquid
+    assign _has_cols = false
+    if section.settings.col1_menu != blank or section.settings.col2_menu != blank or section.settings.col3_menu != blank or section.settings.col4_menu != blank
+      assign _has_cols = true
+    endif
+  -%}
 
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+  {%- if _has_cols -%}
+    <div class="b-section b-py-5 l-sfooter__nav">
+      <div class="b-container b-is-fullhd b-px-5">
+        <div class="b-columns b-is-multiline">
+          {%- for i in (1..4) -%}
+            {%- liquid
+              case i
+                when 1
+                  assign _col_menu = section.settings.col1_menu
+                  assign _col_title = section.settings.col1_title
+                when 2
+                  assign _col_menu = section.settings.col2_menu
+                  assign _col_title = section.settings.col2_title
+                when 3
+                  assign _col_menu = section.settings.col3_menu
+                  assign _col_title = section.settings.col3_title
+                when 4
+                  assign _col_menu = section.settings.col4_menu
+                  assign _col_title = section.settings.col4_title
+              endcase
+            -%}
+
+            {%- if _col_menu != blank -%}
+              <div class="b-column b-is-12-mobile b-is-3-tablet" x-data="{ open: false }">
+                <nav class="b-menu">
+                  {%- liquid
+                    if _col_title != blank
+                      assign _head_label = _col_title
+                    else
+                      assign _head_label = _col_menu.title
+                    endif
+                  -%}
+
+                  <p class="b-menu-label b-has-text-white b-is-hidden-mobile">
+                    {{- _head_label -}}
+                  </p>
+
+                  <button
+                    class="b-menu-label b-has-text-white l-sfooter__menu-toggle b-is-hidden-tablet b-is-flex b-is-justify-content-space-between b-is-align-items-center"
+                    @click="open = !open"
+                    :aria-expanded="open.toString()"
+                    type="button"
+                  >
+                    <span>{{- _head_label -}}</span>
+                    <svg
+                      class="l-sfooter__menu-chevron"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      :style="open ? 'transform:rotate(180deg)' : 'transform:rotate(0)'"
+                      aria-hidden="true"
+                    >
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </button>
+
+                  <ul
+                    class="b-menu-list"
+                    x-show="open || !$store.screenSize.small"
+                    x-collapse
+                    style="display: block;"
+                  >
+                    {%- for link in _col_menu.links -%}
+                      <li>
+                        <a href="{{ link.url }}">{{- link.title -}}</a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </nav>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%}══ BOTTOM BAR ════════════════════════════════════════════{%- endcomment -%}
+  <div class="b-section l-sfooter__bottom">
+    <div class="b-container b-is-fullhd b-px-5">
+      <div class="b-level">
+        <div class="b-level-left b-is-flex b-is-flex-wrap b-is-align-items-center">
+          <span class="b-is-size-7 b-has-text-grey">
+            &copy; {{ 'now' | date: '%Y' }}
+            {{ shop.name }}
+            {%- if section.settings.copyright_extra != blank -%}
+              . {{ section.settings.copyright_extra }}
+            {%- endif -%}
+          </span>
+          {%- if section.settings.legal_menu != blank -%}
+            {%- for link in section.settings.legal_menu.links -%}
+              <a href="{{ link.url }}" class="b-is-size-7 b-has-text-grey">{{- link.title -}}</a>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.show_payment_icons and shop.enabled_payment_types != empty -%}
+          <div
+            class="b-level-right b-is-flex b-is-flex-wrap"
+            aria-label="{{ 'sections.footer.payment_methods' | t | default: 'Métodos de pago aceptados' }}"
+          >
+            {%- for type in shop.enabled_payment_types -%}
+              {{ type | payment_type_svg_tag: class: 'l-sfooter__pay-icon' }}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
   </div>
 </footer>
 
 {% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
+  .l-sfooter {
+    --sf-bg: #1a1525;
+    --sf-band: #221832;
+    --sf-bottom: #110d1a;
+    --sf-border: rgba(255, 255, 255, 0.08);
+    --sf-text: rgba(255, 255, 255, 0.7);
+    --sf-muted: rgba(255, 255, 255, 0.38);
+    background: var(--sf-bg);
+    color: var(--sf-text);
+    padding: 0;
   }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
+
+  .l-sfooter__band {
+    background: var(--sf-band);
+    border-bottom: 1px solid var(--sf-border);
   }
-  footer .footer__links,
-  footer .footer__payment {
-    display: flex;
-    gap: 1rem;
+
+  .l-sfooter__bottom {
+    background: var(--sf-bottom);
+    border-top: 1px solid var(--sf-border);
+  }
+
+  .l-logo-footer {
+    filter: brightness(0) invert(1);
+    max-width: 15rem !important;
+  }
+
+  .l-sfooter .b-input {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: #fff;
+  }
+
+  .l-sfooter .b-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .l-sfooter .b-input:focus {
+    border-color: rgba(244, 67, 108, 0.55);
+  }
+
+  .l-sfooter .b-help {
+    color: var(--sf-muted);
+  }
+
+  .l-sfooter .b-menu-list a {
+    color: var(--sf-text);
+    background: transparent;
+  }
+
+  .l-sfooter .b-menu-list a:hover {
+    color: var(--plt-pink, #f4436c);
+    background: transparent;
+  }
+
+  .l-sfooter__menu-toggle {
+    width: 100%;
+    padding: 1rem 0;
+    margin: 0;
+    border: none;
+    border-bottom: 1px solid var(--sf-border);
+    border-radius: 0;
+    background: none;
+    cursor: pointer;
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 0.975rem;
+    font-weight: 600;
+  }
+
+  .l-sfooter__menu-chevron {
+    flex-shrink: 0;
+    transition: transform 0.22s ease;
+  }
+
+  .l-sfooter__pay-icon {
+    height: 32px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .l-sfooter .b-level-left {
+    gap: 0.5rem 1.25rem;
+  }
+
+  .l-sfooter .b-level-left a:hover {
+    color: var(--sf-text);
+  }
+
+  @media screen and (max-width: 767px) {
+    .l-sfooter__nav.b-section {
+      padding-block: 0;
+    }
+
+    .l-sfooter .b-container {
+      padding-inline: 1.25rem;
+    }
   }
 {% endstylesheet %}
 
@@ -42,9 +367,155 @@
   "name": "t:general.footer",
   "settings": [
     {
+      "type": "header",
+      "content": "Logo y tagline"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo del footer",
+      "info": "Opcional. Si se deja en blanco se usa el logo global del tema."
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "El mejor espacio para descubrir productos de bienestar íntimo con discreción y confianza."
+    },
+
+    {
+      "type": "header",
+      "content": "Redes sociales"
+    },
+    {
+      "type": "url",
+      "id": "social_instagram",
+      "label": "Instagram"
+    },
+    {
+      "type": "url",
+      "id": "social_facebook",
+      "label": "Facebook"
+    },
+    {
+      "type": "url",
+      "id": "social_bluesky",
+      "label": "Bluesky"
+    },
+    {
+      "type": "url",
+      "id": "social_tiktok",
+      "label": "TikTok"
+    },
+    {
+      "type": "url",
+      "id": "social_youtube",
+      "label": "YouTube"
+    },
+    {
+      "type": "url",
+      "id": "social_whatsapp",
+      "label": "WhatsApp"
+    },
+
+    {
+      "type": "header",
+      "content": "Suscripción"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Mostrar formulario de suscripción",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Título",
+      "default": "¡Únete a nuestra comunidad!"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_subtitle",
+      "label": "Subtítulo",
+      "default": "Recibe novedades, ofertas exclusivas y tips de bienestar."
+    },
+
+    {
+      "type": "header",
+      "content": "Columna 1"
+    },
+    {
+      "type": "text",
+      "id": "col1_title",
+      "label": "Título (opcional — usa el nombre del menú si se deja vacío)"
+    },
+    {
       "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
+      "id": "col1_menu",
+      "label": "Menú de navegación"
+    },
+
+    {
+      "type": "header",
+      "content": "Columna 2"
+    },
+    {
+      "type": "text",
+      "id": "col2_title",
+      "label": "Título (opcional)"
+    },
+    {
+      "type": "link_list",
+      "id": "col2_menu",
+      "label": "Menú de navegación"
+    },
+
+    {
+      "type": "header",
+      "content": "Columna 3"
+    },
+    {
+      "type": "text",
+      "id": "col3_title",
+      "label": "Título (opcional)"
+    },
+    {
+      "type": "link_list",
+      "id": "col3_menu",
+      "label": "Menú de navegación"
+    },
+
+    {
+      "type": "header",
+      "content": "Columna 4"
+    },
+    {
+      "type": "text",
+      "id": "col4_title",
+      "label": "Título (opcional)"
+    },
+    {
+      "type": "link_list",
+      "id": "col4_menu",
+      "label": "Menú de navegación"
+    },
+
+    {
+      "type": "header",
+      "content": "Barra inferior"
+    },
+    {
+      "type": "text",
+      "id": "copyright_extra",
+      "label": "Texto adicional de copyright",
+      "info": "Ej: Todos los derechos reservados."
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "t:labels.menu",
+      "info": "Términos, privacidad, aviso legal, etc."
     },
     {
       "type": "checkbox",

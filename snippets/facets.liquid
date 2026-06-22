@@ -80,7 +80,12 @@
       <a href="{{ routes.root_url }}">
         {% if settings.logo %}
           <figure class="b-image l-facets-logo b-mx-auto b-my-4 b-pt-2">
-            <img src="{{ settings.logo | image_url: width: 100 }}" alt="{{ shop.name }}" width="100%" height="100%">
+            <img
+              src="{{ settings.logo | image_url: width: 100 }}"
+              alt="{{ shop.name | append: '_logo' }}"
+              width="100%"
+              height="100%"
+            >
           </figure>
         {% else %}
           {{ 'image' | placeholder_svg_tag: 'l-logo-placeholder' }}
@@ -123,7 +128,10 @@
 
           {% comment %} Sorting {% endcomment %}
 
-          <div class="b-mb-4" x-data="{ open: false, fold_svg: '{{ icon_fold_svg }}', unfold_svg: '{{ icon_unfold_svg }}' }">
+          <div
+            class="b-mb-4"
+            x-data="{ open: false, fold_svg: '{{ icon_fold_svg }}', unfold_svg: '{{ icon_unfold_svg }}' }"
+          >
             <button
               type="button"
               class="b-button b-is-primary b-is-light b-is-fullwidth b-is-justify-content-space-between"
@@ -165,7 +173,10 @@
           {% comment %} Filters {% endcomment %}
 
           {%- for filter in results.filters -%}
-            <div class="b-mb-4" x-data="{ open: false, fold_svg: '{{ icon_fold_svg }}', unfold_svg: '{{ icon_unfold_svg }}' }">
+            <div
+              class="b-mb-4"
+              x-data="{ open: false, fold_svg: '{{ icon_fold_svg }}', unfold_svg: '{{ icon_unfold_svg }}' }"
+            >
               <button
                 type="button"
                 class="b-button b-is-primary b-is-light b-is-fullwidth b-is-justify-content-space-between"

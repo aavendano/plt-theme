@@ -12,6 +12,8 @@
     "logo": "{{ shop.brand.logo }}",
     "logo_width": 130,
     "favicon": "shopify://shop_images/favicon-playlovetoys-32x32.png",
+    "max_page_width": "110rem",
+    "min_page_margin": 10,
     "hreflang_enabled": true,
     "content_for_index": []
   }

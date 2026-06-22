@@ -27,6 +27,7 @@
     crop: 'center',
   %}
 {% enddoc %}
+
 {% liquid
   assign image_full_url = image | image_url: width: width, height: height, pad_color: 'ffffff'
   unless height
@@ -55,8 +56,6 @@
 
 <figure
   class="b-image {{ class }}"
-  x-data="{ imageLoaded: false }"
-  :class="imageLoaded ? '' : 'b-is-skeleton'"
 >
   <img
     src="{{ image_full_url }}"
@@ -64,7 +63,6 @@
     height="{{ image.height }}"
     loading="lazy"
     alt="{{ image.alt | default: image.title | append: ' - ' | append: image.vendor | escape | default: shop.name | escape }}"
-    @load="imageLoaded = true"
     srcset="{{ image_srcset | strip }}"
     sizes="(min-width: 1216px) 25vw, (min-width: 768px) 33vw, 50vw"
     style="object-fit: contain;"

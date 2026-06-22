@@ -1,0 +1,56 @@
+{% doc %}
+  Renders one PlayLoveToys-style product card for location page shelves.
+
+  @param {product} product - The product to display
+  @param {string} [tint] - CSS background for the image block (brand tint or gradient)
+
+  @example
+  {% render 'loc-product-card', product: product, tint: tint %}
+{% enddoc %}
+{%- liquid
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+  endif
+-%}
+<a href="{{ product.url }}" class="b-card l-loc-pcard">
+  <div class="b-card-image">
+    <figure class="b-image b-is-1by1 b-has-image-overlay" style="background: {{ tint | default: 'var(--plt-purple-soft)' }};">
+      {%- if product.featured_image != blank -%}
+        <img
+          src="{{ product.featured_image | image_url: width: 600 }}"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          loading="lazy"
+          width="600"
+          height="600"
+        >
+      {%- endif -%}
+      {%- if on_sale -%}
+        <span class="b-tag b-is-link b-tag-top-left l-loc-badge-sale">{{ 'sections.location.badge_sale' | t }}</span>
+      {%- elsif product.tags contains 'new' or product.tags contains 'New' -%}
+        <span class="b-tag b-is-primary b-tag-top-left l-loc-badge-new">{{ 'sections.location.badge_new' | t }}</span>
+      {%- endif -%}
+    </figure>
+  </div>
+  <div class="b-card-content">
+    {%- if product.vendor != blank -%}
+      <p class="b-is-size-7 b-has-text-grey b-mb-1 l-loc-vendor">{{ product.vendor }}</p>
+    {%- endif -%}
+    <p class="b-title b-is-6 b-mb-2">{{ product.title }}</p>
+    {%- if product.metafields.reviews.rating.value != blank -%}
+      {%- assign r = product.metafields.reviews.rating.value.rating | round -%}
+      <p class="b-has-text-link b-mb-2 l-loc-stars" aria-label="{{ 'sections.location.rated_stars' | t: rating: r }}">
+        {%- for i in (1..5) -%}{% if i <= r %}★{% else %}☆{% endif %}{%- endfor -%}
+      </p>
+    {%- endif -%}
+    <div class="b-is-flex b-is-align-items-baseline l-loc-price">
+      {%- if on_sale -%}
+        <span class="b-has-text-link b-has-text-weight-bold l-loc-price-now">{{ product.price | money }}</span>
+        <span class="b-has-text-grey l-loc-price-was">{{ product.compare_at_price | money }}</span>
+      {%- else -%}
+        <span class="b-has-text-weight-bold">{{ product.price | money }}</span>
+      {%- endif -%}
+    </div>
+    <span class="b-button b-is-link b-is-fullwidth b-is-rounded b-mt-3">{{ 'sections.location.view_product' | t }}</span>
+  </div>
+</a>
